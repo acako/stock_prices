@@ -97,3 +97,12 @@ complete_data_remove$year <- as.factor(complete_data_remove$year)
 #save the new data set as a csv
 write.csv(complete_data_remove,"fundamental_data.csv")
 
+imputed_data_cart <- mice(complete_data_remove, m=5, method='cart',maxit = 5)
+
+saveRDS(imputed_data_cart, 'cart_imputation.rds')
+complete_cart <- complete(imputed_data_cart, 1)
+missing_plot(complete_cart)
+sort((sapply(complete_cart, function(x) sum(is.na(x)))), decreasing=TRUE)
+#still 4 columns with missing values
+#try rf
+imputed_data_rf <- mice(complete_data_remove, m=5, method='rf',maxit = 5)
