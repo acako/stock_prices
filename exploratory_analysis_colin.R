@@ -98,3 +98,18 @@ write.csv(complete_data, 'complete_data.csv')
 write.csv(complete_cart, 'cart_data.csv')
 
 write.csv(complete_rf, 'rf_data.csv')
+
+#look at differences between datasets
+
+col_names <- as.list(names(complete_data))
+no_na <- list('X', 'Sector', 'PRICE.VARR', 'Class', 'Year')
+col_names <- setdiff(col_names, no_na)
+for (i in c(2:224)){
+  plot <- print(ggplot() + 
+          geom_density(aes(x=complete_data[[i]], colour='red')) + 
+          geom_density(aes(x=complete_cart[[i]], colour='green')) + 
+          geom_density(aes(x=complete_rf[[i]], colour='blue')) + 
+          scale_x_continuous(trans='log2') + 
+          theme(legend.position = 'none') + labs(title=col_names[i], x=''))
+  ggsave(paste(col_names[i],'plot.png',sep=''),plot = plot)
+}
