@@ -79,7 +79,7 @@ complete_data <- rbind(data_2014, data_2015, data_2016, data_2017, data_2018)
 
 #only include fundamental columns
 complete_data <- subset(complete_data[,
-                      c(2:4,6:8,10,12:14,16,20,22,30,33,34,36,38,40:43,45:53,55,56,60:74,176,179:190,223:226)])
+                      c(1:4,6:8,10,12:14,16,20,22,30,33,34,36,38,40:43,45:53,55,56,60:74,176,179:190,223:226)])
 missing_plot(complete_data)
 sort((sapply(complete_data, function(x) sum(is.na(x)))), decreasing=TRUE)
 #looks like a lot of observations make up the majority of the missing data 
@@ -96,13 +96,65 @@ complete_data_remove$year <- as.factor(complete_data_remove$year)
 
 #save the new data set as a csv
 write.csv(complete_data_remove,"fundamental_data.csv")
+pvq <- quantile(complete_data_remove$PRICE.VARR, probs = c(0.01,0.99), names=FALSE, na.rm=TRUE)
+plot_data <- complete_data_remove
+plot_data[plot_data==0] <- NA
 
-imputed_data_cart <- mice(complete_data_remove, m=5, method='cart',maxit = 5)
+# plot relationship between target variable and predictors
+for (i in c(2:62)){
+  q <- quantile(plot_data[[i]], probs = c(0.05, 0.95), names=FALSE, na.rm = TRUE)
+  if (min(plot_data[[i]], na.rm=TRUE) >= 0) {
+    lin_plot <- plot_data %>%
+      ggplot(aes_string(x=plot_data[[i]], y=plot_data$PRICE.VARR)) +
+      geom_point() + scale_x_continuous(trans='log2') + 
+      ylim(pvq[1],pvq[2]) + xlim(q[1],q[2]) + 
+      labs(title=as.list(names(plot_data[i])), x='', y='Price Change')
+  } else {
+    lin_plot <- plot_data %>%
+      ggplot(aes_string(x=plot_data[[i]], y=plot_data$PRICE.VARR)) +
+      geom_point() + ylim(pvq[1],pvq[2]) +  xlim(q[1],q[2]) + 
+      labs(title=as.list(names(plot_data[i])), x='', y='Price Change') 
+  }
+  ggsave(paste(as.list(names(plot_data[i])),'plot.png',sep=''),plot = lin_plot)
+}
 
-saveRDS(imputed_data_cart, 'cart_imputation.rds')
-complete_cart <- complete(imputed_data_cart, 1)
-missing_plot(complete_cart)
-sort((sapply(complete_cart, function(x) sum(is.na(x)))), decreasing=TRUE)
+#run linear regression for each predictor
+ctrl <- trainControl(method='cv', number = 5)
+linear_regressions <- c()
+for (i in c(2:62)){
+  data <- na.omit(subset(complete_data_remove[,c(i,64)]))
+  linear_regressions[[i]] <- train(PRICE.VARR ~., data=data, method='lm', trControl=ctrl)
+}
+
+linear_R2 <- c()
+for (i in c(2:62)){
+  linear_R2[[i]] <- linear_regressions[[i]]$results$Rsquared
+}
+
+logistic_regressions <- c()
+for (i in c(2:62)){
+  data <- na.omit(subset(complete_data_remove[,c(i,64)]))
+  logistic_regressions[[i]] <- train(PRICE.VARR ~., data=data, method='glm', trControl=ctrl)
+}
+
+log_R2 <- c()
+for (i in c(2:62)){
+  log_R2[[i]] <- logistic_regressions[[i]]$results$Rsquared
+}
+
+
+lin_log <- data.frame(lin=unlist(linear_R2), log=unlist(log_R2))
+
+lin_log %>% ggplot(aes(x=lin, y=log)) + geom_point()
+
+#imputed_data_cart <- mice(complete_data_remove, m=5, method='cart',maxit = 5)
+
+#saveRDS(imputed_data_cart, 'cart_imputation.rds')
+#complete_cart <- complete(imputed_data_cart, 1)
+#missing_plot(complete_cart)
+#sort((sapply(complete_cart, function(x) sum(is.na(x)))), decreasing=TRUE)
+
+#write.csv(complete_cart, 'cart_imputation.csv')
 #still 4 columns with missing values
 #try rf
-imputed_data_rf <- mice(complete_data_remove, m=5, method='rf',maxit = 5)
+#imputed_data_rf <- mice(complete_data_remove, m=5, method='rf',maxit = 5)
