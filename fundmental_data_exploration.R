@@ -79,7 +79,13 @@ complete_data <- rbind(data_2014, data_2015, data_2016, data_2017, data_2018)
 
 #only include fundamental columns
 complete_data <- subset(complete_data[,
-                      c(1:4,6:8,10,12:14,16,20,22,30,33,34,36,38,40:43,45:53,55,56,60:74,176,179:190,223:226)])
+                      c(1:4,6:8,10,12:14,16,20,22,30,33,34,36,38,40:43,45:53,55,56,60:74,142,176,179:190,223,226)])
+complete_data <- complete_data[complete_data$X != 'IGLD', ]
+complete_data <- complete_data[complete_data$X != 'SBT', ]
+complete_data <- complete_data[complete_data$X != 'KST', ]
+complete_data <- complete_data[complete_data$X != 'AMX', ]
+
+
 missing_plot(complete_data)
 sort((sapply(complete_data, function(x) sum(is.na(x)))), decreasing=TRUE)
 #looks like a lot of observations make up the majority of the missing data 
@@ -147,6 +153,108 @@ lin_log <- data.frame(lin=unlist(linear_R2), log=unlist(log_R2))
 
 lin_log %>% ggplot(aes(x=lin, y=log)) + geom_point()
 
+###Time to look at missingness fully
+
+data <- complete_data
+sort((sapply(data, function(x) sum(is.na(x)))), decreasing=TRUE)
+missingness <- data.frame(name = character(),
+                          percentage = numeric(),
+                          min_diff = numeric(),
+                          q1_diff = numeric(),
+                          median_diff = numeric(),
+                          mean_diff = numeric(),
+                          q3_diff = numeric(),
+                          max_diff = numeric())
+for (i in c(2:62)) {
+  new_data <- subset(data[,c(i,64)])
+  complete_data <- na.omit(new_data)
+  missing_data <- new_data[rowSums(is.na(new_data)) > 0,]
+  miss_pctg <- length(missing_data$PRICE.VARR)/(length(complete_data$PRICE.VARR) + length(missing_data$PRICE.VARR))
+  sum_comp <- unname(summary(complete_data$PRICE.VARR))
+  sum_miss <- unname(summary(missing_data$PRICE.VARR))
+  min_diff <- (sum_miss[1]-sum_comp[1])/sum_comp[1]
+  q1_diff <- (sum_miss[2]-sum_comp[2])/sum_comp[2]
+  median_diff <- (sum_miss[3]-sum_comp[3])/sum_comp[3]
+  mean_diff <- (sum_miss[4]-sum_comp[4])/sum_comp[4]
+  q3_diff <- (sum_miss[5]-sum_comp[5])/sum_comp[5]
+  max_diff <- (sum_miss[6]-sum_comp[6])/sum_comp[6]
+  missingness[i-1,] = c(names(complete_data)[1],
+                             miss_pctg,
+                             min_diff,
+                             q1_diff,
+                             median_diff,
+                             mean_diff,
+                             q3_diff,
+                             max_diff)
+}
+
+missingness[2:8] <- lapply(missingness[2:8], as.numeric)
+
+for (i in c(3:8)){
+  print(missingness %>%
+          ggplot(aes(y=percentage, x=missingness[[i]])) +
+          geom_point() +
+          labs(x=as.list(names(missingness)[i])))
+}
+
+missingness_2 <- data.frame(name = character(),
+                          percentage = numeric(),
+                          min_comp = numeric(),
+                          min_miss = numeric(),
+                          q1_comp = numeric(),
+                          q1_miss = numeric(),
+                          median_comp = numeric(),
+                          median_miss = numeric(),
+                          mean_comp = numeric(),
+                          mean_miss = numeric(),
+                          q3_comp = numeric(),
+                          q3_miss = numeric(),
+                          max_comp = numeric(),
+                          max_miss = numeric())
+
+for (i in c(2:62)) {
+  new_data <- subset(data[,c(i,64)])
+  complete_data <- na.omit(new_data)
+  missing_data <- new_data[rowSums(is.na(new_data)) > 0,]
+  miss_pctg <- length(missing_data$PRICE.VARR)/(length(complete_data$PRICE.VARR) + length(missing_data$PRICE.VARR))
+  sum_comp <- unname(summary(complete_data$PRICE.VARR))
+  sum_miss <- unname(summary(missing_data$PRICE.VARR))
+  min_comp <- sum_comp[1]
+  min_miss <- sum_miss[1]
+  q1_comp <- sum_comp[2]
+  q1_miss <- sum_miss[2]
+  median_comp <- sum_comp[3]
+  median_miss <- sum_miss[3]
+  mean_comp <- sum_comp[4]
+  mean_miss <- sum_miss[4]
+  q3_comp <- sum_comp[5]
+  q3_miss <- sum_miss[5]
+  max_comp <- sum_comp[6]
+  max_miss <- sum_miss[6]
+  missingness_2[i-1,] = c(names(complete_data)[1],
+                        miss_pctg,
+                        min_comp,
+                        min_miss,
+                        q1_comp,
+                        q1_miss,
+                        median_comp,
+                        median_miss,
+                        mean_comp,
+                        mean_miss,
+                        q3_comp,
+                        q3_miss,
+                        max_comp,
+                        max_miss)
+}
+
+missingness_2[2:14] <- lapply(missingness_2[2:14], as.numeric)
+
+missingness_2 %>% ggplot(aes(x=min_comp, y=min_miss)) + geom_point()
+missingness_2 %>% ggplot(aes(x=q1_comp, y=q1_miss)) + geom_point()
+missingness_2 %>% ggplot(aes(x=median_comp, y=median_miss)) + geom_point()
+missingness_2 %>% ggplot(aes(x=mean_comp, y=mean_miss)) + geom_point()
+missingness_2 %>% ggplot(aes(x=q3_comp, y=q3_miss)) + geom_point()
+missingness_2 %>% ggplot(aes(x=max_comp, y=max_miss)) + geom_point()
 #imputed_data_cart <- mice(complete_data_remove, m=5, method='cart',maxit = 5)
 
 #saveRDS(imputed_data_cart, 'cart_imputation.rds')
