@@ -1,0 +1,38 @@
+---
+output: 
+  pdf_document:
+    keep_tex: true
+    fig_caption: true
+    latex_engine: pdflatex
+    template: svm-latex-ms.tex
+    extra_dependencies: "subfig"
+title: "Application of Machine Learning on Fundamental Stock Price Analysis"
+author:
+- name: Albina Cako, BSc
+  affiliation: York University, Certificate in Machine Learning
+- name: Colin Green, BSc
+  affiliation: York University, Certificate in Machine Learning
+- name: Lucy Zhang, BSc
+  affiliation: York University, Certificate in Machine Learning
+- name: Sean X. Zhang, MSc
+  affiliation: York University, Certificate in Machine Learning
+abstract: "Abstract:"
+keywords: "stock price, fundamental analysis, machine learning, R"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+geometry: margin=1in
+fontfamily: mathpazo
+fontsize: 11pt
+# spacing: double
+#bibliography: References_house_prices.bib
+csl: cell-numeric.csl
+header-includes:
+    - \usepackage{hyperref}
+---
+
+# Introduction
+
+# Methodology
+
+# Results
+
+# Discussion
