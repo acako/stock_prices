@@ -102,25 +102,25 @@ complete_data_remove$year <- as.factor(complete_data_remove$year)
 
 #save the new data set as a csv
 write.csv(complete_data_remove,"fundamental_data.csv")
-pvq <- quantile(complete_data_remove$PRICE.VARR, probs = c(0.01,0.99), names=FALSE, na.rm=TRUE)
+pvq <- quantile(complete_data_remove$Market.Cap, probs = c(0.01,0.99), names=FALSE, na.rm=TRUE)
 plot_data <- complete_data_remove
 plot_data[plot_data==0] <- NA
 
 # plot relationship between target variable and predictors
 for (i in c(2:62)){
   q <- quantile(plot_data[[i]], probs = c(0.05, 0.95), names=FALSE, na.rm = TRUE)
-  if (min(plot_data[[i]], na.rm=TRUE) >= 0) {
-    lin_plot <- plot_data %>%
-      ggplot(aes_string(x=plot_data[[i]], y=plot_data$PRICE.VARR)) +
-      geom_point() + scale_x_continuous(trans='log2') + 
-      ylim(pvq[1],pvq[2]) + xlim(q[1],q[2]) + 
-      labs(title=as.list(names(plot_data[i])), x='', y='Price Change')
-  } else {
-    lin_plot <- plot_data %>%
-      ggplot(aes_string(x=plot_data[[i]], y=plot_data$PRICE.VARR)) +
+  #if (min(plot_data[[i]], na.rm=TRUE) >= 0) {
+  #  lin_plot <- plot_data %>%
+  #    ggplot(aes_string(x=plot_data[[i]], y=plot_data$Market.Cap)) +
+  #    geom_point() + scale_x_continuous(trans='log2') + 
+  #   ylim(pvq[1],pvq[2]) + xlim(q[1],q[2]) + 
+  #    labs(title=as.list(names(plot_data[i])), x='', y='Price Change')
+  #} else {
+  lin_plot <- plot_data %>%
+      ggplot(aes_string(x=plot_data[[i]], y=plot_data$Market.Cap)) +
       geom_point() + ylim(pvq[1],pvq[2]) +  xlim(q[1],q[2]) + 
-      labs(title=as.list(names(plot_data[i])), x='', y='Price Change') 
-  }
+      labs(title=as.list(names(plot_data[i])), x='', y='Market Cap')
+  #}
   ggsave(paste(as.list(names(plot_data[i])),'plot.png',sep=''),plot = lin_plot)
 }
 
@@ -128,8 +128,8 @@ for (i in c(2:62)){
 ctrl <- trainControl(method='cv', number = 5)
 linear_regressions <- c()
 for (i in c(2:62)){
-  data <- na.omit(subset(complete_data_remove[,c(i,64)]))
-  linear_regressions[[i]] <- train(PRICE.VARR ~., data=data, method='lm', trControl=ctrl)
+  data <- na.omit(subset(complete_data_remove[,c(i,50)]))
+  linear_regressions[[i]] <- train(Market.Cap ~., data=data, method='lm', trControl=ctrl)
 }
 
 linear_R2 <- c()
@@ -139,8 +139,8 @@ for (i in c(2:62)){
 
 logistic_regressions <- c()
 for (i in c(2:62)){
-  data <- na.omit(subset(complete_data_remove[,c(i,64)]))
-  logistic_regressions[[i]] <- train(PRICE.VARR ~., data=data, method='glm', trControl=ctrl)
+  data <- na.omit(subset(complete_data_remove[,c(i,50)]))
+  logistic_regressions[[i]] <- train(Market.Cap ~., data=data, method='glm', trControl=ctrl)
 }
 
 log_R2 <- c()
@@ -255,14 +255,21 @@ missingness_2 %>% ggplot(aes(x=median_comp, y=median_miss)) + geom_point()
 missingness_2 %>% ggplot(aes(x=mean_comp, y=mean_miss)) + geom_point()
 missingness_2 %>% ggplot(aes(x=q3_comp, y=q3_miss)) + geom_point()
 missingness_2 %>% ggplot(aes(x=max_comp, y=max_miss)) + geom_point()
-#imputed_data_cart <- mice(complete_data_remove, m=5, method='cart',maxit = 5)
 
-#saveRDS(imputed_data_cart, 'cart_imputation.rds')
-#complete_cart <- complete(imputed_data_cart, 1)
+
+imputed_data_cart <- mice(complete_data_remove, m=5, method='cart',maxit = 5)
+
+saveRDS(imputed_data_cart, 'cart_imputation.rds')
+complete_cart <- complete(imputed_data_cart, 1)
 #missing_plot(complete_cart)
-#sort((sapply(complete_cart, function(x) sum(is.na(x)))), decreasing=TRUE)
+sort((sapply(complete_cart, function(x) sum(is.na(x)))), decreasing=TRUE)
+#remove total.non.current.liabilities. and total.non.current.assets
 
-#write.csv(complete_cart, 'cart_imputation.csv')
+complete_cart <- subset(complete_cart[,c(1:22,24:28,31,33:65)])
+
+complete_cart$year <- as.factor(complete_cart$year)
+
+sort((sapply(final_set, function(x) sum(is.na(x)))), decreasing=TRUE)
+write.csv(complete_cart, 'full_set.csv')
 #still 4 columns with missing values
-#try rf
-#imputed_data_rf <- mice(complete_data_remove, m=5, method='rf',maxit = 5)
+
