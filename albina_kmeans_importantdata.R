@@ -7,7 +7,13 @@ summary(data)
 library(factoextra)
 library(cluster)
 library(dplyr)
-data_clean <- select(data, -c(X.1, X))
+df_imputed <- read.csv('full_set.csv')
+data$year <- df_imputed$year
+data$uniqueticker <- paste(data$X, data$year)
+rownames(data) <- data$uniqueticker
+data_clean <- select(data, -c(X.1, X, Market.Cap, year, uniqueticker))
+
+
 #Silhouette Method for finding the optimal number of clusters
 #install.packages("NbClust")
 library(NbClust)

@@ -72,13 +72,34 @@ res.ind$cos2           # Quality of representation
 clustering_PCA <- data.frame(res.pca$ind$coord)
 write.csv(clustering_PCA, 'PCA_df.csv')
 d2 <- dist(clustering_PCA, method = 'euclidean')
-clustering_PCA$Market.Cap <- df_imputed$Market.Cap
 
 hc2 <- hclust(d2, method = 'complete')
 plot(hc2, hang = -1)
 hc2$order
-clustering_PCA$cluster <- as.factor(cutree (hc2, k = 200))
+clustering_PCA$cluster <- as.factor(cutree (hc2, k = 6))
 table(clustering_PCA$cluster)
+
+###
+
+library(NbClust)
+fviz_nbclust(clustering_PCA, kmeans, method = "silhouette") + labs(subtitle = "Silhouette method")
+
+#2 clusters
+set.seed(123)
+km.res <- kmeans(clustering_PCA, 2, nstart = 25)
+print(km.res)
+km.res$cluster
+head(km.res$cluster, 2)
+fviz_cluster(km.res, clustering_PCA, ellipse.type = "norm")
+
+#3 cluster
+km.res <- kmeans(clustering_PCA, 3, nstart = 25)
+print(km.res)
+km.res$cluster
+fviz_cluster(km.res, clustering_PCA, ellipse.type = "norm")
+
+clustering_PCA$cluster <- km.res$cluster
+clustering_PCA$Market.Cap <- df_imputed$Market.Cap
 
 ####################
 df_random <- df[sample(nrow(df), 100),]
