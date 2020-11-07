@@ -3,10 +3,13 @@ library(ggcorrplot)
 library(tidyverse)
 library(VIF)
 library(car)
+library(caret)
 
 
 df <- read.csv('fundamental_data.csv')
-df_complete <- read.csv('complete_data.csv')
+df_imputed <- read.csv('full_set.csv')
+
+#df_complete <- read.csv('complete_data.csv')
 #df_tickernames <- df_complete[, names(df_complete) %in% c('X', 'X.1')]
 #colnames(df_tickernames) <- c('X', 'ticker')
 #df <- merge(df_tickernames, df, by = 'X')
@@ -68,22 +71,22 @@ ggcorrplot(mtx_corrtable, type = 'upper', lab = TRUE)
 
 
 #linear regression
+
 library(caret)
 set.seed(123)
 
 sample <- sample.int(n = nrow(df), size = floor(.75*nrow(df)), replace = F)
 train <- df[sample, ][, names(df) %in% predictor_cols]
 test  <- df[-sample, ][, names(df) %in% predictor_cols]
-
-cv = trainControl(method = 'cv', number = 10)
-model1 <- train(Market.Cap~., train, method = 'glm', trControl = cv, na.action = na.pass)
+na.rm=TRUE
+model1 <- train(Market.Cap~., train, method = 'glm', na.action = na.pass)
 
 independence <- data.frame(vif(model1$finalModel))
 independence$rownames <- rownames(independence)
 colinear <- independence[independence$vif.model1.>5,]
 colinear
 nrow(colinear)
-#38 variables can be removed from the model
+#41 variables can be removed from the model
 
 
 #Outliers
@@ -100,3 +103,38 @@ par(mfrow=c(3,3))
 for (i in predictor_cols){
   boxplot(df_log[[i]], main = paste(i), xlab = '', col= 4)
 }
+
+library(rpart)
+set.seed(123)
+df_imputed <- df_imputed[, !names(df_imputed) %in% c('X', 'X.1')]
+df_imputed$year <- as.factor(df_imputed$year)
+
+#decision tree
+cv = trainControl(method = 'cv', n = 5)
+tree_mod <- train(Market.Cap~., df_imputed, method = 'rpart', na.action = na.pass, trControl = cv)
+
+importance <- sort(tree_mod$finalModel$variable.importance)
+barplot(importance, col = 4, horiz=TRUE, las=2, cex.names = 0.7)
+
+tree_mod
+importance
+
+#linear regression
+lm <- train(Market.Cap~., df_imputed, method = 'glm', na.action = na.pass, trControl = cv)
+coeff <- sort(lm$finalModel$coefficients)
+barplot(coeff, col = 4, horiz=TRUE, las=2, cex.names = 0.7)
+
+lm_independence <- data.frame(vif(lm$finalModel))
+lm_independence$rownames <- rownames(lm_independence)
+lm_colinear <- lm_independence[lm_independence$vif.lm.finalModel.>5,]
+lm_colinear
+length(lm_colinear)
+
+#random forest
+rf <- train(Market.Cap~., df_imputed, method = 'rf', na.action = na.omit, trControl = cv)
+
+rf_importance <- sort(rf$finalModel$importance)
+barplot(rf_importance, col = 4, horiz=TRUE, las=2, cex.names = 0.7)
+
+tree_mod
+importance
