@@ -20,7 +20,7 @@ library(NbClust)
 fviz_nbclust(data_clean, kmeans, method = "silhouette") + labs(subtitle = "Silhouette method")
 #data_scaled <- scale(data_clean)
 #fviz_nbclust(data_scaled, kmeans, method = "silhouette") + labs(subtitle = "Silhouette method")
-#selected top 2: 2, 3 and 4 clusters
+#selected top 3: 2, 3 and 4 clusters
 
 #2 clusters
 set.seed(123)
