@@ -4,7 +4,7 @@ data <- read.csv("exploration_data.csv")
 summary(data)
 
 #multiple histogram plot for missing data
-#laod libraries
+#load libraries
 library(ggplot2)
 library(reshape2)
 #make plot
