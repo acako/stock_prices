@@ -45,3 +45,11 @@ print(km.res)
 km.res$cluster
 head(km.res$cluster, 3)
 fviz_cluster(km.res, data_clean, ellipse.type = "norm")
+
+#5 clusters
+set.seed(123)
+km.res <- kmeans(data_clean, 5, nstart = 50)
+print(km.res)
+km.res$cluster
+head(km.res$cluster, 5)
+fviz_cluster(km.res, data_clean, ellipse.type = "norm")
