@@ -129,7 +129,19 @@ df <- df[df$X.1!=373,]
 df <- df[df$X.1!=4027,]
 df <- df[df$X.1!=12158,]
 
+df_imputed <- df_imputed[df_imputed$X.1!=373,]
+df_imputed <- df_imputed[df_imputed$X.1!=4027,]
+df_imputed <- df_imputed[df_imputed$X.1!=12158,]
+
+df_important <- read.csv('important.csv')
+df_important <- df_important[df_important$X.1!=373,]
+df_important <- df_important[df_important$X.1!=4027,]
+df_important <- df_imputed[df_important$X.1!=12158,]
+
 write.csv(df, 'important_with_clusters.csv')
+write.csv(df_imputed, 'full_set.csv')
+write.csv(df_important, 'important.csv')
+
 
 
 
