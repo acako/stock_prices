@@ -125,6 +125,10 @@ c4df <- left_join(c4df, stocks_lookup_table, by = 'ticker') # this cluster conta
 df$cluster <- km.res$cluster
 rownames(df) <- rownames(df_PCA)
 df$Sector <- df_imputed$Sector
+df <- df[df$X.1!=373,]
+df <- df[df$X.1!=4027,]
+df <- df[df$X.1!=12158,]
+
 write.csv(df, 'important_with_clusters.csv')
 
 
