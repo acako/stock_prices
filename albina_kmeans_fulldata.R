@@ -7,9 +7,12 @@ summary(data)
 library(factoextra)
 library(cluster)
 library(dplyr)
-data_clean <- select(data, -c(X.1, X, Sector))
+data$uniqueticker <- paste(data$X, data$year)
+rownames(data) <- data$uniqueticker
+data_clean <- select(data, -c(X.1, X, Market.Cap, year, uniqueticker, Sector))
+#data_clean <- select(data, -c(X.1, X, Sector))
 summary(data_clean)
-data_clean$Sector <- factor(data_clean$Sector)
+#data_clean$Sector <- factor(data_clean$Sector)
 #Silhouette Method for finding the optimal number of clusters
 #install.packages("NbClust")
 library(NbClust)
@@ -18,7 +21,7 @@ fviz_nbclust(data_clean, kmeans, method = "silhouette") + labs(subtitle = "Silho
 #data_scaled <- scale(data_clean)
 #fviz_nbclust(data_scaled, kmeans, method = "silhouette") + labs(subtitle = "Silhouette method")
 
-#selected top 5: 2, 3 and 4, 5, 6 clusters - did not used scaled data
+#selected top 6: 2, 3 and 4, 5, 6, 7 clusters - did not used scaled data
 
 #2 clusters
 set.seed(123)
@@ -58,6 +61,15 @@ km.res <- kmeans(data_clean, 5, nstart = 50)
 print(km.res)
 km.res$cluster
 head(km.res$cluster, 5)
+fviz_cluster(km.res, data_clean, ellipse.type = "norm")
+
+
+#7 clusters
+set.seed(123)
+km.res <- kmeans(data_clean, 7, nstart = 50)
+print(km.res)
+km.res$cluster
+head(km.res$cluster, )
 fviz_cluster(km.res, data_clean, ellipse.type = "norm")
 
 
