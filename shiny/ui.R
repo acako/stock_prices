@@ -25,7 +25,9 @@ shinyUI(fluidPage(
                     textInput('Consolidated.Income',
                               'Consolidated Income'),
                     textInput('Dividend.payments',
-                              'Dividend Payments')),
+                              'Dividend Payments'),
+                    actionButton('evaluate_man',
+                                 'Evaluate')),
                 column(3,
                     textInput('Stock.based.compensation',
                               'Stock Based Compensation'),
@@ -47,13 +49,18 @@ shinyUI(fluidPage(
                               'Long Term Debt'),
                     textInput('Current.Market.Cap',
                               'Current Market Cap')),
-            )
+            ),
+            textOutput('prediction_man')
         ),
         tabPanel('Search By Ticker',
             sidebarPanel(
                 textInput('ticker',
-                          'Ticker')
-            )
+                          'Ticker',
+                          value=NA),
+                actionButton('evaluate_tick',
+                             'Evaluate')
+            ),
+            textOutput('prediction_tick')
         )
         
     )
