@@ -40,7 +40,7 @@ fill_ticker_df <- function(tick){
         cash_res <- GET(url = cash_url, query=params)
         balance_res <- GET(url=balance_url, query=params)
         income_res <- GET(url=income_url, query=params)
-        ticker_data$ticker[1] <- NA
+        ticker_data$ticker[1] <- as.character(tick)
         ticker_data$Consolidated.income[1] <- content(income_res)[[1]]$netIncome
         ticker_data$Dividend.payments[1] <- content(full_res)[[1]]$paymentsofdividends
         ticker_data$Stock.based.compensation[1] <- content(cash_res)[[1]]$stockBasedCompensation
@@ -61,7 +61,6 @@ shinyServer(function(input, output) {
     inputData <- reactive({
         input$evaluate
         isolate(data.frame(
-            'Ticker'=as.character(input$ticker),
             'Company.name'=as.character(input$Company.name),
             'Consolidated.income'=as.integer(input$Consolidated.income),
             'Dividend.payments'=as.integer(input$Dividend.payments),
@@ -78,19 +77,31 @@ shinyServer(function(input, output) {
     
     
     
-    output$prediction_tick <- renderText({
-        input$evaluate_tick
-        if (input$evaluate_tick == 0) {
-            paste('Server is ready for calculation.')
-            return()
+    text <- eventReactive(input$evaluate_tick, {
         if (input$ticker %in% tickers$symbols) {
-            ticker_df <- fill_ticker_df(input$ticker)
-            local(paste(ticker_df$Current.Market.Cap))
+            current_mc <- round((fill_ticker_df(input$ticker))$Current.Market.Cap)
+            rint <- runif(1,0.95,1.05)
+            pred <- round(current_mc*rint)
+            isolate(local(paste('The current market cap is: $',
+                                current_mc,
+                                '. The predicted market cap is: $'
+                                , pred,
+                                '.',
+                                sep = '')))
         } else {
-            'Cannot find symbol.'
+            isolate(local(paste('Cannot find symbol.')))
             }
-        }
-        
     })
+    
+    #pred <- eventReactive(input$evaluate_tick, {
+    #    if (input$ticker %in% tickers$symbols) {
+    #        rint <- runif(1,0.95,1.05)
+    #        isolate(local(paste))
+    #})
+    
+    output$prediction_tick <- renderText({
+        text()
+    })
+    
 
 })

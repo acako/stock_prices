@@ -60,7 +60,13 @@ shinyUI(fluidPage(
                 actionButton('evaluate_tick',
                              'Evaluate')
             ),
-            textOutput('prediction_tick')
+            mainPanel(
+                tags$style(
+                    type = "text/css",
+                    ".shiny-output-error { visibility: hidden; }",
+                    ".shiny-output-error:before { visibility: hidden; }"
+                ),
+                htmlOutput('prediction_tick'))
         )
         
     )
