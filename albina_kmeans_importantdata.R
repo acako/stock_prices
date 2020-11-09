@@ -53,3 +53,4 @@ print(km.res)
 km.res$cluster
 head(km.res$cluster, 5)
 fviz_cluster(km.res, data_clean, ellipse.type = "norm")
+

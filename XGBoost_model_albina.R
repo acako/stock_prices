@@ -40,4 +40,6 @@ attributes(XGB_model)
 #model accuracy
 min(XGB_model$results$RMSE)
 max(XGB_model$results$Rsquared)
-max(XGB_model$resuls$MAE)
+min(XGB_model$resuls$MAE)
+
+saveRDS(XGB_model, 'XGB_model_albina.rds')
