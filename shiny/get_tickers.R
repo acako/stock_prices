@@ -8,7 +8,7 @@ params = list(
   `datatype` = 'json'
 )
 
-res <- httr::GET(url = 'https://financialmodelingprep.com/api/v3/stock/list?apikey=81419012a8f4bf777c342c25e2ddaf77', query = params)
+res <- httr::GET(url = 'https://financialmodelingprep.com/api/v3/financial-statement-symbol-lists?apikey=81419012a8f4bf777c342c25e2ddaf77', query = params)
 
 ticker_list <- lapply(content(res),'[[','symbol')
 tickers <- data.frame(symbols=unlist(ticker_list))

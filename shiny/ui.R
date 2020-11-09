@@ -66,7 +66,8 @@ shinyUI(fluidPage(
                     ".shiny-output-error { visibility: hidden; }",
                     ".shiny-output-error:before { visibility: hidden; }"
                 ),
-                htmlOutput('prediction_tick'))
+                htmlOutput('prediction_tick'),
+                plotOutput('time_series'))
         )
         
     )
