@@ -39,7 +39,16 @@ library(dendextend)
 library(ggplot2)
 library(FactoMineR)
 library(NbClust)
+library(Hmisc)
+library(ggcorrplot)
+library(tidyverse)
+library(car)
+library(caret)
+library(VIF)
 ```
+
+
+
 
 # Introduction
 
@@ -61,6 +70,62 @@ library(NbClust)
 
 # Results
 ## Data Exploration
+
+```{r text summary, echo=FALSE}
+
+df_full <- read.csv('full_set.csv')
+df <- read.csv('important.csv')
+df_numeric <- subset(df, select =c(3:13))
+
+summary(df[, names(df) %in% numeric_cols])
+table(df$type)
+```
+
+
+The source of the data contains several csv files for different years, we combined the files and kept the unique columns to start with our project.
+We chose the top 10 important colunms by using decision tree algorithm.
+```{r}
+decision_tree_model <- readRDS("decisiontree_model_updated_albina.rds")
+invisible(model_importance <- summary(decision_tree_model$finalModel))
+barplot(model_importance[10:1, 'rel.inf'], col = 'blue', xlab = 'Relative Influence', horiz = TRUE, las = 2, names = model_importance[10:1, 'var'], main = 'Variable Importance', cex = 0.5, cex.main = 0.8, cex.lab = 0.8, cex.axis = 0.6)
+
+```
+```{r}
+imputed_data_cart <- readRDS("cart_imputation.rds")
+complete_cart <- complete(imputed_data_cart, 1)
+```
+
+###Correlation Plot
+We then performed a correlation analysis based on Pearson's coefficient between each numeric predictor. We considered a correlation > 0.5, with p < 0.05 as a significant correlation. \hyperref[sec:fig3]{Figure 3} demonstrates significant correlation between many of our predictor variables. 
+```{r corrplot, echo=FALSE, fig.align='center', fig.height=5, fig.width=5, fig.cap='Correlogram\\label{sec:fig3}'}
+#corrplot for numerical
+cor <- rcorr(as.matrix(df_numeric))
+p.mat <- cor_pmat(as.matrix(df_numeric))
+par(mfrow=c(1,1))
+ggcorrplot(cor$r, type = 'upper', p.mat = p.mat, sig.level = 0.05, lab = TRUE)
+
+```
+
+###Data Normal Distribution 
+```{r}
+df <- read.csv('important.csv')
+
+plot_index <- list()
+for (i in c(3:13)){
+  
+  plot_index[[names(df[i])]] <- ggplot(df, aes(x = df[[i]])) +
+    stat_function(
+      fun = dnorm,
+      args = with(df, c(mean = mean(df[[i]], na.rm=TRUE), 
+                            sd = sd(df[[i]], na.rm=TRUE))))+
+    labs(title=as.list(names(df_normalize[i])), x='',y='Price Change')
+  print(plot_index[[names(df[i])]])
+}
+#nCol <- 3
+#plot <- do.call("grid.arrange", c(plot_index[1:11], ncol=nCol))
+#plot
+```
+
 
 ## Principle Component Analysis
 ```{r scree, message = FALSE, warning = FALSE, echo = FALSE, fig.cap= 'Scree plot'}
@@ -101,10 +166,38 @@ include_graphics('cluster_image.png')
 ```
 
 ## Modeling
+The k-fold cross-validation method evaluates the model performance on different subsets of the training data calculates the average prediction error rate. We used k = 10 for our project,and this method was used instead of the simple train-test-split as it gives a more valid estimation of model effectiveness.
+
 ###Random Forest
 ###XGBoost
 ###Lasso Regression
+The lasso regression model was tuned by several different parameters. RMSE was used to select the optimal model using the smallest value.
+The final value used for the model was fraction = 0.9.
+```{r}
+Lasso_Regression_Model <- readRDS("Lasso_Model.rds")
+invisible(model_importance <- summary(Gradient_Boosting_model$finalModel))
+print(Lasso_Regression_Model)
+```
+
 ###GBM
+The gradient boosting model was tuned by several different parameters. The final values used for the model were n.trees = 600, interaction.depth = 9, shrinkage = 0.1 and n.minobsinnode = 20
+```{r}
+Gradient_Boosting_model <- readRDS("GBM_Model.rds")
+invisible(model_importance <- summary(Gradient_Boosting_model$finalModel))
+print(Gradient_Boosting_model)
+```
 ###Model Selection
+
+```{r create dataframe of model performance, echo=FALSE}
+models <- c("random_forest","extreme_gradient_boosting","Lasso_Regression","gradient_boosting" )
+model_performance <- data.frame(matrix(unlist(models), nrow=4, byrow=TRUE), stringsAsFactors = FALSE)
+colnames(model_performance) <- c("model")
+RMSE<- c(274957.8,233734.1,257316.5,220850.4)
+R2 <- c(0.8067,0.846707,0.8282601,0.861169)
+MAE <- c(135701,119745.2,134117.1,116308.5)
+model_performance <- model_performance %>% mutate(RMSE = round(RMSE,2), R2=round(R2,2), MAE=round(MAE,2))
+kable(model_performance, format = 'pipe', caption = 'Model Accuracy')
+```
+
 
 # Discussion
