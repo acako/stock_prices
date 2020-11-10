@@ -27,7 +27,12 @@ fontsize: 11pt
 csl: cell-numeric.csl
 header-includes:
     - \usepackage{hyperref}
+    - \usepackage{graphicx}
 ---
+
+```{r libraries}
+library(knitr)
+```
 
 # Introduction
 
@@ -35,20 +40,28 @@ header-includes:
 
 # Methodology
 
-##Data Preprocessing
+## Data Preprocessing
 
-##Missing Values
+## Missing Values
 
-##Outliers
+## Outliers
 
-##Data Curation
+## Data Curation
 
-##Modeling
+## Modeling
 
-##Deployment
+## Deployment
 
 # Results
 ## Data Exploration
+
+## Principle Component Analysis
+
+## K Means Clustering
+
+```{r cluster,fig.cap='K means clustering, k = 4', out.height='70%', out.width = '100%', message = FALSE, warning = FALSE, echo = FALSE}
+include_graphics('cluster_image.png')
+```
 
 ## Modeling
 ###Random Forest

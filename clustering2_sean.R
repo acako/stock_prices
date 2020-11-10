@@ -17,13 +17,9 @@ NYSE <- data.frame(NYSE)
 names(NYSE) <- c('ticker','name')
 stocks_lookup_table <- rbind(NYSE,nasdaq)
 
-# 
 # df_imputed <- df_imputed[df_imputed$X.1!=373,]
 # df_imputed <- df_imputed[df_imputed$X.1!=4027,]
 # df_imputed <- df_imputed[df_imputed$X.1!=12158,]
-
-
-
 
 ##let's start with PCA
 df_PCA <- df
@@ -87,9 +83,11 @@ clustering_PCA <- data.frame(res.pca$ind$coord)
 # fviz_cluster(km.res, clustering_PCA, ellipse.type = "norm")
 
 #4 cluster
+set.seed(123)
 clustering_PCA <- data.frame(res.pca$ind$coord)
 km.res <- kmeans(clustering_PCA, 4, nstart = 25)
 fviz_cluster(km.res, clustering_PCA, ellipse.type = "norm")
+
 
 #analysis of clusters
 clustering_PCA$cluster <- as.factor(km.res$cluster)
@@ -152,6 +150,9 @@ df_updated <- df_updated[df_updated$X.1!=373,]
 df_updated <- df_updated[df_updated$X.1!=4027,]
 df_updated <- df_updated[df_updated$X.1!=12158,]
 df_updated <- df_updated[df_updated$Market.Cap!= 0,]
+
+km.res$cluster <- df_updated$cluster
+fviz_cluster(km.res, clustering_PCA, ellipse.type = "norm")
 
 df_updated$PPR <- (df_updated$R.D.Expenses/df_updated$Market.Cap)
 df_updated$DPR <- abs(df_updated$Dividend.payments/df_updated$Market.Cap)
