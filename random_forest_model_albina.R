@@ -1,7 +1,7 @@
 data <- read.csv("important_with_clusters_updated.csv")
 head(data)
 data_clean <- select(data, -c(X.3, X.2, X.1, X))
-
+data_clean <- na.omit(data_clean)
 #load libraries
 library(caret)
 library(rpart)
@@ -16,7 +16,8 @@ summary(data_clean)
 str(data_clean)
 #run model untuned
 set.seed(123)
-grid <- expand.grid(mtry = c(5, 100))
+
+grid <- expand.grid(mtry = c(2,5), max_depth = c(10, 40, 100), min_samples_split = c(2, 5, 10), n_estimators = c(200, 800, 2000))
 random_forest_model <- train(Market.Cap ~.,data=data_clean,trControl = trainControl("cv",number=10, savePredictions = 'all'),
                    method='rf', tuneGrid = grid)
 summary(random_forest_model)
