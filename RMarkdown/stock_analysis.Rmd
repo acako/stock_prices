@@ -30,6 +30,30 @@ header-includes:
 ---
 
 # Introduction
+```{r load packages, include=FALSE}
+# load the packages
+library(dplyr)
+library(readr)
+library(finalfit)
+library(ggplot2)
+library(grid)
+library(gridExtra)
+library(mice)
+library(caret)
+library(rpart)
+library(factoextra)
+
+```
+
+##Data Preprocessing
+
+##Missing Values
+
+##Outliers
+
+##Data Visualization
+
+
 
 # Methodology
 
