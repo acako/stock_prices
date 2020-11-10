@@ -40,9 +40,18 @@
 \setcounter{secnumdepth}{0}
 
 
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
 
-\title{Machine Learning Applications on Fundamental Stock Price Analysis  }
+\title{Application of Machine Learning on Fundamental Stock Price Analysis  }
 
 
 
@@ -73,6 +82,7 @@
 \makeatother
 
 \usepackage{hyperref}
+\usepackage{graphicx}
 \usepackage{subfig}
 
 % move the hyperref stuff down here, after header-includes, to allow for - \usepackage{hyperref}
@@ -98,7 +108,7 @@
             bookmarks=true,
             pdfauthor={Albina Cako, BSc (York University, Certificate in Machine Learning) and Colin Green, BSc (York University, Certificate in Machine Learning) and Lucy Zhang, BSc (York University, Certificate in Machine Learning) and Sean X. Zhang, MSc (York University, Certificate in Machine Learning)},
              pdfkeywords = {stock price, fundamental analysis, machine learning, R},  
-            pdftitle={Machine Learning Applications on Fundamental Stock Price Analysis},
+            pdftitle={Application of Machine Learning on Fundamental Stock Price Analysis},
             colorlinks=true,
             citecolor=blue,
             urlcolor=blue,
@@ -181,8 +191,54 @@
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
 
+\hypertarget{data-preprocessing}{%
+\subsection{Data Preprocessing}\label{data-preprocessing}}
+
+\hypertarget{missing-values}{%
+\subsection{Missing Values}\label{missing-values}}
+
+\hypertarget{outliers}{%
+\subsection{Outliers}\label{outliers}}
+
+\hypertarget{data-curation}{%
+\subsection{Data Curation}\label{data-curation}}
+
+\hypertarget{modeling}{%
+\subsection{Modeling}\label{modeling}}
+
+\hypertarget{deployment}{%
+\subsection{Deployment}\label{deployment}}
+
 \hypertarget{results}{%
 \section{Results}\label{results}}
+
+\hypertarget{data-exploration}{%
+\subsection{Data Exploration}\label{data-exploration}}
+
+\hypertarget{principle-component-analysis}{%
+\subsection{Principle Component
+Analysis}\label{principle-component-analysis}}
+
+\includegraphics{stock_analysis_files/figure-latex/scree-1.pdf}
+\includegraphics{stock_analysis_files/figure-latex/PCAind-1.pdf}
+\includegraphics{stock_analysis_files/figure-latex/PCAvar-1.pdf}
+
+\hypertarget{k-means-clustering}{%
+\subsection{K Means Clustering}\label{k-means-clustering}}
+
+\begin{figure}
+\includegraphics[width=1\linewidth,height=0.7\textheight]{unsupervised_elbow} \caption{Elbow method}\label{fig:elbow}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=1\linewidth,height=0.7\textheight]{cluster_image} \caption{K means clustering, k = 4}\label{fig:cluster}
+\end{figure}
+
+\hypertarget{modeling-1}{%
+\subsection{Modeling}\label{modeling-1}}
+
+\#\#\#Random Forest \#\#\#XGBoost \#\#\#Lasso Regression \#\#\#GBM
+\#\#\#Model Selection
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
