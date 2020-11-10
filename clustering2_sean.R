@@ -17,6 +17,14 @@ NYSE <- data.frame(NYSE)
 names(NYSE) <- c('ticker','name')
 stocks_lookup_table <- rbind(NYSE,nasdaq)
 
+# 
+# df_imputed <- df_imputed[df_imputed$X.1!=373,]
+# df_imputed <- df_imputed[df_imputed$X.1!=4027,]
+# df_imputed <- df_imputed[df_imputed$X.1!=12158,]
+
+
+
+
 ##let's start with PCA
 df_PCA <- df
 df_PCA$year <- df_imputed$year
@@ -62,7 +70,7 @@ res.ind$cos2           # Quality of representation
 
 ##cluster using top 5 PCA columns which explain 85% var
 clustering_PCA <- data.frame(res.pca$ind$coord)
-write.csv(clustering_PCA, 'PCA_df.csv')
+#write.csv(clustering_PCA, 'PCA_df.csv')
 
 # Now K means clustering
 #fviz_nbclust(clustering_PCA, kmeans, method = "wss") + labs(subtitle = "Elbow method")
@@ -125,80 +133,70 @@ c4df <- left_join(c4df, stocks_lookup_table, by = 'ticker') # this cluster conta
 df$cluster <- km.res$cluster
 rownames(df) <- rownames(df_PCA)
 df$Sector <- df_imputed$Sector
+df$Market.Cap <- df_imputed$Market.Cap
 df <- df[df$X.1!=373,]
 df <- df[df$X.1!=4027,]
 df <- df[df$X.1!=12158,]
+df$cluster <- as.factor(df$cluster)
 
-df_imputed <- df_imputed[df_imputed$X.1!=373,]
-df_imputed <- df_imputed[df_imputed$X.1!=4027,]
-df_imputed <- df_imputed[df_imputed$X.1!=12158,]
-
-df_important <- read.csv('important.csv')
-df_important <- df_important[df_important$X.1!=373,]
-df_important <- df_important[df_important$X.1!=4027,]
-df_important <- df_imputed[df_important$X.1!=12158,]
-
-write.csv(df, 'important_with_clusters.csv')
-write.csv(df_imputed, 'full_set.csv')
-write.csv(df_important, 'important.csv')
+#write.csv(df, 'important_with_clusters.csv')
 
 
+#analyzing clusters
+
+df_updated <- read.csv('important_with_clusters_updated.csv')
+#df_updated$Short.term.debt <- df_imputed$Short.term.debt
+df_updated$cluster <- as.factor(df_updated$cluster)
+rownames(df_updated) <- df_updated$X.2
+df_updated <- df_updated[df_updated$X.1!=373,]
+df_updated <- df_updated[df_updated$X.1!=4027,]
+df_updated <- df_updated[df_updated$X.1!=12158,]
+df_updated <- df_updated[df_updated$Market.Cap!= 0,]
+
+df_updated$PPR <- (df_updated$R.D.Expenses/df_updated$Market.Cap)
+df_updated$DPR <- abs(df_updated$Dividend.payments/df_updated$Market.Cap)
+df_updated$DTI <- df_updated$Total.debt/df_updated$Consolidated.Income
 
 
-# JUNK CODE BELOW
+df_c1 <- subset(df_updated, df_updated$cluster==1) #everything else
+df_c2 <- subset(df_updated, df_updated$cluster==2) #Big tech, 'FANG'
+df_c3 <- subset(df_updated, df_updated$cluster==3) #big banks + oil
+df_c4 <- subset(df_updated, df_updated$cluster==4) #big pharma, consumer goods?
 
-# #cluster1: Walmart, Toyota, General Electric, AT&T, Verizon, China Mobile, Exxon Mobil, Chevron, 
-# 
-# cluster1$company <- data.frame(merge(cluster1, NYSE, by.x = ))
-# 
-# 
-# # K means clustering with only one year
-# df_2018 <- df_imputed[df_imputed$year == 2018, ]
-# df_2018 <- df_2018[, names(df_2018) %in% names(df)]
-# rownames(df_2018) <- df_2018$X
-# df_2018_clean <- df_2018[, !names(df_2018) %in% c('X.1','X', 'Market.Cap')]
-# fviz_nbclust(df_2018_clean, kmeans, method = "silhouette") + labs(subtitle = "Silhouette method")
-# 
-# km.res <- kmeans(df_2018_clean, 4, nstart = 25)
-# fviz_cluster(km.res, df_2018_clean, ellipse.type = "norm")
-# df_2018_clean$cluster <- km.res$cluster
-# setdiff(rownames(df_2018_clean[df_2018_clean$cluster == 2, ]), toupper(nasdaq$Ticker))
-# length(setdiff(toupper(nasdaq$Ticker), rownames(df_2018_clean[df_2018_clean$cluster == 3, ])))
-# setdiff(toupper(nasdaq$Ticker), rownames(df_2018_clean[df_2018_clean$cluster == 3, ]))
+#Clusters by Market Cap (value of the company) - note cluster 1 is clearly lower market cap compared to others
+ggplot(df_updated, aes(x = log(Market.Cap), color=cluster)) + geom_density() + labs(title = 'Clusters by log(Market cap)')
+#Clusters by sector
+ggplot(df_updated, aes(x=cluster, fill = Sector)) + geom_bar(position = 'fill')
+# look into clusters by market cap AND
 
-# ####################
-# df_random <- df[sample(nrow(df), 100),]
-# df_random <- df_random[, !names(df_random) %in% c('X','X.1', 'Market.Cap', 'year','uniqueticker')]
-# df_random <- data.frame(scale(df_random)) 
-# d <- dist(df_random, method = 'euclidean')
-# 
-# 
-# hc2 <- hclust(d, method = 'complete')
-# plot(hc2, hang = -1)
-# hc2$order
-# df_random$cluster <- cutree (hc2, k = 4)
-# rect.hclust(hc2, k = 4, border = 2:5)
-# 
-# df$year <- df_imputed$year
-# df$uniqueticker <- paste(df$X, df$year)
-# rownames(df) <- df$uniqueticker
-# df <- df[, !names(df) %in% c('X','X.1', 'Market.Cap', 'year','uniqueticker')]
-# df <- data.frame(scale(df)) 
-# d <- dist(df, method = 'euclidean')
-# df$Market.Cap <- df_imputed$Market.Cap
-# 
-# hc1 <- hclust(d, method = 'complete')
-# plot(hc1, hang = -1)
-# hc1$order
-# df$cluster <- as.factor(cutree (hc1, k = 12))
-# table(df$cluster)
-# 
-# ggplot(df, aes(x=log(Market.Cap, color = cluster))) + geom_density()
-# 
-# d2 <- dist(clustering_PCA, method = 'euclidean')
-# 
-# hc2 <- hclust(d2, method = 'complete')
-# plot(hc2, hang = -1)
-# hc2$order
-# clustering_PCA$cluster <- as.factor(cutree (hc2, k = 6))
-# table(clustering_PCA$cluster)
+#Clusters by dividend payout: dividend payout higher in cluster 3 compared to others. cluster 1 mostly probably smaller companies with lower dividend
+ggplot(df_updated[df_updated$DPR<0.1,], aes(x = DPR, color=cluster)) + geom_density() + labs(title = 'Clusters by Dividend payout, normalized by Market Cap')
+ggplot(df_updated, aes(x=Market.Cap, y=abs(Dividend.payments), color = cluster)) + geom_point() + labs(title='Market Cap vs Dividend by Cluster') 
+#Cluster 3
+ggplot(df_c3, aes(x=Market.Cap, y=abs(Dividend.payments), color = Sector)) + geom_point()  + labs(title = 'Cluster 3 Dividend Payout by Sector')
+ggplot(df_c3[df_c3$DPR<0.2,], aes(x = DPR, color=Sector)) + geom_density() + labs(title = 'Clusters by Dividend payout, normalized by Market Cap')
+
+
+#Clusters by Research and Development
+ggplot(df_updated[df_updated$PPR != 0 & df_updated$PPR<0.4,], aes(x = PPR, color=cluster)) + geom_density() + labs(title = 'Research to Price Ratio by cluster')
+
+#Cluster 2 and cluster 4 have higher R and D compared to average
+ggplot(df_updated, aes(x=Market.Cap, y=R.D.Expenses, color = cluster)) + geom_point() + labs(title = 'Higher market cap correlates with more R and D')
+
+#tech and big pharma on average have higher R and D
+ggplot(df_updated, aes(x=Market.Cap, y=R.D.Expenses, color = Sector)) + geom_point() + labs(title = 'R and D expenses by Sector')
+#Cluster 2
+ggplot(df_c2, aes(x=Market.Cap, y=R.D.Expenses, color = Sector)) + geom_point() + geom_text(label=df_c2$X.2) 
+#Cluster 3
+ggplot(df_c4, aes(x = PPR, color=Sector)) + geom_density() + labs(title = 'Research to Price Ratio in Cluster 3 by Sector')
+ggplot(df_c4[df_c4$PPR != 0 & df_updated$PPR< 0.4,], aes(x = PPR, color=Sector)) + geom_density() + labs(title = 'Research to Price Ratio in Cluster 3 by Sector')
+#Cluster 4
+ggplot(df_c4[df_c4$PPR != 0 & df_updated$PPR< 0.4,], aes(x = PPR, color=Sector)) + geom_density() + labs(title = 'Research to Price Ratio in Cluster 4 by Sector')
+
+# big pharma companies 
+
+#debt to income ratio
+ggplot(df_updated[df_updated$DTI > -25 & df_updated$DTI < 25,], aes(x = abs(DTI), color=cluster)) + geom_density() + labs(title = 'Clusters by Debt to Income Ratio')
+
+
+
