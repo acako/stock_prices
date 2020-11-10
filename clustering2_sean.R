@@ -69,7 +69,7 @@ clustering_PCA <- data.frame(res.pca$ind$coord)
 #write.csv(clustering_PCA, 'PCA_df.csv')
 
 # Now K means clustering
-#fviz_nbclust(clustering_PCA, kmeans, method = "wss") + labs(subtitle = "Elbow method")
+fviz_nbclust(clustering_PCA, kmeans, method = "wss") + labs(subtitle = "Elbow method")
 
 #2 clusters
 # set.seed(123)
@@ -151,12 +151,10 @@ df_updated <- df_updated[df_updated$X.1!=4027,]
 df_updated <- df_updated[df_updated$X.1!=12158,]
 df_updated <- df_updated[df_updated$Market.Cap!= 0,]
 
-km.res$cluster <- df_updated$cluster
-fviz_cluster(km.res, clustering_PCA, ellipse.type = "norm")
-
 df_updated$PPR <- (df_updated$R.D.Expenses/df_updated$Market.Cap)
 df_updated$DPR <- abs(df_updated$Dividend.payments/df_updated$Market.Cap)
 df_updated$DTI <- df_updated$Total.debt/df_updated$Consolidated.Income
+df_updated$`P/E` <- df_updated$Market.Cap/df_updated$Retained.earnings..deficit.
 
 
 df_c1 <- subset(df_updated, df_updated$cluster==1) #everything else
@@ -165,25 +163,26 @@ df_c3 <- subset(df_updated, df_updated$cluster==3) #big banks + oil
 df_c4 <- subset(df_updated, df_updated$cluster==4) #big pharma, consumer goods?
 
 #Clusters by Market Cap (value of the company) - note cluster 1 is clearly lower market cap compared to others
-ggplot(df_updated, aes(x = log(Market.Cap), color=cluster)) + geom_density() + labs(title = 'Clusters by log(Market cap)')
+ggplot(df_updated, aes(x = log(Market.Cap), color=cluster)) + geom_density() + labs(title = 'Clusters by Market cap')
 #Clusters by sector
 ggplot(df_updated, aes(x=cluster, fill = Sector)) + geom_bar(position = 'fill')
-# look into clusters by market cap AND
+
+#PE ratio
+ggplot(df_updated[df_updated$PE > -10 & df_updated$PE < 50, ], aes(x = `P/E`, color=cluster)) + geom_density() + labs(title = 'Clusters by P/E ratio')
+ggplot(df_updated, aes(x=Market.Cap, y=Retained.earnings..deficit., color = cluster)) + geom_point()  + labs(title = 'Price to Earnings by Sector') + geom_text(label = df_updated$X.2)
+
 
 #Clusters by dividend payout: dividend payout higher in cluster 3 compared to others. cluster 1 mostly probably smaller companies with lower dividend
 ggplot(df_updated[df_updated$DPR<0.1,], aes(x = DPR, color=cluster)) + geom_density() + labs(title = 'Clusters by Dividend payout, normalized by Market Cap')
-ggplot(df_updated, aes(x=Market.Cap, y=abs(Dividend.payments), color = cluster)) + geom_point() + labs(title='Market Cap vs Dividend by Cluster') 
+ggplot(df_updated, aes(x=Market.Cap, y=abs(Dividend.payments), color = cluster)) + geom_point() + labs(title='Cluster segregation by Market Cap and Divident Payments', ylab = 'Dividend') + labs(y = 'Dividend.payments') 
 #Cluster 3
 ggplot(df_c3, aes(x=Market.Cap, y=abs(Dividend.payments), color = Sector)) + geom_point()  + labs(title = 'Cluster 3 Dividend Payout by Sector')
 ggplot(df_c3[df_c3$DPR<0.2,], aes(x = DPR, color=Sector)) + geom_density() + labs(title = 'Clusters by Dividend payout, normalized by Market Cap')
 
-
 #Clusters by Research and Development
 ggplot(df_updated[df_updated$PPR != 0 & df_updated$PPR<0.4,], aes(x = PPR, color=cluster)) + geom_density() + labs(title = 'Research to Price Ratio by cluster')
-
 #Cluster 2 and cluster 4 have higher R and D compared to average
-ggplot(df_updated, aes(x=Market.Cap, y=R.D.Expenses, color = cluster)) + geom_point() + labs(title = 'Higher market cap correlates with more R and D')
-
+ggplot(df_updated, aes(x=Market.Cap, y=R.D.Expenses, color = cluster)) + geom_point() + labs(title = 'Cluster segregation by Market Cap and R&D Expenses')
 #tech and big pharma on average have higher R and D
 ggplot(df_updated, aes(x=Market.Cap, y=R.D.Expenses, color = Sector)) + geom_point() + labs(title = 'R and D expenses by Sector')
 #Cluster 2
@@ -198,6 +197,3 @@ ggplot(df_c4[df_c4$PPR != 0 & df_updated$PPR< 0.4,], aes(x = PPR, color=Sector))
 
 #debt to income ratio
 ggplot(df_updated[df_updated$DTI > -25 & df_updated$DTI < 25,], aes(x = abs(DTI), color=cluster)) + geom_density() + labs(title = 'Clusters by Debt to Income Ratio')
-
-
-
