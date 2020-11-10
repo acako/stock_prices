@@ -43,7 +43,7 @@ library(NbClust)
 
 # Introduction
 
-
+The stock market 
 
 # Methodology
 
@@ -63,7 +63,7 @@ library(NbClust)
 ## Data Exploration
 
 ## Principle Component Analysis
-```{r scree, message = FALSE, warning = FALSE, echo = FALSE, fig.cap= 'Scree plot'}
+```{r scree, message = FALSE, warning = FALSE, echo = FALSE, fig.cap= 'Scree plot', fig.height=3, fig.width=3,fig.align='center'}
 df_PCA <- read.csv('important.csv')
 df_imputed <- read.csv('full_set.csv')
 df_PCA$year <- df_imputed$year
@@ -75,14 +75,14 @@ res.pca <- PCA(df_PCA, graph = FALSE)
 #visualize percentage of explained variance from each dimension. first 5 explain ~85%
 fviz_eig(res.pca)
 ```
-```{r PCAind, message = FALSE, warning = FALSE, echo = FALSE, fig.cap= 'Individual points - PCA'}
+```{r PCAind, message = FALSE, warning = FALSE, echo = FALSE, fig.cap= 'Effect of Individual points - PCA',fig.height=4,fig.width=4,fig.align='center'}
 #color visualization for individual companies
 fviz_pca_ind(res.pca,
              col.ind = "cos2", # Color by the quality of representation
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
 )
 ```
-```{r PCAvar, message = FALSE, warning = FALSE, echo = FALSE, fig.cap= 'Variables - PCA'}
+```{r PCAvar, message = FALSE, warning = FALSE, echo = FALSE, fig.cap= 'Effect of Variables - PCA',fig.height=4,fig.width=4,fig.align='center'}
 #color visualization for variables
 fviz_pca_var(res.pca,
              col.var = "contrib", # Color by contributions to the PC
