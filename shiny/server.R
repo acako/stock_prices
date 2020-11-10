@@ -72,6 +72,9 @@ fill_time_series_df <- function(tick){
         'date'=as.Date(date_list,'%Y-%m-%d'),
         'market.Cap'=(as.numeric(mc_list)/10^9)
     )
+    #upper_lim <- unname(quantile(time_series_df, 0.98))[1]
+    #lower_lim <- unname(quantile(time_series_df, 0.02))[1]
+    #time_series_df <- time_series_df %>% subset(market.Cap < upper_lim & market.Cap > lower_lim)
     return(time_series_df)
 }
 shinyServer(function(input, output) {
@@ -108,13 +111,13 @@ shinyServer(function(input, output) {
             if (pred/current_mc >= 1.025){
                     rec <- 'a strong buy'
             } else if(pred/current_mc > 1.01 & pred/current_mc < 1.025){
-                    rec <- 'a weak buy'
+                    rec <- 'a weak buy.'
             } else if (pred/current_mc > 0.99 & pred/current_mc <= 1.01){
-                    rec <- 'to hold'
+                    rec <- 'to hold.'
             } else if (pred/current_mc > 0.975 & pred/current_mc <= 0.99){
-                    rec <- 'a weak sell'
+                    rec <- 'a weak sell.'
             } else if( pred/current_mc <= 0.975){
-                    rec <- 'a strong sell'
+                    rec <- 'a strong sell.'
             }
             isolate(local(paste('The current market cap is: $',
                                 current_mc,

@@ -1,0 +1,10 @@
+name: shiny
+title:
+username:
+account: colin-green
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3197971
+bundleId: 3839632
+url: https://colin-green.shinyapps.io/shiny/
+when: 1604961372.28769
