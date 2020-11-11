@@ -57,7 +57,20 @@ library(factoextra)
 
 # Introduction
 
-The stock market 
+## Background
+
+The stock market is a marketplace where investors can purchase or sell shares of publicly traded companies. As of 2019, the amount of money invested in the global stock market has surpassed over $85 trillion. Since the inception of the stock market, investors have continuously sought to develop methods of improving their returns. Currently, there are two main schools of thought when it comes to stock market analysis: technical analysis and fundamental analysis.
+
+*Technical analysis* looks at buying and selling trends of a particular stock. The core theory of technical analysis assumes that all information is already factored into the stock price. As such, technical analysis prioritizes identifying patterns or trends in time-series data to predict stock price at a particular time point.
+
+*Fundamental analysis* attempts to measure the intrinsic value of a company by studying information from that company’s balance sheet, such as revenue or debt. Fundamental analysis attempts to identify companies that appear to be ‘undervalued’ or ‘overvalued’ to inform buy or sell recommendations.
+
+Previous machine learning models that simulated stock market returns have largely focused on using time series data to predict stock trends, which is more akin to technical analysis. However, such models have run into challenges such as overfitting or a lack of interpretability. One benefit of fundamental analysis is that it allows the investor to learn about which aspects of a company’s financials will influence that company’s stock price; it is more interpretable. As there are dozens to hundreds of variables on a company’s balance sheet, the use of machine-learning approaches may augment fundamental analysis by pinpointing important markers of a company’s financials and their relationship with the stock price.
+
+## Objective
+
+In this project, we apply machine learning and data science techniques to predict the market capitalization, which is how much company is worth on the stock market. Stock price can then be calculated by dividing market capitalization by total number of stocks issued. We also create an application using R shiny to be used as a guide for investors. This application would be used individuals interested in checking their stock analyses with a machine learning prediction. The application could be used by financial analysts, portfolio managers, or non-professional investors with an interest in fundamental analysis.
+
 
 # Methodology
 
