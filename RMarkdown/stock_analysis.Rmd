@@ -87,12 +87,13 @@ We applied Principle Component Analysis (PCA) to our feature dataset for dimensi
 The k-Means algorithm was performed in order to cluster the data before supervised learning. The number of clusters was evaluated by plotting the within-cluster sum of squares (WSS) against the number of clusters (k). The optimal number of clusters was chosen based on a combination of the 'elbow method' and domain knowledge.  
 
 ## Supervised Learning
-Supervised learning was performed using three algorithms: XGBoost, Random Forest, Lasso Model and GBM Model. XGBoost is a very powerful algorithm which drives fast learning and offers efficient usage of storage. XGBoost uses ensemble learning, which is a systematic solution that combines the predictive power of multiple learners. It outputs a single model that gives the combined output from many models. This allows the opportunity to not rely on the results of a single machine learning model.In this particular model, the trees are built sequentially, such that the next tree focuses on reducing  the errors of the previous tree. Random forest is another supervised learning model that uses "ensemble" method to fit many decision trees by using a subset of the rows and then taking the "mode" of the predicted class. GBM, which stands for Gradient Boosting Machine, is also a gradient boosting algorithm that works similar to XGBoost. However, XGBoost has more tuning parameters, thus both algorithms were chosen for comparison. 
+Supervised learning was performed using three algorithms: XGBoost, Random Forest, Lasso Model and GBM Model. XGBoost is a very powerful algorithm which drives fast learning and offers efficient usage of storage. XGBoost uses ensemble learning, which is a systematic solution that combines the predictive power of multiple learners. It outputs a single model that gives the combined output from many models. This allows the opportunity to not rely on the results of a single machine learning model.In this particular model, the trees are built sequentially, such that the next tree focuses on reducing  the errors of the previous tree. Random forest is another supervised learning model that uses "ensemble" method to fit many decision trees by using a subset of the rows and then taking the "mode" of the predicted class. GBM, which stands for Gradient Boosting Machine, is also a gradient boosting algorithm that works similar to XGBoost. However, XGBoost has more tuning parameters, thus both algorithms were chosen for comparison. All models were ran and they were evaluated using the k-fold cross validation method. Three accuracy metrics: Root Mean-Squared Error (RMSE), Pearson correlation ($R^2$), and Mean Average Error (MAE) were used to chose the final model.
 
 ## Deployment
 
 # Results
-## Data Exploration
+
+The original dataset contained 
 
 ###Data Preparation
 
