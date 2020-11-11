@@ -70,46 +70,92 @@ The stock market
 
 # Results
 ## Data Exploration
+###Data Preparetion
+The original data is from Kaggle and have several different CSV files include the stock information for different years. We combined the CSV files into one full data set for our project
+```{r}
+#load in the first file
+data_2014 <- read.csv('2014_Financial_Data.csv')
+data_2015 <- read.csv('2015_Financial_Data.csv')
+data_2016 <- read.csv('2016_Financial_Data.csv')
+data_2017 <- read.csv('2017_Financial_Data.csv')
+data_2018 <- read.csv('2018_Financial_Data.csv')
 
-```{r text summary, echo=FALSE}
+#add a column for year
+data_2014 <- data_2014 %>% mutate(year=2014)
+data_2015 <- data_2015 %>% mutate(year=2015)
+data_2016 <- data_2016 %>% mutate(year=2016)
+data_2017 <- data_2017 %>% mutate(year=2017)
+data_2018 <- data_2018 %>% mutate(year=2018)
 
-df_full <- read.csv('full_set.csv')
-df <- read.csv('important.csv')
-df_numeric <- subset(df, select =c(3:13))
+#fix the column name
+colnames(data_2014)[224] <- 'PRICE.VARR'
+colnames(data_2015)[224] <- 'PRICE.VARR'
+colnames(data_2016)[224] <- 'PRICE.VARR'
+colnames(data_2017)[224] <- 'PRICE.VARR'
+colnames(data_2018)[224] <- 'PRICE.VARR'
 
-summary(df[, names(df) %in% numeric_cols])
-table(df$type)
+complete_data <- rbind(data_2014, data_2015, data_2016, data_2017, data_2018)
+
+#only include fundamental columns
+complete_data <- subset(complete_data[,c(1:4,6:8,10,12:14,16,20,22,30,33,34,36,38,40:43,45:53,55,56,60:74,142,176,179:190,223,226)])
+complete_data <- complete_data[complete_data$X != 'IGLD', ]
+complete_data <- complete_data[complete_data$X != 'SBT', ]
+complete_data <- complete_data[complete_data$X != 'KST', ]
+complete_data <- complete_data[complete_data$X != 'AMX', ]
+
 ```
 
-
-The source of the data contains several csv files for different years, we combined the files and kept the unique columns to start with our project.
-We chose the top 10 important colunms by using decision tree algorithm.
+After we finished the first step of data cleaning, we want to do the data validation. For missing values, as the plot shown, a lot of observations make up the majority of the missing data and we decided to remove observations that have more than a third of the columns NA.After we removed those observations, we set the sector and year columns as a factor and saved the new data set into a new CSV files for futhur data exploration.
 ```{r}
-decision_tree_model <- readRDS("decisiontree_model_updated_albina.rds")
-invisible(model_importance <- summary(decision_tree_model$finalModel))
-barplot(model_importance[10:1, 'rel.inf'], col = 'blue', xlab = 'Relative Influence', horiz = TRUE, las = 2, names = model_importance[10:1, 'var'], main = 'Variable Importance', cex = 0.5, cex.main = 0.8, cex.lab = 0.8, cex.axis = 0.6)
+missing_plot(complete_data)
+#sort((sapply(complete_data, function(x) sum(is.na(x)))), decreasing=TRUE)
+
+complete_data_remove<-complete_data[which(rowMeans(!is.na(complete_data))>(1/3)),]
+missing_plot(complete_data_remove)
+#sort((sapply(complete_data_remove, function(x) sum(is.na(x)))), decreasing=TRUE)
+
+complete_data_remove$Sector <- as.factor(complete_data_remove$Sector)
+complete_data_remove$year <- as.factor(complete_data_remove$year)
+
+#save the new data set as a csv
+#write.csv(complete_data_remove,"fundamental_data.csv")
+pvq <- quantile(complete_data_remove$Market.Cap, probs = c(0.01,0.99), names=FALSE, na.rm=TRUE)
+plot_data <- complete_data_remove
+plot_data[plot_data==0] <- NA
 
 ```
-```{r}
-imputed_data_cart <- readRDS("cart_imputation.rds")
+
+To account for missing values, we chose to use the CART (Classification and Regression Trees) method of imputation (\hyperref[sec:fig2]{Figure 2}). Blue represents the distribution of the original data, while red represents the distribution of imputed data. After the imputation there are still 4 columns has missing values.
+
+```{r CART imputation, echo=FALSE, fig.align='center', fig.height=3, fig.width=4, fig.cap = 'CART-imputed values for sqft\\label{sec:fig2}'}
+cart <- readRDS('cart_imputation.rds')
 complete_cart <- complete(imputed_data_cart, 1)
+complete_cart <- subset(complete_cart[,c(1:22,24:28,31,33:65)])
+complete_cart$year <- as.factor(complete_cart$year)
+write.csv(complete_cart, 'full_set.csv')
+summary(complete_cart)
+#still 4 columns with missing values
 ```
 
-###Correlation Plot
-We then performed a correlation analysis based on Pearson's coefficient between each numeric predictor. We considered a correlation > 0.5, with p < 0.05 as a significant correlation. \hyperref[sec:fig3]{Figure 3} demonstrates significant correlation between many of our predictor variables. 
+###Feature Selection
+
+####Correlation Plot
+There are 62 columns after we finished data cleaning, and we want to select the important features to do modeling.
+We performed a correlation analysis based on Pearson's coefficient between each numeric predictor first. We considered a correlation > 0.5, with p < 0.05 as a significant correlation. \hyperref[sec:fig3]{Figure 3} demonstrates significant correlation between many of our predictor variables. 
+
 ```{r corrplot, echo=FALSE, fig.align='center', fig.height=5, fig.width=5, fig.cap='Correlogram\\label{sec:fig3}'}
 #corrplot for numerical
-cor <- rcorr(as.matrix(df_numeric))
-p.mat <- cor_pmat(as.matrix(df_numeric))
+df_full <- read.csv('full_set.csv')
+df_full_numeric <- subset(df_full, select =c(3:60))
+cor <- rcorr(as.matrix(df_full_numeric))
+p.mat <- cor_pmat(as.matrix(df_full_numeric))
 par(mfrow=c(1,1))
 ggcorrplot(cor$r, type = 'upper', p.mat = p.mat, sig.level = 0.05, lab = TRUE)
 
 ```
 
-###Data Normal Distribution 
+###Data Normal Distribution
 ```{r}
-df <- read.csv('important.csv')
-
 plot_index <- list()
 for (i in c(3:13)){
   
@@ -119,11 +165,49 @@ for (i in c(3:13)){
       args = with(df, c(mean = mean(df[[i]], na.rm=TRUE), 
                             sd = sd(df[[i]], na.rm=TRUE))))+
     labs(title=as.list(names(df_normalize[i])), x='',y='Price Change')
-  print(plot_index[[names(df[i])]])
+  #print(plot_index[[names(df[i])]])
 }
-#nCol <- 3
-#plot <- do.call("grid.arrange", c(plot_index[1:11], ncol=nCol))
-#plot
+nCol <- 3
+plot1 <- do.call("grid.arrange", c(plot_index[1:9], ncol=nCol))
+plot2 <- do.call("grid.arrange", c(plot_index[10:20], ncol=nCol))
+plot3 <- do.call("grid.arrange", c(plot_index[20:30], ncol=nCol))
+plot4 <- do.call("grid.arrange", c(plot_index[30:40], ncol=nCol))
+plot5 <- do.call("grid.arrange", c(plot_index[40:50], ncol=nCol))
+plot6 <- do.call("grid.arrange", c(plot_index[50:62], ncol=nCol))
+```
+
+####Varaible Importancy
+We decided to use decision tree to check the variable importancy as a important reference for us to do feature selection.
+```{r}
+decision_tree_model <-readRDS('decision_tree_model.rds')
+print(decision_tree_model)
+summary(decision_tree_model$finalModel)
+dTreeImp <- varImp(decision_tree_model, scale = FALSE)
+plot(dTreeImp, top = 10)
+#invisible(model_importance <- summary(decision_tree_model$finalModel))
+barplot(dTreeImp, col = 'blue', xlab = 'Relative Influence', horiz = TRUE, las = 2, names = model_importance, main = 'Variable Importance', cex = 0.5, cex.main = 0.8, cex.lab = 0.8, cex.axis = 0.6)
+```
+
+
+We also did some data visualization for our final data set we will use for modeling.
+```{r text summary, echo=FALSE}
+full_set <- subset(full_set[,c(2,16,43,35,10,31,36,8,6,28,27,47)])
+write.csv(full_set,'important.csv')
+
+summary(df_numeric)
+table(df_numeric$type)
+```
+
+Correlation plot for the final dataset 
+```{r corrplot, echo=FALSE, fig.align='center', fig.height=5, fig.width=5, fig.cap='Correlogram\\label{sec:fig3}'}
+#corrplot for numerical
+df <- read.csv('important.csv')
+df_numeric <- subset(df, select =c(3:13))
+cor <- rcorr(as.matrix(df_numeric))
+p.mat <- cor_pmat(as.matrix(df_numeric))
+par(mfrow=c(1,1))
+ggcorrplot(cor$r, type = 'upper', p.mat = p.mat, sig.level = 0.05, lab = TRUE)
+
 ```
 
 
@@ -169,13 +253,25 @@ include_graphics('cluster_image.png')
 The k-fold cross-validation method evaluates the model performance on different subsets of the training data calculates the average prediction error rate. We used k = 10 for our project,and this method was used instead of the simple train-test-split as it gives a more valid estimation of model effectiveness.
 
 ###Random Forest
-###XGBoost
-###Lasso Regression
-The lasso regression model was tuned by several different parameters. RMSE was used to select the optimal model using the smallest value.
-The final value used for the model was fraction = 0.9.
 ```{r}
 Lasso_Regression_Model <- readRDS("Lasso_Model.rds")
 invisible(model_importance <- summary(Gradient_Boosting_model$finalModel))
+print(Lasso_Regression_Model)
+```
+
+###XGBoost
+```{r}
+XGB_model_albina_updated <- readRDS("XGB_model_albina_updated.rds")
+invisible(model_importance <- summary(XGB_model_albina_updated$finalModel))
+print(XGB_model_albina_updated)
+```
+
+###Lasso Regression
+For the lasso regression model, RMSE was used to select the optimal model using the smallest value.
+The final value used for the model was fraction = 0.9.
+```{r}
+Lasso_Regression_Model <- readRDS("Lasso_Model.rds")
+invisible(model_importance <- summary(Lasso_Regression_Model$finalModel))
 print(Lasso_Regression_Model)
 ```
 
@@ -186,8 +282,9 @@ Gradient_Boosting_model <- readRDS("GBM_Model.rds")
 invisible(model_importance <- summary(Gradient_Boosting_model$finalModel))
 print(Gradient_Boosting_model)
 ```
-###Model Selection
 
+###Model Selection
+All models found $nmnmb$ and $hghh$ to be important predictors of Market.Cap. Mean Absolute Error (MAE) tells the average error of the variable we want to predict. Root Mean-Squared Error (RMSE) is similar with MAE but it is more useful when we are interested in fewer larger errors over many small errors. Overall, we prioritize model stability and thus prioritized RMSE over MAE. $R^2$ computes how much better the regression fits the data than the mean line, which gives an overall score.For predicting market cap, we desired a model with the lowest RMSE and MAE to keep the high accuracy of prediction. The XGBoost model had the highest $R^2$ as well as the lowest RMSE and MAE, thus, it was chosen for deployment.
 ```{r create dataframe of model performance, echo=FALSE}
 models <- c("random_forest","extreme_gradient_boosting","Lasso_Regression","gradient_boosting" )
 model_performance <- data.frame(matrix(unlist(models), nrow=4, byrow=TRUE), stringsAsFactors = FALSE)
