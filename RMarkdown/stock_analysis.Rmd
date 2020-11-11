@@ -388,7 +388,7 @@ ggplot2::ggplot(varImp(Gradient_Boosting_model))
 
 ```
 
-###Model Selection
+## Model Selection
 All models found $nmnmb$ and $hghh$ to be important predictors of Market.Cap. Mean Absolute Error (MAE) tells the average error of the variable we want to predict. Root Mean-Squared Error (RMSE) is similar with MAE but it is more useful when we are interested in fewer larger errors over many small errors. Overall, we prioritize model stability and thus prioritized RMSE over MAE. $R^2$ computes how much better the regression fits the data than the mean line, which gives an overall score.For predicting market cap, we desired a model with the lowest RMSE and MAE to keep the high accuracy of prediction. The XGBoost model had the highest $R^2$ as well as the lowest RMSE and MAE, thus, it was chosen for deployment.
 ```{r create dataframe of model performance, echo=FALSE}
 models <- c("random_forest","extreme_gradient_boosting","Lasso_Regression","gradient_boosting" )
