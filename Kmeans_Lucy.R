@@ -42,11 +42,11 @@ print(res.pca)
 
 fviz_eig(res.pca, addlabels = TRUE, ylim = c(0, 50))
 
-# trctrl <- trainControl(method = "cv", number = 5)
-# set.seed(333)
-# dtree_fit <- train(Market.Cap ~., data = df, method = "rpart",
-#                    parms=list(split='information'),
-#                    tuneLength = 10,
-#                    trControl=trctrl)
-# 
-# summary(dtree_fit$finalModel)
+trctrl <- trainControl(method = "cv", number = 5)
+set.seed(333)
+ dtree_fit <- train(Market.Cap ~., data = df, method = "rpart",
+                    parms=list(split='information'),
+                    tuneLength = 10,
+                    trControl=trctrl)
+ saveRDS(dtree_fit, 'decision_tree_model.rds')
+ summary(dtree_fit$finalModel)

@@ -53,6 +53,7 @@ summary(gbmFit1)
 print(gbmFit2)#The final values used for the model were n.trees = 600, interaction.depth =
 #9, shrinkage = 0.1 and n.minobsinnode = 20.
 
+saveRDS(gbmFit2, 'GBM_Model.rds')
 
 lassoFit <- train(Market.Cap ~ .,
                   data = df_trained,
@@ -60,5 +61,5 @@ lassoFit <- train(Market.Cap ~ .,
                   trControl = fitControl,
                   preProcess = c('scale', 'center'))  
 print(lassoFit)
-
+saveRDS(lassoFit, 'Lasso_Model.rds')
 
