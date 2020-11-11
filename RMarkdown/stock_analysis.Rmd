@@ -33,6 +33,8 @@ header-includes:
 ```{r libraries, message = FALSE, warning = FALSE, echo = FALSE}
 library(knitr)
 library(dplyr)
+library(readr)
+library(finalfit)
 library(cluster)
 library(factoextra)
 library(dendextend)
@@ -45,6 +47,9 @@ library(tidyverse)
 library(car)
 library(caret)
 library(VIF)
+library(mice)
+library(rpart)
+library(factoextra)
 ```
 
 
@@ -60,8 +65,6 @@ The stock market
 
 ## Missing Values
 
-## Outliers
-
 ## Data Curation
 
 ## Modeling
@@ -70,6 +73,7 @@ The stock market
 
 # Results
 ## Data Exploration
+
 ###Data Preparetion
 The original data is from Kaggle and have several different CSV files include the stock information for different years. We combined the CSV files into one full data set for our project
 ```{r}
@@ -129,7 +133,7 @@ To account for missing values, we chose to use the CART (Classification and Regr
 
 ```{r CART imputation, echo=FALSE, fig.align='center', fig.height=3, fig.width=4, fig.cap = 'CART-imputed values for sqft\\label{sec:fig2}'}
 cart <- readRDS('cart_imputation.rds')
-complete_cart <- complete(imputed_data_cart, 1)
+complete_cart <- complete(cart, 1)
 complete_cart <- subset(complete_cart[,c(1:22,24:28,31,33:65)])
 complete_cart$year <- as.factor(complete_cart$year)
 write.csv(complete_cart, 'full_set.csv')
@@ -155,51 +159,41 @@ ggcorrplot(cor$r, type = 'upper', p.mat = p.mat, sig.level = 0.05, lab = TRUE)
 ```
 
 ###Data Normal Distribution
-```{r}
+```{r data normal distribution }
 plot_index <- list()
-for (i in c(3:13)){
+for (i in c(1:58)){
   
-  plot_index[[names(df[i])]] <- ggplot(df, aes(x = df[[i]])) +
+  plot_index[[names(df_full_numeric[i])]] <- ggplot(df_full_numeric, aes(x = df_full_numeric[[i]])) +
     stat_function(
       fun = dnorm,
-      args = with(df, c(mean = mean(df[[i]], na.rm=TRUE), 
-                            sd = sd(df[[i]], na.rm=TRUE))))+
-    labs(title=as.list(names(df_normalize[i])), x='',y='Price Change')
+      args = with(df_full_numeric, c(mean = mean(df_full_numeric[[i]], na.rm=TRUE), 
+                            sd = sd(df_full_numeric[[i]], na.rm=TRUE))))+
+    labs(title=as.list(names(df_full_numeric[i])), x='',y='Price Change')
   #print(plot_index[[names(df[i])]])
 }
-nCol <- 3
-plot1 <- do.call("grid.arrange", c(plot_index[1:9], ncol=nCol))
-plot2 <- do.call("grid.arrange", c(plot_index[10:20], ncol=nCol))
-plot3 <- do.call("grid.arrange", c(plot_index[20:30], ncol=nCol))
-plot4 <- do.call("grid.arrange", c(plot_index[30:40], ncol=nCol))
-plot5 <- do.call("grid.arrange", c(plot_index[40:50], ncol=nCol))
-plot6 <- do.call("grid.arrange", c(plot_index[50:62], ncol=nCol))
+
 ```
 
 ####Varaible Importancy
-We decided to use decision tree to check the variable importancy as a important reference for us to do feature selection.
-```{r}
-decision_tree_model <-readRDS('decision_tree_model.rds')
-print(decision_tree_model)
-summary(decision_tree_model$finalModel)
-dTreeImp <- varImp(decision_tree_model, scale = FALSE)
-plot(dTreeImp, top = 10)
+We decided to use decision tree to check the variable importance as a important reference for us to do feature selection.
+```{r variable importancy}
+#decision_tree_model <-readRDS('decision_tree_model.rds')
+#print(decision_tree_model)
+#dTreeImp <- varImp(decision_tree_model, scale = FALSE)
+#plot(dTreeImp, top = 10)
 #invisible(model_importance <- summary(decision_tree_model$finalModel))
-barplot(dTreeImp, col = 'blue', xlab = 'Relative Influence', horiz = TRUE, las = 2, names = model_importance, main = 'Variable Importance', cex = 0.5, cex.main = 0.8, cex.lab = 0.8, cex.axis = 0.6)
+
 ```
 
 
-We also did some data visualization for our final data set we will use for modeling.
+We also did some data visualization for our final data set which we will use for modeling.
 ```{r text summary, echo=FALSE}
-full_set <- subset(full_set[,c(2,16,43,35,10,31,36,8,6,28,27,47)])
-write.csv(full_set,'important.csv')
-
-summary(df_numeric)
-table(df_numeric$type)
+df_full <- subset(df_full[,c(2,16,43,35,10,31,36,8,6,28,27,47)])
+write.csv(df_full,'important.csv')
 ```
 
 Correlation plot for the final dataset 
-```{r corrplot, echo=FALSE, fig.align='center', fig.height=5, fig.width=5, fig.cap='Correlogram\\label{sec:fig3}'}
+```{r corrplot 2, echo=FALSE, fig.align='center', fig.height=5, fig.width=5, fig.cap='Correlogram\\label{sec:fig3}'}
 #corrplot for numerical
 df <- read.csv('important.csv')
 df_numeric <- subset(df, select =c(3:13))
@@ -255,7 +249,7 @@ The k-fold cross-validation method evaluates the model performance on different 
 ###Random Forest
 ```{r}
 Lasso_Regression_Model <- readRDS("Lasso_Model.rds")
-invisible(model_importance <- summary(Gradient_Boosting_model$finalModel))
+invisible(model_importance <- summary(Lasso_Regression_Model$finalModel))
 print(Lasso_Regression_Model)
 ```
 
