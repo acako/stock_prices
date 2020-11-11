@@ -229,7 +229,53 @@
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-The stock market
+\hypertarget{background}{%
+\subsection{Background}\label{background}}
+
+The stock market is a marketplace where investors can purchase or sell
+shares of publicly traded companies. As of 2019, the amount of money
+invested in the global stock market has surpassed over \$85 trillion.
+Since the inception of the stock market, investors have continuously
+sought to develop methods of improving their returns. Currently, there
+are two main schools of thought when it comes to stock market analysis:
+technical analysis and fundamental analysis.
+
+\emph{Technical analysis} looks at buying and selling trends of a
+particular stock. The core theory of technical analysis assumes that all
+information is already factored into the stock price. As such, technical
+analysis prioritizes identifying patterns or trends in time-series data
+to predict stock price at a particular time point.
+
+\emph{Fundamental analysis} attempts to measure the intrinsic value of a
+company by studying information from that company's balance sheet, such
+as revenue or debt. Fundamental analysis attempts to identify companies
+that appear to be `undervalued' or `overvalued' to inform buy or sell
+recommendations.
+
+Previous machine learning models that simulated stock market returns
+have largely focused on using time series data to predict stock trends,
+which is more akin to technical analysis. However, such models have run
+into challenges such as overfitting or a lack of interpretability. One
+benefit of fundamental analysis is that it allows the investor to learn
+about which aspects of a company's financials will influence that
+company's stock price; it is more interpretable. As there are dozens to
+hundreds of variables on a company's balance sheet, the use of
+machine-learning approaches may augment fundamental analysis by
+pinpointing important markers of a company's financials and their
+relationship with the stock price.
+
+\hypertarget{objective}{%
+\subsection{Objective}\label{objective}}
+
+In this project, we apply machine learning and data science techniques
+to predict the market capitalization, which is how much company is worth
+on the stock market. Stock price can then be calculated by dividing
+market capitalization by total number of stocks issued. We also create
+an application using R shiny to be used as a guide for investors. This
+application would be used individuals interested in checking their stock
+analyses with a machine learning prediction. The application could be
+used by financial analysts, portfolio managers, or non-professional
+investors with an interest in fundamental analysis.
 
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
@@ -246,6 +292,34 @@ The stock market
 \hypertarget{modeling}{%
 \subsection{Modeling}\label{modeling}}
 
+\hypertarget{feature-selection}{%
+\subsection{Feature Selection}\label{feature-selection}}
+
+Talk about the decision tree here
+
+\hypertarget{principle-component-analysis}{%
+\subsection{Principle Component
+Analysis}\label{principle-component-analysis}}
+
+We applied Principle Component Analysis (PCA) to our feature dataset for
+dimensionality reduction before unsupervised learning with k-Nearest
+Neighbor (kNN). PCA creates orthoganal `principle components' of the
+feature set, reducing multicollinearity within the data. While k-NN is
+non-parametric, reducing multicollinearity before performing k-NN could
+lead to greater discrimination in-between points.
+
+\hypertarget{unsupervised-learning}{%
+\subsection{Unsupervised Learning}\label{unsupervised-learning}}
+
+The k-NN algorithm was run to cluster the data before supervised
+learning. The number of clusters was evaluated by plotting the
+within-cluster sum of squares (WSS) against the number of clusters (k).
+The optimal number of clusters was chosen based on a combination of the
+`elbow method' and domain knowledge.
+
+\hypertarget{supervised-learning}{%
+\subsection{Supervised Learning}\label{supervised-learning}}
+
 \hypertarget{deployment}{%
 \subsection{Deployment}\label{deployment}}
 
@@ -255,7 +329,7 @@ The stock market
 \hypertarget{data-exploration}{%
 \subsection{Data Exploration}\label{data-exploration}}
 
-\#\#\#Data Preparetion The original data is from Kaggle and have several
+\#\#\#Data Preparation The original data is from Kaggle and have several
 different CSV files include the stock information for different years.
 We combined the CSV files into one full data set for our project
 
@@ -528,7 +602,7 @@ correlation between many of our predictor variables.
 \end{Highlighting}
 \end{Shaded}
 
-\#\#\#\#Varaible Importancy We decided to use decision tree to check the
+\#\#\#\#Varaible Importance We decided to use decision tree to check the
 variable importance as a important reference for us to do feature
 selection.
 
@@ -556,9 +630,18 @@ Correlation plot for the final dataset
 \caption{Correlogram\label{sec:fig3}}\label{fig:corrplot 2}
 \end{figure}
 
-\hypertarget{principle-component-analysis}{%
+\hypertarget{principle-component-analysis-1}{%
 \subsection{Principle Component
-Analysis}\label{principle-component-analysis}}
+Analysis}\label{principle-component-analysis-1}}
+
+We performed PCA to reduce the dimensionality of our feature dataset.
+The Scree plot shows the overall variance explained by each principle
+component. The top 5 dimensions explained approximately 90\% of the
+total variance within the data. Individual datapoints involving large
+technology companies (Google, Apple, Amazon) had high contributions to
+the overall variance. R\&D Expenses and Stock-based compensation were
+two variables with high contribution to variance, while Income Tax
+Expense and Operating Cash Flow had more negligible contribution.
 
 \begin{figure}
 
@@ -568,6 +651,7 @@ Analysis}\label{principle-component-analysis}}
 
 \caption{Scree plot}\label{fig:scree}
 \end{figure}
+
 \begin{figure}
 
 {\centering \includegraphics{stock_analysis_files/figure-latex/PCAind-1} 
@@ -588,9 +672,18 @@ Analysis}\label{principle-component-analysis}}
 \hypertarget{k-means-clustering}{%
 \subsection{K Means Clustering}\label{k-means-clustering}}
 
+The `elbow method' was first performed to determine an optimal number of
+k clusters. However, there was no significant drop in within-cluster sum
+of squares with k besides k=2. As two clusters did not provide much
+discrimination for our observations, we instead used k=4 as the final
+number of clusters.
+
 \begin{figure}
-\includegraphics[width=1\linewidth,height=0.7\textheight]{unsupervised_elbow} \caption{Elbow method}\label{fig:elbow}
+\includegraphics[width=0.7\linewidth,height=0.5\textheight]{unsupervised_elbow} \caption{Elbow method}\label{fig:elbow}
 \end{figure}
+
+The following figure displays our datapoints in a 2-D space based on 4
+clusters. (will show the cluster plots and more by tomorrow evening)
 
 \begin{figure}
 \includegraphics[width=1\linewidth,height=0.7\textheight]{cluster_image} \caption{K means clustering, k = 4}\label{fig:cluster}
@@ -640,16 +733,6 @@ estimation of model effectiveness.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{XGB_model_albina_updated <-}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{"XGB_model_albina_updated.rds"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning: namespace 'xgboost' is not available and has been replaced
-## by .GlobalEnv when processing object '<unknown>'
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \KeywordTok{invisible}\NormalTok{(model_importance <-}\StringTok{ }\KeywordTok{summary}\NormalTok{(XGB_model_albina_updated}\OperatorTok{$}\NormalTok{finalModel))}
 \KeywordTok{print}\NormalTok{(XGB_model_albina_updated)}
 \end{Highlighting}
