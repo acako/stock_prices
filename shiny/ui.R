@@ -9,6 +9,9 @@
 
 library(shiny)
 library(shinythemes)
+sectors <- c('Basic Materials', 'Communication Services', 'Consumer Cyclical',
+             'Consumer Defensive', 'Energy', 'Financial Services', 'Healthcare',
+             'Industrials', 'Real Estate', 'Technology', 'Utilities')
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
     theme=shinytheme('yeti'),
@@ -18,6 +21,9 @@ shinyUI(fluidPage(
         "Stock Evaluator",
         tabPanel('Search By Ticker',
             sidebarPanel(
+                selectInput('sector_tick',
+                            'Sector',
+                            sectors),
                 textInput('ticker',
                           'Ticker',
                           value=NA),
@@ -42,6 +48,9 @@ shinyUI(fluidPage(
                                       'Consolidated Income'),
                             textInput('Dividend.payments',
                                       'Dividend Payments'),
+                            selectInput('sector',
+                                        'Sector',
+                                        sectors),
                             actionButton('evaluate_man',
                                          'Evaluate')),
                      column(3,
@@ -66,6 +75,7 @@ shinyUI(fluidPage(
                             textInput('Current.Market.Cap',
                                       'Current Market Cap')),
                  ),
+                 
                  textOutput('prediction_man')
         )
         
