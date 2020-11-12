@@ -272,10 +272,9 @@ nCol <- 3
 
 In order to do our feature selection, we ran a decision tree model to determine important variables within our dataset. Below are plots showing the importance of each variable as well as their correlations with one another.
 ```{r variable importance,fig.height=5, fig.width=5,fig.align='center', fig.cap='Top 10 variable importance, determined by Decision Tree', echo=FALSE}
-tree_mod <-readRDS('tree_mod.rds')
-tree_imp2 <- data.frame(tree_mod$finalModel$variable.importance)
+tree_imp2 <- read.csv('tree_imp2.csv')
 par(mar=c(5,9,4,1)+.1)
-barplot(tree_imp2$tree_mod.finalModel.variable.importance[10:1], horiz = TRUE, las = 1, names.arg = rownames(tree_imp2)[10:1], col = 4, cex.names = 0.8, cex.axis = 0.8, main = 'List of Variables by Importance')
+barplot(tree_imp2$tree_mod.finalModel.variable.importance[10:1], horiz = TRUE, las = 1, names.arg = tree_imp2$X[10:1], col = 4, cex.names = 0.8, cex.axis = 0.8, main = 'List of Variables by Importance')
 ```
 ```{r text summary, include=FALSE}
 df_full <- subset(df_full[,c(2,16,43,35,10,31,36,8,6,28,27,47)])

@@ -25,6 +25,7 @@ plot(tree_imp, top = 10)
 #R.D.Expenses                      35.22
 
 tree_imp2 <- data.frame(tree_mod$finalModel$variable.importance)
+write.csv(tree_imp2,'tree_imp2.csv')
 par(mar=c(5,9,4,1)+.1)
 barplot(tree_imp2$tree_mod.finalModel.variable.importance[10:1], horiz = TRUE, las = 1, names.arg = rownames(tree_imp2)[10:1], col = 4, cex.names = 0.8, cex.axis = 0.8, main = 'List of Variables by Importance')
 
