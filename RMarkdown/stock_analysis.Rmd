@@ -382,11 +382,7 @@ ggplot(df_updated[df_updated$cluster==1 & df_updated$`P/E` > -10 & df_updated$`P
 The k-fold cross-validation method evaluates the model performance on different subsets of the training data calculates the average prediction error rate. We used k = 10 for our project,and this method was used instead of the simple train-test-split as it gives a more valid estimation of model effectiveness.
 
 ## XGBoost
-    For the XGBoost model, we used nrounds, eta, max_depth as tuning parameters to increase the accuarcy of the final model and reduce errors.
-The model used tuning parameter 'subsample' as a constant at a value of 0.8, and RMSE was used to select the optimal model using the smallest value.
-The final values used for the model were nrounds = 200, max_depth =
- 6, eta = 0.1, gamma = 0, colsample_bytree = 0.5, min_child_weight =
- 1 and subsample = 0.8.
+    The XGBoost model was ran and was parametrized using grid method.The final parameter values used by the best model were nrounds = 200, max_depth = 6, eta = 0.1, gamma = 0, colsample_bytree = 0.5, min_child_weight = 1 and subsample = 0.8.
 ```{r XGBoost, message = FALSE, warning = FALSE, echo = FALSE,fig.height=5, fig.width=5,fig.align='center', fig.cap='XGBoost Tuning Parameters', results='hide', fig.keep='all'}
 invisible(XGB_model_albina_updated <- readRDS("XGB_model_albina_updated.rds"))
 ggplot2::ggplot(varImp(XGB_model_albina_updated))
@@ -400,6 +396,7 @@ Gradient_Boosting_model <- readRDS("GBM_Model.rds")
 ggplot2::ggplot(varImp(Gradient_Boosting_model))
 
 ```
+##Random Forest
 
 ## Model Selection
 All models found $Consolidated Income$ and $Stock based Compensation$ and $Dividend Payments$ to be important predictors of Market.Cap. Mean Absolute Error (MAE) tells the average error of the variable we want to predict. Root Mean-Squared Error (RMSE) is similar with MAE but it is more useful when we are interested in fewer larger errors over many small errors. Overall, we prioritize model stability and thus prioritized RMSE over MAE. $R^2$ computes how much better the regression fits the data than the mean line, which gives an overall score.For predicting market cap, we desired a model with the lowest RMSE and MAE to keep the high accuracy of prediction. The XGBoost model had the highest $R^2$ as well as the lowest RMSE and MAE, thus, it was chosen for deployment.

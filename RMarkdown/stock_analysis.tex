@@ -290,13 +290,13 @@ Long.term.debt & & numeric\tabularnewline
 \bottomrule
 \end{longtable}
 
-\hypertarget{principle-component-analysis}{%
-\subsection{Principle Component
-Analysis}\label{principle-component-analysis}}
+\hypertarget{principal-component-analysis}{%
+\subsection{Principal Component
+Analysis}\label{principal-component-analysis}}
 
-We applied Principle Component Analysis (PCA) to our feature dataset for
+We applied Principal Component Analysis (PCA) to our feature dataset for
 dimension reduction before doing unsupervised learning using the k-Means
-clustering algorithm. PCA creates orthogonal `principle components' of
+clustering algorithm. PCA creates orthogonal `principal components' of
 the feature set, reducing multicollinearity within the data. Although
 the k-means algorithm is non-parametric, the reduction in
 multicollinearity by PCA could lead to greater discrimination between
@@ -337,8 +337,25 @@ used to chose the final model.
 \hypertarget{deployment}{%
 \subsection{Deployment}\label{deployment}}
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
+Due to its accuracy, size, and speed in predicting, we chose the XGBoost
+model to include in our application. The application's main function is
+to provide a recommendation for a stock based on the financial
+information released by the company. The application is built to be used
+by financial advisers and portfolio managers. The main page allows the
+user to input a ticker ID. If the ID is in the database, the application
+will pull the latest financial data for the company, and run the model
+on that data. The application then compares the predicted market cap
+with the current market cap and provides a recommendation based on the
+difference. If the ID is not in the database, the user can manually
+enter the financial data for the company in order to produce a
+recommendation. The application uses data provided by the API from
+\url{https://financialmodelingprep.com/}. The application is limited by
+the availability of the financial data and the restrictions provided by
+the free account on financialmodelingprep.com. For a full deployment, a
+paid account would be needed.
+
+The application can be found here
+\url{https://colin-green.shinyapps.io/stock-evaluator/} \# Results
 
 \begin{longtable}[]{@{}lll@{}}
 \caption{Data Dictionary}\tabularnewline
@@ -491,8 +508,8 @@ still have missing values, which were then subsequently removed.
 There were 62 columns after we finished data cleaning, and we want to
 select the important features to do modeling. We performed a correlation
 analysis based on Pearson's coefficient between each numeric predictor
-first. We considered a correlation \textgreater{} \textbar0.8\textbar,
-with p \textless{} 0.05 as a significant correlation.
+first. We considered a \textbar correlation\textbar{} \textgreater{}
+0.8, with p \textless{} 0.05 as a significant correlation.
 \hyperref[sec:fig3]{Figure 3} demonstrates significant correlation
 between many of our predictor variables. However, due to the large
 amount of variables, the correlation plot was uninterpretable if we try
@@ -506,7 +523,7 @@ absolute value greater than 0.8.
 
 }
 
-\caption{Correlogram of variables with R>|0.8|}\label{fig:corrplot}
+\caption{Correlogram of variables with |R| > 0.8}\label{fig:corrplot}
 \end{figure}
 
 \hypertarget{data-distribution}{%
@@ -515,7 +532,7 @@ absolute value greater than 0.8.
 we then performed the distribution plot for all the columns to check the
 data distribution, to observe the means, and check for outliers. Most
 variables were not normally distributed and had a clear skew. In Figure
-(FILL\_IN), we show a subset of the variable distributions.
+3, we show a subset of the variable distributions.
 
 \begin{figure}
 
@@ -552,12 +569,12 @@ with one another.
 \caption{Correlogram of Top 10 Variables}\label{fig:correlation plot 2}
 \end{figure}
 
-\hypertarget{principle-component-analysis-1}{%
-\subsection{Principle Component
-Analysis}\label{principle-component-analysis-1}}
+\hypertarget{principal-component-analysis-1}{%
+\subsection{Principal Component
+Analysis}\label{principal-component-analysis-1}}
 
 We performed PCA to reduce the dimensionality of our feature dataset.
-The Scree plot shows the overall variance explained by each principle
+The Scree plot shows the overall variance explained by each principal
 component. The top 5 dimensions explained approximately 90\% of the
 total variance within the data. Individual datapoints involving large
 technology companies (Google, Apple, Amazon) had high contributions to
@@ -673,7 +690,7 @@ companies are reporting a loss.
 
 }
 
-\caption{Clusters by Sector}\label{fig:pe ratio}
+\caption{Clusters by P/E ratio}\label{fig:pe ratio}
 \end{figure}
 
 Normalizing for the proportion of small-medium and large cap stocks in
@@ -700,19 +717,16 @@ error rate. We used k = 10 for our project,and this method was used
 instead of the simple train-test-split as it gives a more valid
 estimation of model effectiveness.
 
-\hypertarget{random-forest}{%
-\paragraph{\texorpdfstring{\textbf{Random Forest}\\
-}{Random Forest }}\label{random-forest}}
-
 \hypertarget{xgboost}{%
-\paragraph{\texorpdfstring{\textbf{XGBoost}\\
-}{XGBoost }}\label{xgboost}}
+\subsection{XGBoost}\label{xgboost}}
 
-For the XGBoost model, we used nrounds, eta, max\_depth as tuning
-parameters to increase the accuarcy of the final model and reduce
-errors. The model used tuning parameter `subsample' as a constant at a
-value of 0.8, and RMSE was used to select the optimal model using the
-smallest value. The final values used for the model were nrounds = 200,
+\begin{verbatim}
+For the XGBoost model, we used nrounds, eta, max_depth as tuning parameters to increase the accuarcy of the final model and reduce errors.
+\end{verbatim}
+
+The model used tuning parameter `subsample' as a constant at a value of
+0.8, and RMSE was used to select the optimal model using the smallest
+value. The final values used for the model were nrounds = 200,
 max\_depth = 6, eta = 0.1, gamma = 0, colsample\_bytree = 0.5,
 min\_child\_weight = 1 and subsample = 0.8.
 
@@ -741,19 +755,8 @@ min\_child\_weight = 1 and subsample = 0.8.
 \caption{XGBoost Tuning Parameters}\label{fig:XGBoost-3}
 \end{figure}
 
-\hypertarget{lasso-regression}{%
-\paragraph{\texorpdfstring{\textbf{Lasso Regression}\\
-}{Lasso Regression }}\label{lasso-regression}}
-
-For the lasso regression model, RMSE was used to select the optimal
-model using the smallest value. The final value used for the model was
-fraction = 0.9.
-
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/Lasso regression-1} \end{center}
-
 \hypertarget{gradient-boosting}{%
-\paragraph{\texorpdfstring{\textbf{Gradient Boosting}\\
-}{Gradient Boosting }}\label{gradient-boosting}}
+\subsection{Gradient Boosting}\label{gradient-boosting}}
 
 The gradient boosting model was tuned by several different parameters.
 The final values used for the model were n.trees = 600,
@@ -764,17 +767,18 @@ interaction.depth = 9, shrinkage = 0.1 and n.minobsinnode = 20
 \hypertarget{model-selection}{%
 \subsection{Model Selection}\label{model-selection}}
 
-All models found \(nmnmb\) and \(hghh\) to be important predictors of
-Market.Cap. Mean Absolute Error (MAE) tells the average error of the
-variable we want to predict. Root Mean-Squared Error (RMSE) is similar
-with MAE but it is more useful when we are interested in fewer larger
-errors over many small errors. Overall, we prioritize model stability
-and thus prioritized RMSE over MAE. \(R^2\) computes how much better the
-regression fits the data than the mean line, which gives an overall
-score.For predicting market cap, we desired a model with the lowest RMSE
-and MAE to keep the high accuracy of prediction. The XGBoost model had
-the highest \(R^2\) as well as the lowest RMSE and MAE, thus, it was
-chosen for deployment.
+All models found \(Consolidated Income\) and
+\(Stock based Compensation\) and \(Dividend Payments\) to be important
+predictors of Market.Cap. Mean Absolute Error (MAE) tells the average
+error of the variable we want to predict. Root Mean-Squared Error (RMSE)
+is similar with MAE but it is more useful when we are interested in
+fewer larger errors over many small errors. Overall, we prioritize model
+stability and thus prioritized RMSE over MAE. \(R^2\) computes how much
+better the regression fits the data than the mean line, which gives an
+overall score.For predicting market cap, we desired a model with the
+lowest RMSE and MAE to keep the high accuracy of prediction. The XGBoost
+model had the highest \(R^2\) as well as the lowest RMSE and MAE, thus,
+it was chosen for deployment.
 
 \begin{longtable}[]{@{}llrl@{}}
 \caption{Model Accuracy}\tabularnewline
@@ -788,13 +792,15 @@ model & RMSE & R2 & MAE\tabularnewline
 \endhead
 random\_forest & 2.75e+05 & 0.81 & 1.36e+05\tabularnewline
 extreme\_gradient\_boosting & 1.08e+10 & 0.90 & 2.70e+09\tabularnewline
-Lasso\_Regression & 1.45e+10 & 0.82 & 3.75e+09\tabularnewline
 gradient\_boosting & 1.18e+10 & 0.88 & 2.92e+09\tabularnewline
 \bottomrule
 \end{longtable}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
+
+\hypertarget{discussion-1}{%
+\section{Discussion}\label{discussion-1}}
 
 
 

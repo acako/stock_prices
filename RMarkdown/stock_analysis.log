@@ -1,14 +1,14 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.10.31)  11 NOV 2020 20:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.11.11)  12 NOV 2020 17:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **stock_analysis.tex
 (./stock_analysis.tex
 LaTeX2e <2020-10-01> patch level 2
-L3 programming layer <2020-10-27> xparse <2020-03-03> (c:/Users/seanx/AppData/R
-oaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
+L3 programming layer <2020-10-27> xparse <2020-03-03> (/Users/albinacako/Librar
+y/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size11.clo
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/base/size11.clo
 File: size11.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 )
 \c@part=\count175
@@ -22,19 +22,14 @@ File: size11.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometry.
-sty
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.st
-y
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks15
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
 \Gm@cnth=\count183
@@ -49,34 +44,27 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 \Gm@layouthoffset=\dimen145
 \Gm@layoutvoffset=\dimen146
 \Gm@dimlist=\toks16
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/mathpazo.st
-y
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/psnfss/mathpazo.sty
 Package: mathpazo 2020/03/25 PSNFSS-v9.3 Palatino w/ Pazo Math (D.Puga, WaS) 
 \symupright=\mathgroup4
-) (c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2020/08/10 v2.0s Standard LaTeX package
 LaTeX Font Info:    Trying to load font information for T1+ppl on input line 11
 2.
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1ppl.fd
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
-)) (c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.s
-ty
+)) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2020/08/01 v1.3d Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/abstract/abstract.
-sty
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/abstract/abstract.sty
 Package: abstract 2009/06/08 v1.2a configurable abstracts
 \abstitleskip=\skip49
 \absleftindent=\skip50
 \absrightindent=\skip51
 \absparindent=\skip52
 \absparsep=\skip53
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.st
-y
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \LTleft=\skip54
 \LTright=\skip55
@@ -93,9 +81,7 @@ Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \c@LT@tables=\count189
 \c@LT@chunks=\count190
 \LT@p@ftn=\toks19
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.
-sty
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen148
 \lightrulewidth=\dimen149
@@ -114,9 +100,7 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count193
 \@lastruleclass=\count194
 \@thisrulewidth=\dimen160
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/titlesec/titlesec.
-sty
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2019/10/16 v2.13 Sectioning titles
 \ttl@box=\box51
 \beforetitleunit=\skip58
@@ -129,76 +113,60 @@ Package: titlesec 2019/10/16 v2.13 Sectioning titles
 \titlewidthfirst=\dimen165
 )
 \c@hypothesis=\count195
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/setspace/setspace.
-sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.
-sty
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2020-05-15 v7.00e Hypertext links for LaTeX
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.
-sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 )
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdfte
-xcmds.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds
+.sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
 
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwar
-err.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.s
+ty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 )
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvsetk
-eys.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.s
+ty
 Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
 )
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvd
-efinekeys.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefine
+keys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 )
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfesc
-ape.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.s
+ty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.st
-y
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 )
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltx
-macro.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxmacro
+.sty
 Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.st
-y
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoption
-s.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
 \@linkdim=\dimen166
 \Hy@linkcounter=\count196
 \Hy@pagecounter=\count197
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.de
-f
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.
-sty
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmd
-s.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count198
@@ -210,19 +178,17 @@ Package hyperref Info: Backreferencing OFF on input line 4484.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4717.
 \c@Hy@tempcnt=\count199
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5076.
 \XeTeXLinkMargin=\dimen167
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.st
-y
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigin
-tcalc.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc
+.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
@@ -238,9 +204,7 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6372.
 Package hyperref Info: PDF/A mode OFF on input line 6377.
 LaTeX Info: Redefining \ref on input line 6417.
 LaTeX Info: Redefining \pageref on input line 6421.
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.
-sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
 ge
 with kernel methods
@@ -250,13 +214,9 @@ with kernel methods
 \c@Hfootnote=\count269
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.d
-ef
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2020-05-15 v7.00e Hyperref driver for pdfTeX
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx
-.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
 e
 with kernel methods
@@ -264,55 +224,43 @@ with kernel methods
 \Fld@listcount=\count270
 \c@bookmark@seq@number=\count271
 
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rer
-unfilecheck.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfil
+echeck.sty
 Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
 
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/un
-iquecounter.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquec
+ounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 86.
 )
 \Hy@SectionHShift=\skip60
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.
-sty
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.
-sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graph
-ics.cfg
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.c
+fg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 105.
 
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdfte
-x.def
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen170
 \Gin@req@width=\dimen171
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/lscape.st
-y
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
 Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
-) (c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/subfig/subfig.st
-y
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/subfig/subfig.sty
 Package: subfig 2005/06/28 ver: 1.3 subfig package
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption.st
-y
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2020/10/26 v3.5g Customizing captions (AR)
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption3.s
-ty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
 \captionmargin=\dimen172
 \captionmargin@=\dimen173
@@ -327,9 +275,7 @@ Package caption Info: Standard document class detected.
 \c@continuedfloat=\count273
 Package caption Info: hyperref package is loaded.
 Package caption Info: longtable package is loaded.
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.
-sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 ))
 \c@KVtest=\count274
@@ -345,18 +291,13 @@ Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 \c@lotdepth=\count280
 \sf@top=\skip64
 \sf@bottom=\skip65
-)
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
+) (/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2020/02/24 v1.2b Standard LaTeX Color (DPC)
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color
-.cfg
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 147.
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.
-def
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.def
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 ))
 Package hyperref Info: Option `breaklinks' set `true' on input line 109.
@@ -365,13 +306,11 @@ Package hyperref Warning: Option `bookmarks' has already been used,
 (hyperref)                setting the option has no effect on input line 109.
 
 Package hyperref Info: Option `colorlinks' set `true' on input line 109.
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/placeins/placeins.
-sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/placeins/placeins.sty
 Package: placeins 2005/04/18  v 2.2
 )
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backen
-d-pdftex.def
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdf
+tex.def
 File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
 \l__kernel_color_stack_int=\count281
 \l__pdf_internal_box=\box52
@@ -430,17 +369,13 @@ LaTeX Font Info:    ... okay on input line 127.
 
 \big@size=\dimen180
 Package hyperref Info: Link coloring ON on input line 127.
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.s
-ty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
-
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount.
-sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 )
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/g
-ettitlestring.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettit
+lestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count282
@@ -453,14 +388,14 @@ LaTeX Info: Redefining \nameref on input line 127.
 \openout3 = `stock_analysis.out'.
 
 
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epsto
-pdf-base.sty
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-b
+ase.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
 
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epstop
-df-sys.cfg
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sy
+s.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
@@ -469,35 +404,35 @@ Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Trying to load font information for T1+phv on input line 14
 3.
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1phv.fd
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 ) [1
 
-{c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
-x.map}] [2]
+{/Users/albinacako/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+}] [2]
 LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 3
 34.
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ppl.fd
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 LaTeX Font Info:    Trying to load font information for OML+zplm on input line 
 334.
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/omlzplm.fd
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 
 334.
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/omszplm.fd
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 
 334.
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/omxzplm.fd
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 
 334.
-(c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ot1zplm.fd
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
 Overfull \hbox (0.75035pt too wide) in paragraph at lines 317--336
@@ -506,229 +441,230 @@ Overfull \hbox (0.75035pt too wide) in paragraph at lines 317--336
  []
 
 
-Overfull \hbox (14.07944pt too wide) in paragraph at lines 380--381
+Overfull \hbox (14.07944pt too wide) in paragraph at lines 397--398
 []\T1/ppl/m/n/10.95 Consolidated.Income|  
  []
 
 
-Overfull \hbox (7.15901pt too wide) in paragraph at lines 388--389
+Overfull \hbox (7.15901pt too wide) in paragraph at lines 405--406
 []\T1/ppl/m/n/10.95 Dividend.payments|  
  []
 
 
-Overfull \hbox (38.50848pt too wide) in paragraph at lines 395--396
+Overfull \hbox (38.50848pt too wide) in paragraph at lines 412--413
 []\T1/ppl/m/n/10.95 Stock.based.compensation|  
  []
 
 
-Overfull \hbox (9.29436pt too wide) in paragraph at lines 403--404
+Overfull \hbox (9.29436pt too wide) in paragraph at lines 420--421
 []\T1/ppl/m/n/10.95 Income.Tax.Expense|  
  []
 
 
-Overfull \hbox (14.30934pt too wide) in paragraph at lines 417--418
+Overfull \hbox (14.30934pt too wide) in paragraph at lines 434--435
 []\T1/ppl/m/n/10.95 Operating.Cash.Flow|  
  []
 
 
-Overfull \hbox (8.00208pt too wide) in paragraph at lines 424--425
+Overfull \hbox (8.00208pt too wide) in paragraph at lines 441--442
 []\T1/ppl/m/n/10.95 Operating.Expenses|  
  []
 
 [3]
-<stock_analysis_files/figure-latex/missing values-1.pdf, id=127, 469.755pt x 32
+<stock_analysis_files/figure-latex/missing values-1.pdf, id=136, 469.755pt x 32
 5.215pt>
 File: stock_analysis_files/figure-latex/missing values-1.pdf Graphic file (type
  pdf)
 <use stock_analysis_files/figure-latex/missing values-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/missing values-1.pdf
-  used on input line 477.
+  used on input line 494.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-LaTeX Warning: Hyper reference `sec:fig3' on page 4 undefined on input line 496
+LaTeX Warning: Hyper reference `sec:fig3' on page 4 undefined on input line 513
 .
 
-[4 <./stock_analysis_files/figure-latex/missing values-1.pdf>]
-<stock_analysis_files/figure-latex/corrplot-1.pdf, id=142, 361.35pt x 361.35pt>
+<stock_analysis_files/figure-latex/corrplot-1.pdf, id=137, 361.35pt x 361.35pt>
 
 File: stock_analysis_files/figure-latex/corrplot-1.pdf Graphic file (type pdf)
 <use stock_analysis_files/figure-latex/corrplot-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/corrplot-1.pdf  used
- on input line 505.
+ on input line 522.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-<stock_analysis_files/figure-latex/data normal distribution plot1-1.pdf, id=143
+<stock_analysis_files/figure-latex/data normal distribution plot1-1.pdf, id=138
 , 361.35pt x 361.35pt>
 File: stock_analysis_files/figure-latex/data normal distribution plot1-1.pdf Gr
 aphic file (type pdf)
 <use stock_analysis_files/figure-latex/data normal distribution plot1-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/data normal distribu
-tion plot1-1.pdf  used on input line 522.
+tion plot1-1.pdf  used on input line 539.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-[5 <./stock_analysis_files/figure-latex/corrplot-1.pdf>] [6 <./stock_analysis_f
-iles/figure-latex/data normal distribution plot1-1.pdf>]
-<stock_analysis_files/figure-latex/variable importance-1.pdf, id=168, 361.35pt 
+[4] [5 <./stock_analysis_files/figure-latex/missing values-1.pdf>] [6 <./stock_
+analysis_files/figure-latex/corrplot-1.pdf>] [7 <./stock_analysis_files/figure-
+latex/data normal distribution plot1-1.pdf>]
+<stock_analysis_files/figure-latex/variable importance-1.pdf, id=182, 361.35pt 
 x 361.35pt>
 File: stock_analysis_files/figure-latex/variable importance-1.pdf Graphic file 
 (type pdf)
 <use stock_analysis_files/figure-latex/variable importance-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/variable importance-
-1.pdf  used on input line 539.
+1.pdf  used on input line 556.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-<stock_analysis_files/figure-latex/correlation plot 2-1.pdf, id=169, 469.755pt 
+<stock_analysis_files/figure-latex/correlation plot 2-1.pdf, id=183, 469.755pt 
 x 325.215pt>
 File: stock_analysis_files/figure-latex/correlation plot 2-1.pdf Graphic file (
 type pdf)
 <use stock_analysis_files/figure-latex/correlation plot 2-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/correlation plot 2-1
-.pdf  used on input line 548.
+.pdf  used on input line 565.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<stock_analysis_files/figure-latex/scree-1.pdf, id=170, 216.81pt x 216.81pt>
+<stock_analysis_files/figure-latex/scree-1.pdf, id=184, 216.81pt x 216.81pt>
 File: stock_analysis_files/figure-latex/scree-1.pdf Graphic file (type pdf)
 <use stock_analysis_files/figure-latex/scree-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/scree-1.pdf  used on
- input line 570.
+ input line 587.
 (pdftex.def)             Requested size: 216.80946pt x 216.80946pt.
-<stock_analysis_files/figure-latex/PCAind-1.pdf, id=171, 289.08pt x 289.08pt>
+<stock_analysis_files/figure-latex/PCAind-1.pdf, id=185, 289.08pt x 289.08pt>
 File: stock_analysis_files/figure-latex/PCAind-1.pdf Graphic file (type pdf)
 <use stock_analysis_files/figure-latex/PCAind-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/PCAind-1.pdf  used o
-n input line 578.
+n input line 595.
 (pdftex.def)             Requested size: 289.07928pt x 289.07928pt.
-<stock_analysis_files/figure-latex/PCAvar-1.pdf, id=172, 289.08pt x 289.08pt>
+<stock_analysis_files/figure-latex/PCAvar-1.pdf, id=186, 289.08pt x 289.08pt>
 File: stock_analysis_files/figure-latex/PCAvar-1.pdf Graphic file (type pdf)
 <use stock_analysis_files/figure-latex/PCAvar-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/PCAvar-1.pdf  used o
-n input line 586.
+n input line 603.
 (pdftex.def)             Requested size: 289.07928pt x 289.07928pt.
-[7 <./stock_analysis_files/figure-latex/variable importance-1.pdf>] [8 <./stock
+[8 <./stock_analysis_files/figure-latex/variable importance-1.pdf>] [9 <./stock
 _analysis_files/figure-latex/correlation plot 2-1.pdf> <./stock_analysis_files/
-figure-latex/scree-1.pdf>] [9 <./stock_analysis_files/figure-latex/PCAind-1.pdf
-> <./stock_analysis_files/figure-latex/PCAvar-1.pdf>]
-<unsupervised_elbow.png, id=222, 436.63126pt x 462.22687pt>
+figure-latex/scree-1.pdf>] [10 <./stock_analysis_files/figure-latex/PCAind-1.pd
+f> <./stock_analysis_files/figure-latex/PCAvar-1.pdf>]
+<unsupervised_elbow.png, id=235, 436.63126pt x 462.22687pt>
 File: unsupervised_elbow.png Graphic file (type png)
 <use unsupervised_elbow.png>
-Package pdftex.def Info: unsupervised_elbow.png  used on input line 604.
+Package pdftex.def Info: unsupervised_elbow.png  used on input line 621.
 (pdftex.def)             Requested size: 281.85486pt x 260.17125pt.
-[10 <./unsupervised_elbow.png>]
-<cluster_image.png, id=229, 1077.27469pt x 782.925pt>
+[11 <./unsupervised_elbow.png>]
+<cluster_image.png, id=242, 1077.27469pt x 782.925pt>
 File: cluster_image.png Graphic file (type png)
 <use cluster_image.png>
-Package pdftex.def Info: cluster_image.png  used on input line 616.
+Package pdftex.def Info: cluster_image.png  used on input line 633.
 (pdftex.def)             Requested size: 650.42996pt x 469.75862pt.
 
-LaTeX Warning: Float too large for page by 23.60359pt on input line 617.
+LaTeX Warning: Float too large for page by 23.60359pt on input line 634.
 
-[11 <./cluster_image.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 623--629
+[12 <./cluster_image.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 640--646
 
  []
 
-<stock_analysis_files/figure-latex/cluster by marketcap-1.pdf, id=235, 361.35pt
+<stock_analysis_files/figure-latex/cluster by marketcap-1.pdf, id=248, 361.35pt
  x 361.35pt>
 File: stock_analysis_files/figure-latex/cluster by marketcap-1.pdf Graphic file
  (type pdf)
 <use stock_analysis_files/figure-latex/cluster by marketcap-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/cluster by marketcap
--1.pdf  used on input line 632.
+-1.pdf  used on input line 649.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 639--650
+Underfull \hbox (badness 10000) in paragraph at lines 656--667
 
  []
 
-<stock_analysis_files/figure-latex/sector-1.pdf, id=236, 361.35pt x 361.35pt>
+<stock_analysis_files/figure-latex/sector-1.pdf, id=249, 361.35pt x 361.35pt>
 File: stock_analysis_files/figure-latex/sector-1.pdf Graphic file (type pdf)
 <use stock_analysis_files/figure-latex/sector-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/sector-1.pdf  used o
-n input line 653.
+n input line 670.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-[12
+[13
 
 
- <./stock_analysis_files/figure-latex/cluster by marketcap-1.pdf>] [13 <./stock
+ <./stock_analysis_files/figure-latex/cluster by marketcap-1.pdf>] [14 <./stock
 _analysis_files/figure-latex/sector-1.pdf>]
-<stock_analysis_files/figure-latex/pe ratio-1.pdf, id=259, 361.35pt x 361.35pt>
+<stock_analysis_files/figure-latex/pe ratio-1.pdf, id=272, 361.35pt x 361.35pt>
 
 File: stock_analysis_files/figure-latex/pe ratio-1.pdf Graphic file (type pdf)
 <use stock_analysis_files/figure-latex/pe ratio-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/pe ratio-1.pdf  used
- on input line 672.
+ on input line 689.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-<stock_analysis_files/figure-latex/pe ratio clust1-1.pdf, id=260, 361.35pt x 36
+<stock_analysis_files/figure-latex/pe ratio clust1-1.pdf, id=273, 361.35pt x 36
 1.35pt>
 File: stock_analysis_files/figure-latex/pe ratio clust1-1.pdf Graphic file (typ
 e pdf)
 <use stock_analysis_files/figure-latex/pe ratio clust1-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/pe ratio clust1-1.pd
-f  used on input line 687.
+f  used on input line 704.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-[14 <./stock_analysis_files/figure-latex/pe ratio-1.pdf>] [15 <./stock_analysis
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 7
+23.
+(/Users/albinacako/Library/TinyTeX/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+Overfull \hbox (311.10017pt too wide) in paragraph at lines 725--725
+[]\T1/cmtt/m/n/10.95 For the XGBoost model, we used nrounds, eta, max_depth as 
+tuning parameters to increase the accuarcy of the final model and reduce errors
+.[] 
+ []
+
+[15 <./stock_analysis_files/figure-latex/pe ratio-1.pdf>] [16 <./stock_analysis
 _files/figure-latex/pe ratio clust1-1.pdf>]
-<stock_analysis_files/figure-latex/XGBoost-1.pdf, id=284, 361.35pt x 361.35pt>
+<stock_analysis_files/figure-latex/XGBoost-1.pdf, id=297, 361.35pt x 361.35pt>
 File: stock_analysis_files/figure-latex/XGBoost-1.pdf Graphic file (type pdf)
 <use stock_analysis_files/figure-latex/XGBoost-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/XGBoost-1.pdf  used 
-on input line 721.
+on input line 735.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-<stock_analysis_files/figure-latex/XGBoost-2.pdf, id=285, 361.35pt x 361.35pt>
+<stock_analysis_files/figure-latex/XGBoost-2.pdf, id=298, 361.35pt x 361.35pt>
 File: stock_analysis_files/figure-latex/XGBoost-2.pdf Graphic file (type pdf)
 <use stock_analysis_files/figure-latex/XGBoost-2.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/XGBoost-2.pdf  used 
-on input line 729.
+on input line 743.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-<stock_analysis_files/figure-latex/XGBoost-3.pdf, id=286, 361.35pt x 361.35pt>
+<stock_analysis_files/figure-latex/XGBoost-3.pdf, id=299, 361.35pt x 361.35pt>
 File: stock_analysis_files/figure-latex/XGBoost-3.pdf Graphic file (type pdf)
 <use stock_analysis_files/figure-latex/XGBoost-3.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/XGBoost-3.pdf  used 
-on input line 737.
+on input line 751.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-<stock_analysis_files/figure-latex/Lasso regression-1.pdf, id=287, 361.35pt x 3
-61.35pt>
-File: stock_analysis_files/figure-latex/Lasso regression-1.pdf Graphic file (ty
-pe pdf)
-<use stock_analysis_files/figure-latex/Lasso regression-1.pdf>
-Package pdftex.def Info: stock_analysis_files/figure-latex/Lasso regression-1.p
-df  used on input line 752.
-(pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-[16 <./stock_analysis_files/figure-latex/XGBoost-1.pdf>] [17 <./stock_analysis_
-files/figure-latex/XGBoost-2.pdf>] [18 <./stock_analysis_files/figure-latex/XGB
-oost-3.pdf>]
-<stock_analysis_files/figure-latex/gradient boosting-1.pdf, id=324, 361.35pt x 
+<stock_analysis_files/figure-latex/gradient boosting-1.pdf, id=300, 361.35pt x 
 361.35pt>
 File: stock_analysis_files/figure-latex/gradient boosting-1.pdf Graphic file (t
 ype pdf)
 <use stock_analysis_files/figure-latex/gradient boosting-1.pdf>
 Package pdftex.def Info: stock_analysis_files/figure-latex/gradient boosting-1.
-pdf  used on input line 762.
+pdf  used on input line 765.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-[19 <./stock_analysis_files/figure-latex/Lasso regression-1.pdf>] [20 <./stock_
-analysis_files/figure-latex/gradient boosting-1.pdf>] [21] (./stock_analysis.au
-x)
+[17 <./stock_analysis_files/figure-latex/XGBoost-1.pdf>] [18 <./stock_analysis_
+files/figure-latex/XGBoost-2.pdf>] [19 <./stock_analysis_files/figure-latex/XGB
+oost-3.pdf>] [20 <./stock_analysis_files/figure-latex/gradient boosting-1.pdf>]
+[21] (./stock_analysis.aux)
 Package rerunfilecheck Info: File `stock_analysis.out' has not changed.
-(rerunfilecheck)             Checksum: B3B28743A5616FC4E4B6DA8D313EE449;1467.
+(rerunfilecheck)             Checksum: 4232412E7EFDEDCEAE7F663146DFA793;1586.
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 8170 strings out of 481433
- 137143 string characters out of 5918819
- 440833 words of memory out of 5000000
- 24658 multiletter control sequences out of 15000+600000
- 556192 words of font info for 64 fonts, out of 8000000 for 9000
+ 8176 strings out of 481433
+ 136587 string characters out of 5919428
+ 440669 words of memory out of 5000000
+ 24665 multiletter control sequences out of 15000+600000
+ 554910 words of font info for 63 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 68i,9n,76p,570b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.en
-c}<c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/u
-hvb8a.pfb><c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/pa
-latino/uplb8a.pfb><c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
-1/urw/palatino/uplbi8a.pfb><c:/Users/seanx/AppData/Roaming/TinyTeX/texmf-dist/f
-onts/type1/urw/palatino/uplr8a.pfb><c:/Users/seanx/AppData/Roaming/TinyTeX/texm
-f-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on stock_analysis.pdf (21 pages, 2647301 bytes).
+ 68i,9n,76p,570b,468s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </Users/albinacako/Library/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ect
+t1095.600pk>{/Users/albinacako/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/
+8r.enc}</Users/albinacako/Library/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/u
+hvb8a.pfb></Users/albinacako/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatin
+o/uplb8a.pfb></Users/albinacako/Library/TinyTeX/texmf-dist/fonts/type1/urw/pala
+tino/uplr8a.pfb></Users/albinacako/Library/TinyTeX/texmf-dist/fonts/type1/urw/p
+alatino/uplri8a.pfb>
+Output written on stock_analysis.pdf (21 pages, 2640819 bytes).
 PDF statistics:
- 395 PDF objects out of 1000 (max. 8388607)
- 321 compressed objects within 4 object streams
- 96 named destinations out of 1000 (max. 500000)
- 280 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 420 PDF objects out of 1000 (max. 8388607)
+ 322 compressed objects within 4 object streams
+ 92 named destinations out of 1000 (max. 500000)
+ 291 words of extra memory for PDF output out of 10000 (max. 10000000)
 
