@@ -97,8 +97,8 @@ colnames(predictors_df) <- c("Variable", "             ", "Type")
 kable(predictors_df, format='pipe', caption = 'Common Predictor variables')
 ```
 
-## Principle Component Analysis
-We applied Principle Component Analysis (PCA) to our feature dataset for dimension reduction before doing unsupervised learning using the k-Means clustering algorithm. PCA creates orthogonal 'principle components' of the feature set, reducing multicollinearity within the data. Although the k-means algorithm is non-parametric, the reduction in multicollinearity by PCA could lead to greater discrimination between the observations.
+## Principal Component Analysis
+We applied Principal Component Analysis (PCA) to our feature dataset for dimension reduction before doing unsupervised learning using the k-Means clustering algorithm. PCA creates orthogonal 'principal components' of the feature set, reducing multicollinearity within the data. Although the k-means algorithm is non-parametric, the reduction in multicollinearity by PCA could lead to greater discrimination between the observations.
 
 ## Unsupervised Learning
 The k-Means algorithm was performed in order to cluster the data before supervised learning. The number of clusters was evaluated by plotting the within-cluster sum of squares (WSS) against the number of clusters (k). The optimal number of clusters was chosen based on a combination of the 'elbow method' and domain knowledge.  
@@ -296,8 +296,8 @@ ggcorrplot(cor$r, type = 'upper', p.mat = p.mat, sig.level = 0.05, lab = TRUE, l
 ```
 
 
-## Principle Component Analysis
-We performed PCA to reduce the dimensionality of our feature dataset. The Scree plot shows the overall variance explained by each principle component. The top 5 dimensions explained approximately 90% of the total variance within the data. Individual datapoints involving large technology companies (Google, Apple, Amazon) had high contributions to the overall variance. R&D Expenses and Stock-based compensation were two variables with high contribution to variance, while Income Tax Expense and Operating Cash Flow had more negligible contribution.  
+## Principal Component Analysis
+We performed PCA to reduce the dimensionality of our feature dataset. The Scree plot shows the overall variance explained by each principal component. The top 5 dimensions explained approximately 90% of the total variance within the data. Individual datapoints involving large technology companies (Google, Apple, Amazon) had high contributions to the overall variance. R&D Expenses and Stock-based compensation were two variables with high contribution to variance, while Income Tax Expense and Operating Cash Flow had more negligible contribution.  
 
 ```{r scree, message = FALSE, warning = FALSE, echo = FALSE, fig.cap= 'Scree plot', fig.height=3, fig.width=3,fig.align='center'}
 df_PCA <- read.csv('important.csv')
