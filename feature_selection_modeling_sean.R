@@ -11,7 +11,7 @@ df_imputed$year <- as.factor(df_imputed$year)
 #decision tree
 cv = trainControl(method = 'cv', n = 10)
 tree_mod <- train(Market.Cap~., df_imputed, method = 'rpart', trControl = cv)
-
+saveRDS(tree_mod, 'tree_mod.rds')
 
 tree_imp1 <- varImp(tree_mod)
 plot(tree_imp, top = 10)
