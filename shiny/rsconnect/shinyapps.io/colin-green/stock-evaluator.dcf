@@ -1,0 +1,10 @@
+name: stock-evaluator
+title:
+username:
+account: colin-green
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3220059
+bundleId: 3853390
+url: https://colin-green.shinyapps.io/stock-evaluator/
+when: 1605207243.98224

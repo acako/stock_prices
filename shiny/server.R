@@ -17,7 +17,7 @@ options(scipen = 999)
 #load in tickers
 tickers <- read.csv('tickers.csv')
 #load in model
-model <- readRDS('XGB_model_albina_updated.RDS')
+model <- readRDS('XGB_model_albina_updated.rds')
 #load in cluster info
 cluster_info <- read.csv('clusters.csv')
 #function to retrieve financial info if ticker is selected
