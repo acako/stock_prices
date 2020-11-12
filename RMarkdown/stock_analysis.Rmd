@@ -381,15 +381,8 @@ ggplot(df_updated[df_updated$cluster==1 & df_updated$`P/E` > -10 & df_updated$`P
 ## Modeling
 The k-fold cross-validation method evaluates the model performance on different subsets of the training data calculates the average prediction error rate. We used k = 10 for our project,and this method was used instead of the simple train-test-split as it gives a more valid estimation of model effectiveness.
 
-#### **Random Forest**\
-```{r random forest, message = FALSE, warning = FALSE, echo = FALSE,fig.height=5, fig.width=5,fig.align='center'}
-Lasso_Regression_Model <- readRDS("Lasso_Model.rds")
-invisible(model_importance <- summary(Lasso_Regression_Model$finalModel))
-
-```
-
-#### **XGBoost**\
-For the XGBoost model, we used nrounds, eta, max_depth as tuning parameters to increase the accuarcy of the final model and reduce errors.
+## XGBoost
+    For the XGBoost model, we used nrounds, eta, max_depth as tuning parameters to increase the accuarcy of the final model and reduce errors.
 The model used tuning parameter 'subsample' as a constant at a value of 0.8, and RMSE was used to select the optimal model using the smallest value.
 The final values used for the model were nrounds = 200, max_depth =
  6, eta = 0.1, gamma = 0, colsample_bytree = 0.5, min_child_weight =
@@ -400,16 +393,7 @@ ggplot2::ggplot(varImp(XGB_model_albina_updated))
 plot(XGB_model_albina_updated)
 ```
 
-#### **Lasso Regression**\
-For the lasso regression model, RMSE was used to select the optimal model using the smallest value.
-The final value used for the model was fraction = 0.9.
-```{r Lasso regression, message = FALSE, warning = FALSE, echo = FALSE,fig.height=5, fig.width=5,fig.align='center'}
-Lasso_Regression_Model <- readRDS("Lasso_Model.rds")
-ggplot2::ggplot(varImp(Lasso_Regression_Model))
-
-```
-
-#### **Gradient Boosting**\
+## Gradient Boosting
 The gradient boosting model was tuned by several different parameters. The final values used for the model were n.trees = 600, interaction.depth = 9, shrinkage = 0.1 and n.minobsinnode = 20
 ```{r gradient boosting, message = FALSE, warning = FALSE, echo = FALSE ,fig.height=5, fig.width=5,fig.align='center'}
 Gradient_Boosting_model <- readRDS("GBM_Model.rds")
@@ -418,17 +402,21 @@ ggplot2::ggplot(varImp(Gradient_Boosting_model))
 ```
 
 ## Model Selection
-All models found $nmnmb$ and $hghh$ to be important predictors of Market.Cap. Mean Absolute Error (MAE) tells the average error of the variable we want to predict. Root Mean-Squared Error (RMSE) is similar with MAE but it is more useful when we are interested in fewer larger errors over many small errors. Overall, we prioritize model stability and thus prioritized RMSE over MAE. $R^2$ computes how much better the regression fits the data than the mean line, which gives an overall score.For predicting market cap, we desired a model with the lowest RMSE and MAE to keep the high accuracy of prediction. The XGBoost model had the highest $R^2$ as well as the lowest RMSE and MAE, thus, it was chosen for deployment.
+All models found $Consolidated Income$ and $Stock based Compensation$ and $Dividend Payments$ to be important predictors of Market.Cap. Mean Absolute Error (MAE) tells the average error of the variable we want to predict. Root Mean-Squared Error (RMSE) is similar with MAE but it is more useful when we are interested in fewer larger errors over many small errors. Overall, we prioritize model stability and thus prioritized RMSE over MAE. $R^2$ computes how much better the regression fits the data than the mean line, which gives an overall score.For predicting market cap, we desired a model with the lowest RMSE and MAE to keep the high accuracy of prediction. The XGBoost model had the highest $R^2$ as well as the lowest RMSE and MAE, thus, it was chosen for deployment.
+
 ```{r create dataframe of model performance, echo=FALSE}
-models <- c("random_forest","extreme_gradient_boosting","Lasso_Regression","gradient_boosting" )
-model_performance <- data.frame(matrix(unlist(models), nrow=4, byrow=TRUE), stringsAsFactors = FALSE)
+models <- c("random_forest","extreme_gradient_boosting","gradient_boosting" )
+model_performance <- data.frame(matrix(unlist(models), nrow=3, byrow=TRUE), stringsAsFactors = FALSE)
 colnames(model_performance) <- c("model")
-RMSE<- c(274957.8,10811777965,14502322435,11765977743)
-R2 <- c(0.8067,0.9010295,0.8229718,0.8754267)
-MAE <- c(135701,2699512435,3748806832,2917376718)
+RMSE<- c(274957.8,10811777965,11765977743)
+R2 <- c(0.8067,0.9010295,0.8754267)
+MAE <- c(135701,2699512435,2917376718)
 model_performance <- model_performance %>% mutate(RMSE = formatC(RMSE, format = "e", digits = 2), R2=round(R2,2), MAE=formatC(MAE, format = "e", digits = 2))
 kable(model_performance, format = 'pipe', caption = 'Model Accuracy')
 ```
+
+
+# Discussion
 
 
 # Discussion
