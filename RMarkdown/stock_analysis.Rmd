@@ -223,7 +223,7 @@ ggcorrplot(mtx_corrtable, type = 'upper', lab = TRUE)
 ```
 
 ## Data Distribution
-we then performed the distribution plot for all the columns to check the data distribution, to observe the means, and check for outliers. Most variables were not normally distributed and had a clear skew. In Figure (FILL_IN), we show a subset of the variable distributions.
+we then performed the distribution plot for all the columns to check the data distribution, to observe the means, and check for outliers. Most variables were not normally distributed and had a clear skew. In Figure 3, we show a subset of the variable distributions.
 
 ```{r data normal distribution, echo = FALSE, message = FALSE, warning = FALSE}
 df_normalize <- normalize(df_full)
