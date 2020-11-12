@@ -192,7 +192,7 @@ To account for missing values, we chose to use the CART (Classification and Regr
 
 ## Correlation Plot
 There were 62 columns after we finished data cleaning, and we want to select the important features to do modeling.
-We performed a correlation analysis based on Pearson's coefficient between each numeric predictor first. We considered a correlation > |0.8|, with p < 0.05 as a significant correlation. \hyperref[sec:fig3]{Figure 3} demonstrates significant correlation between many of our predictor variables. 
+We performed a correlation analysis based on Pearson's coefficient between each numeric predictor first. We considered a |correlation| > 0.8, with p < 0.05 as a significant correlation. \hyperref[sec:fig3]{Figure 3} demonstrates significant correlation between many of our predictor variables. 
 However, due to the large amount of variables, the correlation plot was uninterpretable if we try to plot all the variables, therefore, we tried to filtered the correlation plot, keeping only variables that had a correlation with absolute value greater than 0.8.
 
 ```{r corrplot, echo=FALSE,fig.height=5, fig.width=5,fig.align='center', fig.cap='Correlogram of variables with R>|0.8|'}
