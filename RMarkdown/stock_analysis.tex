@@ -39,57 +39,8 @@
 
 \setcounter{secnumdepth}{0}
 
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
 
-\usepackage{graphicx,grffile}
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
 
 \title{Application of Machine Learning on Fundamental Stock Price Analysis  }
@@ -124,6 +75,7 @@
 
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{lscape}
 \usepackage{subfig}
 
 % move the hyperref stuff down here, after header-includes, to allow for - \usepackage{hyperref}
@@ -285,9 +237,9 @@ investors with an interest in fundamental analysis.
 
 The original dataset was obtained from Kaggle. Five datasets were
 combined together containing stock information for different years:
-2014, 2015, 2016, 2017 and 2018, respectively. There were 200 columns in
-the dataset, however, after analyzing the data, only 66 columns were
-chosen as fundamental columns and were included in the project.
+2014, 2015, 2016, 2017 and 2018, respectively. There were 225 columns in
+the original dataset. However, after curating the data, only 66 columns
+were chosen as fundamental columns and were included in the project.
 
 \hypertarget{missingness}{%
 \subsection{Missingness}\label{missingness}}
@@ -305,7 +257,7 @@ with a total of 62 columns.
 
 It is important to note that this project contains both unsupervised and
 supervised learning. Decision Tree was used for feature selection.
-Feature tree is a classification algorithm used for classification
+Decision tree is a classification algorithm used for classification
 problems, as well as detecting variable importance in a dataset. The top
 10 important variables from the decision tree were selected as the
 features. They were used to run k-means unsupervised learning, which
@@ -316,7 +268,7 @@ Thus, the unsupervised learning data contained 10 features, while the
 supervised learning data contained 12.
 
 \begin{longtable}[]{@{}lll@{}}
-\caption{Comman Predictor variables}\tabularnewline
+\caption{Common Predictor variables}\tabularnewline
 \toprule
 Variable & & Type\tabularnewline
 \midrule
@@ -345,10 +297,10 @@ Analysis}\label{principle-component-analysis}}
 We applied Principle Component Analysis (PCA) to our feature dataset for
 dimension reduction before doing unsupervised learning using the k-Means
 clustering algorithm. PCA creates orthogonal `principle components' of
-the feature set, reducing multicollinearity within the data. Since the
-k-means algorithm is non-parametric, reducing multicollinearity before
-performing k-Means clustering, could lead to greater discrimination
-between the clusters.
+the feature set, reducing multicollinearity within the data. Although
+the k-means algorithm is non-parametric, the reduction in
+multicollinearity by PCA could lead to greater discrimination between
+the observations.
 
 \hypertarget{unsupervised-learning}{%
 \subsection{Unsupervised Learning}\label{unsupervised-learning}}
@@ -520,256 +472,85 @@ we removed those observations, we set the sector and year columns as a
 factor and saved the new data set into a new CSV files for further data
 exploration.
 
-\includegraphics{stock_analysis_files/figure-latex/missing values-1.pdf}
-\includegraphics{stock_analysis_files/figure-latex/missing values-2.pdf}
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/missing values-1} 
+
+}
+
+\caption{Missing values map before imputation}\label{fig:missing values}
+\end{figure}
 
 To account for missing values, we chose to use the CART (Classification
-and Regression Trees) method of imputation
-(\hyperref[sec:fig2]{Figure 2}). Blue represents the distribution of the
-original data, while red represents the distribution of imputed data.
-After imputation, 4 columns still have missing values.
-
-\begin{verbatim}
-##       X                Revenue           Revenue.Growth    
-##  Length:20526       Min.   :-6.276e+08   Min.   :   -6.87  
-##  Class :character   1st Qu.: 6.567e+07   1st Qu.:   -0.01  
-##  Mode  :character   Median : 4.684e+08   Median :    0.06  
-##                     Mean   : 4.883e+09   Mean   :    5.72  
-##                     3rd Qu.: 2.367e+09   3rd Qu.:    0.18  
-##                     Max.   : 5.003e+11   Max.   :42138.66  
-##  Cost.of.Revenue       R.D.Expenses         SG.A.Expense       
-##  Min.   :-2.987e+09   Min.   :-1.098e+08   Min.   :-1.402e+08  
-##  1st Qu.: 3.380e+06   1st Qu.: 0.000e+00   1st Qu.: 1.778e+07  
-##  Median : 1.519e+08   Median : 0.000e+00   Median : 8.048e+07  
-##  Mean   : 2.942e+09   Mean   : 1.037e+08   Mean   : 8.508e+08  
-##  3rd Qu.: 1.171e+09   3rd Qu.: 1.235e+07   3rd Qu.: 3.698e+08  
-##  Max.   : 3.771e+11   Max.   : 2.884e+10   Max.   : 1.065e+11  
-##  Operating.Expenses   Interest.Expense     Income.Tax.Expense  
-##  Min.   :-5.496e+09   Min.   :-1.711e+09   Min.   :-7.380e+11  
-##  1st Qu.: 3.582e+07   1st Qu.: 0.000e+00   1st Qu.: 0.000e+00  
-##  Median : 1.565e+08   Median : 3.684e+06   Median : 3.374e+06  
-##  Mean   : 1.354e+09   Mean   : 9.349e+07   Mean   : 1.242e+08  
-##  3rd Qu.: 6.233e+08   3rd Qu.: 4.994e+07   3rd Qu.: 4.443e+07  
-##  Max.   : 1.065e+11   Max.   : 1.845e+10   Max.   : 8.490e+11  
-##  Net.Income...Non.Controlling.int Net.Income...Discontinued.ops
-##  Min.   :-1.587e+09               Min.   :-1.591e+10           
-##  1st Qu.: 0.000e+00               1st Qu.: 0.000e+00           
-##  Median : 0.000e+00               Median : 0.000e+00           
-##  Mean   : 1.343e+07               Mean   :-4.430e+06           
-##  3rd Qu.: 0.000e+00               3rd Qu.: 0.000e+00           
-##  Max.   : 6.431e+09               Max.   : 8.368e+09           
-##  Preferred.Dividends  Weighted.Average.Shs.Out Dividend.per.Share 
-##  Min.   :-161000000   Min.   :0.000e+00        Min.   :    0.000  
-##  1st Qu.:         0   1st Qu.:1.743e+07        1st Qu.:    0.000  
-##  Median :         0   Median :4.421e+07        Median :    0.000  
-##  Mean   :   4816894   Mean   :2.620e+08        Mean   :    1.197  
-##  3rd Qu.:         0   3rd Qu.:1.196e+08        3rd Qu.:    0.720  
-##  Max.   :2741588000   Max.   :1.113e+11        Max.   :10100.664  
-##  Consolidated.Income  Cash.and.cash.equivalents Short.term.investments
-##  Min.   :-2.244e+10   Min.   :0.000e+00         Min.   :0.000e+00     
-##  1st Qu.:-9.438e+06   1st Qu.:1.809e+07         1st Qu.:0.000e+00     
-##  Median : 1.950e+07   Median :7.410e+07         Median :0.000e+00     
-##  Mean   : 3.798e+08   Mean   :1.538e+09         Mean   :1.483e+09     
-##  3rd Qu.: 1.643e+08   3rd Qu.:2.976e+08         3rd Qu.:1.800e+07     
-##  Max.   : 5.953e+10   Max.   :5.123e+11         Max.   :8.000e+11     
-##   Receivables        Total.current.assets Goodwill.and.Intangible.Assets
-##  Min.   :0.000e+00   Min.   :0.000e+00    Min.   :0.000e+00             
-##  1st Qu.:2.169e+06   1st Qu.:6.823e+07    1st Qu.:0.000e+00             
-##  Median :4.472e+07   Median :2.822e+08    Median :3.743e+07             
-##  Mean   :8.594e+08   Mean   :5.709e+09    Mean   :1.708e+09             
-##  3rd Qu.:2.889e+08   3rd Qu.:1.234e+09    3rd Qu.:4.915e+08             
-##  Max.   :1.624e+11   Max.   :1.181e+12    Max.   :2.931e+11             
-##  Long.term.investments   Tax.assets           Payables         
-##  Min.   :-8.000e+07    Min.   :0.000e+00   Min.   :-2.059e+10  
-##  1st Qu.: 0.000e+00    1st Qu.:0.000e+00   1st Qu.: 2.801e+06  
-##  Median : 0.000e+00    Median :0.000e+00   Median : 2.620e+07  
-##  Mean   : 3.621e+09    Mean   :1.498e+08   Mean   : 8.274e+08  
-##  3rd Qu.: 6.371e+07    3rd Qu.:1.566e+07   3rd Qu.: 1.820e+08  
-##  Max.   : 9.970e+11    Max.   :4.262e+10   Max.   : 2.136e+11  
-##  Short.term.debt      Total.current.liabilities Long.term.debt      
-##  Min.   :-1.375e+09   Min.   :-2.108e+10        Min.   :-8.446e+09  
-##  1st Qu.: 0.000e+00   1st Qu.: 2.838e+07        1st Qu.: 7.345e+05  
-##  Median : 1.666e+06   Median : 1.810e+08        Median : 1.504e+08  
-##  Mean   : 6.148e+08   Mean   : 8.541e+09        Mean   : 2.999e+09  
-##  3rd Qu.: 4.003e+07   3rd Qu.: 1.040e+09        3rd Qu.: 1.285e+09  
-##  Max.   : 2.192e+11   Max.   : 2.095e+12        Max.   : 7.330e+11  
-##    Total.debt         Deposit.Liabilities Other.comprehensive.income
-##  Min.   :-9.290e+09   Min.   :0.000e+00   Min.   :-9.478e+10        
-##  1st Qu.: 5.916e+06   1st Qu.:0.000e+00   1st Qu.:-2.083e+07        
-##  Median : 2.131e+08   Median :0.000e+00   Median :-2.335e+05        
-##  Mean   : 4.158e+09   Mean   :4.917e+09   Mean   : 8.310e+10        
-##  3rd Qu.: 1.486e+09   3rd Qu.:0.000e+00   3rd Qu.: 0.000e+00        
-##  Max.   : 1.014e+12   Max.   :1.471e+12   Max.   : 1.709e+15        
-##  Retained.earnings..deficit.  Other.Assets        Other.Liabilities   
-##  Min.   :-2.800e+11          Min.   :-9.120e+11   Min.   :-9.923e+10  
-##  1st Qu.:-1.190e+08          1st Qu.: 1.878e+06   1st Qu.: 7.704e+06  
-##  Median : 2.056e+07          Median : 1.542e+07   Median : 6.580e+07  
-##  Mean   : 2.005e+09          Mean   : 1.430e+09   Mean   : 7.223e+09  
-##  3rd Qu.: 5.367e+08          3rd Qu.: 9.163e+07   3rd Qu.: 4.791e+08  
-##  Max.   : 4.217e+11          Max.   : 6.010e+11   Max.   : 1.866e+12  
-##  Depreciation...Amortization Stock.based.compensation Operating.Cash.Flow 
-##  Min.   :-8.336e+07          Min.   :-137000000       Min.   :-3.180e+11  
-##  1st Qu.: 2.046e+06          1st Qu.:    496050       1st Qu.: 1.018e+06  
-##  Median : 2.086e+07          Median :   3811000       Median : 5.854e+07  
-##  Mean   : 3.358e+08          Mean   :  31793457       Mean   : 8.704e+08  
-##  3rd Qu.: 1.256e+08          3rd Qu.:  14953500       3rd Qu.: 3.394e+08  
-##  Max.   : 7.510e+11          Max.   :9353000000       Max.   : 9.600e+11  
-##  Capital.Expenditure  Acquisitions.and.disposals Investment.purchases.and.sales
-##  Min.   :-9.662e+10   Min.   :-5.100e+10         Min.   :-1.930e+11            
-##  1st Qu.:-1.291e+08   1st Qu.:-1.153e+07         1st Qu.:-1.017e+07            
-##  Median :-1.700e+07   Median : 0.000e+00         Median : 0.000e+00            
-##  Mean   :-3.608e+08   Mean   :-1.030e+08         Mean   :-1.764e+08            
-##  3rd Qu.:-1.344e+06   3rd Qu.: 0.000e+00         3rd Qu.: 0.000e+00            
-##  Max.   : 5.823e+09   Max.   : 6.987e+10         Max.   : 1.499e+11            
-##  Investing.Cash.flow  Issuance..repayment..of.debt
-##  Min.   :-1.980e+11   Min.   :-8.488e+10          
-##  1st Qu.:-2.887e+08   1st Qu.:-1.045e+07          
-##  Median :-4.875e+07   Median : 0.000e+00          
-##  Mean   :-6.591e+08   Mean   : 6.767e+07          
-##  3rd Qu.:-1.848e+06   3rd Qu.: 4.738e+07          
-##  Max.   : 1.446e+11   Max.   : 6.268e+10          
-##  Issuance..buybacks..of.shares Dividend.payments    Financing.Cash.Flow 
-##  Min.   :-7.207e+10            Min.   :-1.603e+10   Min.   :-1.875e+11  
-##  1st Qu.:-8.241e+06            1st Qu.:-5.092e+07   1st Qu.:-7.786e+07  
-##  Median : 0.000e+00            Median : 0.000e+00   Median : 0.000e+00  
-##  Mean   :-1.140e+08            Mean   :-1.854e+08   Mean   :-6.441e+07  
-##  3rd Qu.: 6.221e+06            3rd Qu.: 0.000e+00   3rd Qu.: 5.758e+07  
-##  Max.   : 1.444e+11            Max.   : 0.000e+00   Max.   : 2.260e+11  
-##  Effect.of.forex.changes.on.cash Net.cash.flow...Change.in.cash
-##  Min.   :-1.000e+12              Min.   :-1.525e+11            
-##  1st Qu.:-2.668e+05              1st Qu.:-1.689e+07            
-##  Median : 0.000e+00              Median : 7.057e+05            
-##  Mean   :-6.421e+07              Mean   : 7.016e+07            
-##  3rd Qu.: 0.000e+00              3rd Qu.: 2.900e+07            
-##  Max.   : 9.993e+09              Max.   : 4.050e+11            
-##    Market.Cap        Tangible.Asset.Value Average.Receivables
-##  Min.   :0.000e+00   Min.   :-2.422e+10   Min.   :0.000e+00  
-##  1st Qu.:1.970e+08   1st Qu.: 1.681e+08   1st Qu.:2.378e+06  
-##  Median :9.249e+08   Median : 9.063e+08   Median :4.341e+07  
-##  Mean   :8.305e+09   Mean   : 1.611e+10   Mean   :8.522e+08  
-##  3rd Qu.:4.029e+09   3rd Qu.: 4.047e+09   3rd Qu.:2.831e+08  
-##  Max.   :1.098e+12   Max.   : 2.568e+12   Max.   :1.614e+11  
-##  Average.Payables     Average.Inventory   Days.Sales.Outstanding
-##  Min.   :-2.037e+10   Min.   :0.000e+00   Min.   :-165044.9     
-##  1st Qu.: 2.911e+06   1st Qu.:0.000e+00   1st Qu.:     10.6     
-##  Median : 2.619e+07   Median :1.693e+06   Median :     45.4     
-##  Mean   : 9.308e+08   Mean   :4.189e+08   Mean   :    197.2     
-##  3rd Qu.: 1.783e+08   3rd Qu.:1.009e+08   3rd Qu.:     72.3     
-##  Max.   : 7.124e+11   Max.   :4.560e+11   Max.   :1504680.2     
-##  Days.Payables.Outstanding Days.of.Inventory.on.Hand Receivables.Turnover
-##  Min.   :-207232.5         Min.   :-5182867          Min.   :   -27.99   
-##  1st Qu.:     10.3         1st Qu.:     -70          1st Qu.:     2.70   
-##  Median :     26.8         Median :      -5          Median :     5.96   
-##  Mean   :    404.2         Mean   :    -650          Mean   :    44.53   
-##  3rd Qu.:     55.7         3rd Qu.:       0          3rd Qu.:     9.89   
-##  Max.   :1043413.3         Max.   :     976          Max.   :164428.50   
-##  Payables.Turnover  Inventory.Turnover      ROE           Capex.per.Share    
-##  Min.   : -41.096   Min.   :    0.00   Min.   :  -34772   Min.   :-73354000  
-##  1st Qu.:   0.784   1st Qu.:    0.00   1st Qu.:       0   1st Qu.:       -2  
-##  Median :   2.543   Median :    3.18   Median :       0   Median :        0  
-##  Mean   :   7.394   Mean   :   33.30   Mean   :    1583   Mean   :   -19086  
-##  3rd Qu.:   4.913   3rd Qu.:   10.63   3rd Qu.:       0   3rd Qu.:        0  
-##  Max.   :8650.316   Max.   :95827.71   Max.   :11141142   Max.   :  1255873  
-##  Gross.Profit.Growth    Sector            year     
-##  Min.   : -5536.5    Length:20526       2014:3758  
-##  1st Qu.:     0.0    Class :character   2015:3976  
-##  Median :     0.1    Mode  :character   2016:4210  
-##  Mean   :    19.6                       2017:4343  
-##  3rd Qu.:     0.2                       2018:4239  
-##  Max.   :336767.8
-\end{verbatim}
+and Regression Trees) method of imputation. After imputation, 4 columns
+still have missing values, which were then subsequently removed.
 
 \hypertarget{correlation-plot}{%
 \subsection{Correlation Plot}\label{correlation-plot}}
 
-There are 62 columns after we finished data cleaning, and we want to
+There were 62 columns after we finished data cleaning, and we want to
 select the important features to do modeling. We performed a correlation
 analysis based on Pearson's coefficient between each numeric predictor
-first. We considered a correlation \textgreater{} 0.5, with p
-\textless{} 0.05 as a significant correlation.
+first. We considered a correlation \textgreater{} \textbar0.8\textbar,
+with p \textless{} 0.05 as a significant correlation.
 \hyperref[sec:fig3]{Figure 3} demonstrates significant correlation
 between many of our predictor variables. However, due to the large
-amount of variables, the correlation plot is really hard to read if we
-try to plot all the variables, therefore, we tried to filtered the
-correlation plot. We only kept the variables has positive correlation
-with a value greater than 0.8.
+amount of variables, the correlation plot was uninterpretable if we try
+to plot all the variables, therefore, we tried to filtered the
+correlation plot, keeping only variables that had a correlation with
+absolute value greater than 0.8.
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/corrplot-1} \end{center}
+\begin{figure}
 
-\begin{verbatim}
-##                      rowname                  variable correlation
-## 1            Cost.of.Revenue                   Revenue   0.9529257
-## 2         Operating.Expenses              SG.A.Expense   0.8649144
-## 3       Total.current.assets Cash.and.cash.equivalents   0.8144814
-## 4  Total.current.liabilities Cash.and.cash.equivalents   0.8693025
-## 5        Deposit.Liabilities Cash.and.cash.equivalents   0.8613017
-## 6          Other.Liabilities Cash.and.cash.equivalents   0.8658095
-## 7       Tangible.Asset.Value Cash.and.cash.equivalents   0.8507838
-## 8        Average.Receivables               Receivables   0.9754628
-## 9  Total.current.liabilities      Total.current.assets   0.8852829
-## 10                Total.debt      Total.current.assets   0.8465258
-## 11         Other.Liabilities      Total.current.assets   0.8595369
-## 12      Tangible.Asset.Value      Total.current.assets   0.8866186
-## 13                Total.debt Total.current.liabilities   0.8169391
-## 14       Deposit.Liabilities Total.current.liabilities   0.9418235
-## 15         Other.Liabilities Total.current.liabilities   0.9889940
-## 16      Tangible.Asset.Value Total.current.liabilities   0.9566535
-## 17      Tangible.Asset.Value                Total.debt   0.8338607
-## 18         Other.Liabilities       Deposit.Liabilities   0.9484187
-## 19      Tangible.Asset.Value       Deposit.Liabilities   0.8932697
-## 20      Tangible.Asset.Value         Other.Liabilities   0.9426275
-## 21 Days.of.Inventory.on.Hand         Average.Inventory  -0.9128818
-\end{verbatim}
+{\centering \includegraphics{stock_analysis_files/figure-latex/corrplot-1} 
 
-\begin{verbatim}
-## [1] "Cost.of.Revenue"           "Operating.Expenses"       
-## [3] "Tangible.Asset.Value"      "Average.Receivables"      
-## [5] "Days.of.Inventory.on.Hand"
-\end{verbatim}
+}
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/corrplot-2} \end{center}
+\caption{Correlogram of variables with R>|0.8|}\label{fig:corrplot}
+\end{figure}
 
 \hypertarget{data-distribution}{%
 \subsection{Data Distribution}\label{data-distribution}}
 
 we then performed the distribution plot for all the columns to check the
-data distribution, to oberseve the means, and check is there any
-outliers.
+data distribution, to observe the means, and check for outliers. Most
+variables were not normally distributed and had a clear skew. In Figure
+(FILL\_IN), we show a subset of the variable distributions.
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/data normal distribution plot1-1} \end{center}
+\begin{figure}
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/data normal distribution plot2-1} \end{center}
+{\centering \includegraphics{stock_analysis_files/figure-latex/data normal distribution plot1-1} 
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/data normal distribution plot3-1} \end{center}
+}
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/data normal distribution plot4-1} \end{center}
-
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/data normal distribution plot5-1} \end{center}
-
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/data normal distribution plot6-1} \end{center}
+\caption{Column distributions}\label{fig:data normal distribution plot1}
+\end{figure}
 
 \hypertarget{feature-selection-1}{%
 \subsection{Feature Selection}\label{feature-selection-1}}
 
-In order to do our feature selection, we ran a decision tree model to do
-a variable importance analysis.
+In order to do our feature selection, we ran a decision tree model to
+determine important variables within our dataset. Below are plots
+showing the importance of each variable as well as their correlations
+with one another.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{#decision_tree_model <-readRDS('decision_tree_model.rds')}
-\CommentTok{#print(decision_tree_model)}
-\CommentTok{#dTreeImp <- varImp(decision_tree_model, scale = FALSE)}
-\CommentTok{#plot(dTreeImp, top = 10)}
-\CommentTok{#invisible(model_importance <- summary(decision_tree_model$finalModel))}
-\end{Highlighting}
-\end{Shaded}
+\begin{figure}
 
-We also did some data visualization for our final data set which we will
-use for modeling.
+{\centering \includegraphics{stock_analysis_files/figure-latex/variable importance-1} 
 
-Correlation plot for the final dataset
+}
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/correlation plot 2-1} \end{center}
+\caption{Top 10 variable importance, determined by Decision Tree}\label{fig:variable importance}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/correlation plot 2-1} 
+
+}
+
+\caption{Correlogram of Top 10 Variables}\label{fig:correlation plot 2}
+\end{figure}
 
 \hypertarget{principle-component-analysis-1}{%
 \subsection{Principle Component
@@ -792,7 +573,6 @@ Expense and Operating Cash Flow had more negligible contribution.
 
 \caption{Scree plot}\label{fig:scree}
 \end{figure}
-
 \begin{figure}
 
 {\centering \includegraphics{stock_analysis_files/figure-latex/PCAind-1} 
@@ -820,14 +600,95 @@ discrimination for our observations, we instead used k=4 as the final
 number of clusters.
 
 \begin{figure}
-\includegraphics[width=0.7\linewidth,height=0.5\textheight]{unsupervised_elbow} \caption{Elbow method}\label{fig:elbow}
+
+{\centering \includegraphics[width=0.6\linewidth,height=0.4\textheight]{unsupervised_elbow} 
+
+}
+
+\caption{Elbow method}\label{fig:elbow}
 \end{figure}
 
 The following figure displays our datapoints in a 2-D space based on 4
-clusters. (will show the cluster plots and more by tomorrow evening)
+clusters.
+
+\begin{landscape}
+\begin{figure}
+\includegraphics[width=1\linewidth,height=1\textheight]{cluster_image} \caption{K means clustering, k = 4}\label{fig:cluster}
+\end{figure}
+\end{landscape}
+
+\hypertarget{cluster-interpretation}{%
+\subsection{Cluster Interpretation}\label{cluster-interpretation}}
+
+We performed some exploratory visualizations to interpret how the data
+was clustered by k-means. Cluster 1 contained the majority of
+observations, with n=19759. Cluster 2 had 35 observations, cluster 3 had
+126, and cluster 4 had 586. On average, cluster 1 contained more small-
+and medium-sized companies compared to other clusters, with 89\% of
+observations falling under a market cap of \$10 billion.\\
 
 \begin{figure}
-\includegraphics[width=1\linewidth,height=0.7\textheight]{cluster_image} \caption{K means clustering, k = 4}\label{fig:cluster}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/cluster by marketcap-1} 
+
+}
+
+\caption{Clusters by Market Cap}\label{fig:cluster by marketcap}
+\end{figure}
+
+K-means was able to segregate the large high-tech companies: Facebook,
+Apple, Amazon, Google, Intel, and Microsoft all into one cluster
+(Cluster 2). We noted that these companies trended towards large market
+capitalization, high stock compensation, and high R \& D expenses.
+Cluster 3 contained a significant majority of big banks, such as JP
+Morgan, Wells Fargo, and Bank of America, as well as large energy
+corporations such as ExxonMobil and Chevron. Clusters 1 and 4 had
+similar sector distributions, although companies in cluster 4 were all
+large cap. Interesting to note that the top 20 big pharmaceutical and
+healthcare companies were mainly in cluster 4, such as Johnson \&
+Johnson, Roche, and Abbvie.\\
+
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/sector-1} 
+
+}
+
+\caption{Clusters by Sector}\label{fig:sector}
+\end{figure}
+
+Price-to-earnings ratio is a common method of determining how a company
+is valued by investors. A high P/E ratio may suggest that investors are
+willing to pay a higher price for that company's share price because of
+future growth expectations. Here, we see that cluster 2, composed
+largely of high-tech companies such as Google, had high P/E ratios -
+aligning with investor sentiments about the growth of the industry.
+Cluster 1 maintains an interesting bimodal distribution of positive and
+negative P/E ratios. Stocks with negative P/E ratio suggest that these
+companies are reporting a loss.
+
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/pe ratio-1} 
+
+}
+
+\caption{Clusters by Sector}\label{fig:pe ratio}
+\end{figure}
+
+Normalizing for the proportion of small-medium and large cap stocks in
+cluster 1, we noted that small to medium-sized companies were 2 to 3
+times more likely to have a negative P/E ratio compared to large
+companies. The bimodal distribution in cluster 1 can therefore be
+partially explained by a split between the distribution of company size.
+
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/pe ratio clust1-1} 
+
+}
+
+\caption{Cluster 1: Market Cap vs. P/E Ratio}\label{fig:pe ratio clust1}
 \end{figure}
 
 \hypertarget{modeling}{%
@@ -855,15 +716,30 @@ smallest value. The final values used for the model were nrounds = 200,
 max\_depth = 6, eta = 0.1, gamma = 0, colsample\_bytree = 0.5,
 min\_child\_weight = 1 and subsample = 0.8.
 
-\begin{verbatim}
-## [15:59:17] WARNING: amalgamation/../src/objective/regression_obj.cu:174: reg:linear is now deprecated in favor of reg:squarederror.
-\end{verbatim}
+\begin{figure}
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/XGBoost-1} \end{center}
+{\centering \includegraphics{stock_analysis_files/figure-latex/XGBoost-1} 
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/XGBoost-2} \end{center}
+}
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/XGBoost-3} \end{center}
+\caption{XGBoost Tuning Parameters}\label{fig:XGBoost-1}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/XGBoost-2} 
+
+}
+
+\caption{XGBoost Tuning Parameters}\label{fig:XGBoost-2}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/XGBoost-3} 
+
+}
+
+\caption{XGBoost Tuning Parameters}\label{fig:XGBoost-3}
+\end{figure}
 
 \hypertarget{lasso-regression}{%
 \paragraph{\texorpdfstring{\textbf{Lasso Regression}\\
@@ -885,17 +761,20 @@ interaction.depth = 9, shrinkage = 0.1 and n.minobsinnode = 20
 
 \begin{center}\includegraphics{stock_analysis_files/figure-latex/gradient boosting-1} \end{center}
 
-\#\#\#Model Selection All models found \(nmnmb\) and \(hghh\) to be
-important predictors of Market.Cap. Mean Absolute Error (MAE) tells the
-average error of the variable we want to predict. Root Mean-Squared
-Error (RMSE) is similar with MAE but it is more useful when we are
-interested in fewer larger errors over many small errors. Overall, we
-prioritize model stability and thus prioritized RMSE over MAE. \(R^2\)
-computes how much better the regression fits the data than the mean
-line, which gives an overall score.For predicting market cap, we desired
-a model with the lowest RMSE and MAE to keep the high accuracy of
-prediction. The XGBoost model had the highest \(R^2\) as well as the
-lowest RMSE and MAE, thus, it was chosen for deployment.
+\hypertarget{model-selection}{%
+\subsection{Model Selection}\label{model-selection}}
+
+All models found \(nmnmb\) and \(hghh\) to be important predictors of
+Market.Cap. Mean Absolute Error (MAE) tells the average error of the
+variable we want to predict. Root Mean-Squared Error (RMSE) is similar
+with MAE but it is more useful when we are interested in fewer larger
+errors over many small errors. Overall, we prioritize model stability
+and thus prioritized RMSE over MAE. \(R^2\) computes how much better the
+regression fits the data than the mean line, which gives an overall
+score.For predicting market cap, we desired a model with the lowest RMSE
+and MAE to keep the high accuracy of prediction. The XGBoost model had
+the highest \(R^2\) as well as the lowest RMSE and MAE, thus, it was
+chosen for deployment.
 
 \begin{longtable}[]{@{}llrl@{}}
 \caption{Model Accuracy}\tabularnewline
