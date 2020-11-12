@@ -369,7 +369,7 @@ ggplot(df_updated, aes(x=cluster, fill = Sector)) + geom_bar(position = 'fill')
 ```
 Price-to-earnings ratio is a common method of determining how a company is valued by investors. A high P/E ratio may suggest that investors are willing to pay a higher price for that company's share price because of future growth expectations. Here, we see that cluster 2, composed largely of high-tech companies such as Google, had high P/E ratios - aligning with investor sentiments about the growth of the industry. Cluster 1 maintains an interesting bimodal distribution of positive and negative P/E ratios. Stocks with negative P/E ratio suggest that these companies are reporting a loss. 
 
-```{r pe ratio,  echo = FALSE, message = FALSE, fig.cap = 'Clusters by Sector', fig.align='center', fig.height=5,fig.width=5}
+```{r pe ratio,  echo = FALSE, message = FALSE, fig.cap = 'Clusters by P/E ratio', fig.align='center', fig.height=5,fig.width=5}
 ggplot(df_updated[df_updated$`P/E` > -10 & df_updated$`P/E` < 50,], aes(x = `P/E`, color=cluster)) + geom_density() + labs(title = 'Clusters by P/E ratio')
 ```
 Normalizing for the proportion of small-medium and large cap stocks in cluster 1, we noted that small to medium-sized companies were 2 to 3 times more likely to have a negative P/E ratio compared to large companies. The bimodal distribution in cluster 1 can therefore be partially explained by a split between the distribution of company size.
