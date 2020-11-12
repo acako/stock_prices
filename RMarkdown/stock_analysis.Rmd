@@ -331,7 +331,7 @@ include_graphics('unsupervised_elbow.png')
 ```
 The following figure displays our datapoints in a 2-D space based on 4 clusters.
 \begin{landscape}
-```{r cluster,fig.cap='K means clustering, k = 4', message = FALSE, warning = FALSE, echo = FALSE}
+```{r cluster,fig.cap='K means clustering, k = 4', message = FALSE, warning = FALSE, echo = FALSE, out.height='100%', out.width='100%'}
 include_graphics('cluster_image.png')
 ```
 \end{landscape}
@@ -392,7 +392,7 @@ The model used tuning parameter 'subsample' as a constant at a value of 0.8, and
 The final values used for the model were nrounds = 200, max_depth =
  6, eta = 0.1, gamma = 0, colsample_bytree = 0.5, min_child_weight =
  1 and subsample = 0.8.
-```{r XGBoost, message = FALSE, warning = FALSE, echo = FALSE,fig.height=5, fig.width=5,fig.align='center', fig.cap='XGBoost Tuning Parameters'}
+```{r XGBoost, message = FALSE, warning = FALSE, echo = FALSE,fig.height=5, fig.width=5,fig.align='center', fig.cap='XGBoost Tuning Parameters', results='hide', fig.keep='all'}
 invisible(XGB_model_albina_updated <- readRDS("XGB_model_albina_updated.rds"))
 ggplot2::ggplot(varImp(XGB_model_albina_updated))
 plot(XGB_model_albina_updated)

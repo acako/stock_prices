@@ -41,15 +41,6 @@
 
 \usepackage{longtable,booktabs}
 
-\usepackage{graphicx,grffile}
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
 
 \title{Application of Machine Learning on Fundamental Stock Price Analysis  }
@@ -84,7 +75,7 @@
 
 \usepackage{hyperref}
 \usepackage{graphicx}
-\usepackage{booktabs}
+\usepackage{lscape}
 \usepackage{subfig}
 
 % move the hyperref stuff down here, after header-includes, to allow for - \usepackage{hyperref}
@@ -481,8 +472,14 @@ we removed those observations, we set the sector and year columns as a
 factor and saved the new data set into a new CSV files for further data
 exploration.
 
-\includegraphics{stock_analysis_files/figure-latex/missing values-1.pdf}
-\includegraphics{stock_analysis_files/figure-latex/missing values-2.pdf}
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/missing values-1} 
+
+}
+
+\caption{Missing values map before imputation}\label{fig:missing values}
+\end{figure}
 
 To account for missing values, we chose to use the CART (Classification
 and Regression Trees) method of imputation. After imputation, 4 columns
@@ -546,7 +543,14 @@ with one another.
 \caption{Top 10 variable importance, determined by Decision Tree}\label{fig:variable importance}
 \end{figure}
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/correlation plot 2-1} \end{center}
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/correlation plot 2-1} 
+
+}
+
+\caption{Correlogram of Top 10 Variables}\label{fig:correlation plot 2}
+\end{figure}
 
 \hypertarget{principle-component-analysis-1}{%
 \subsection{Principle Component
@@ -607,9 +611,11 @@ number of clusters.
 The following figure displays our datapoints in a 2-D space based on 4
 clusters.
 
+\begin{landscape}
 \begin{figure}
-\includegraphics[width=1\linewidth,height=0.7\textheight]{cluster_image} \caption{K means clustering, k = 4}\label{fig:cluster}
+\includegraphics[width=1\linewidth,height=1\textheight]{cluster_image} \caption{K means clustering, k = 4}\label{fig:cluster}
 \end{figure}
+\end{landscape}
 
 \hypertarget{cluster-interpretation}{%
 \subsection{Cluster Interpretation}\label{cluster-interpretation}}
@@ -617,14 +623,9 @@ clusters.
 We performed some exploratory visualizations to interpret how the data
 was clustered by k-means. Cluster 1 contained the majority of
 observations, with n=19759. Cluster 2 had 35 observations, cluster 3 had
-126, and cluster 4 had 586. On average, cluster 1 contained smaller
-market capitalization companies compared to other clusters.
-
-\begin{verbatim}
-## 
-##     1     2     3     4 
-## 19759    35   126   586
-\end{verbatim}
+126, and cluster 4 had 586. On average, cluster 1 contained more small-
+and medium-sized companies compared to other clusters, with 89\% of
+observations falling under a market cap of \$10 billion.\\
 
 \begin{figure}
 
@@ -635,45 +636,60 @@ market capitalization companies compared to other clusters.
 \caption{Clusters by Market Cap}\label{fig:cluster by marketcap}
 \end{figure}
 
-\begin{table}[!htb]
-    \begin{minipage}{.5\linewidth}
-      \caption{}
-      \centering 
-\begin{tabular}{llll}
-\toprule
-  & X & name & Sector\\
-\midrule
-955 & BABA & Alibaba Group Holding & Consumer Cyclical\\
-2376 & V & Visa Inc & Financial Services\\
-14325 & MA & Mastercard Inc & Financial Services\\
-15749 & NVDA & NVIDIA Corporation Common Stock & Technology\\
-15876 & ADBE & Adobe Inc. Common Stock & Technology\\
-\addlinespace
-15802 & NFLX & Netflix, Inc. Common Stock & Communication Services\\
-15699 & NKE & Nike Inc & Consumer Cyclical\\
-16071 & LBTYK & Liberty Global plc Class C Ordinary Shares & Communication Services\\
-15739 & PYPL & PayPal Holdings, Inc. Common Stock & Financial Services\\
-10909 & ACN & Accenture Plc & Technology\\
-\bottomrule
-\end{tabular} \end{minipage}%
-    \begin{minipage}{.5\linewidth}
-      \centering
-        \caption{} 
-\begin{tabular}{llll}
-\toprule
-  & X & name & Sector\\
-\midrule
-29 & AAPL & Apple Inc. Common Stock & Technology\\
-30 & MSFT & Microsoft Corporation Common Stock & Technology\\
-26 & GOOGL & Alphabet Inc. Class A Common Stock & Technology\\
-27 & GOOG & Alphabet Inc. Class C Capital Stock & Technology\\
-33 & AMZN & Amazon.com, Inc. Common Stock & Technology\\
-\addlinespace
-24 & FB & Facebook, Inc. Class A Common Stock & Technology\\
-20 & JNJ & Johnson \& Johnson & Healthcare\\
-\bottomrule
-\end{tabular} \end{minipage} 
-\end{table}
+K-means was able to segregate the large high-tech companies: Facebook,
+Apple, Amazon, Google, Intel, and Microsoft all into one cluster
+(Cluster 2). We noted that these companies trended towards large market
+capitalization, high stock compensation, and high R \& D expenses.
+Cluster 3 contained a significant majority of big banks, such as JP
+Morgan, Wells Fargo, and Bank of America, as well as large energy
+corporations such as ExxonMobil and Chevron. Clusters 1 and 4 had
+similar sector distributions, although companies in cluster 4 were all
+large cap. Interesting to note that the top 20 big pharmaceutical and
+healthcare companies were mainly in cluster 4, such as Johnson \&
+Johnson, Roche, and Abbvie.\\
+
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/sector-1} 
+
+}
+
+\caption{Clusters by Sector}\label{fig:sector}
+\end{figure}
+
+Price-to-earnings ratio is a common method of determining how a company
+is valued by investors. A high P/E ratio may suggest that investors are
+willing to pay a higher price for that company's share price because of
+future growth expectations. Here, we see that cluster 2, composed
+largely of high-tech companies such as Google, had high P/E ratios -
+aligning with investor sentiments about the growth of the industry.
+Cluster 1 maintains an interesting bimodal distribution of positive and
+negative P/E ratios. Stocks with negative P/E ratio suggest that these
+companies are reporting a loss.
+
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/pe ratio-1} 
+
+}
+
+\caption{Clusters by Sector}\label{fig:pe ratio}
+\end{figure}
+
+Normalizing for the proportion of small-medium and large cap stocks in
+cluster 1, we noted that small to medium-sized companies were 2 to 3
+times more likely to have a negative P/E ratio compared to large
+companies. The bimodal distribution in cluster 1 can therefore be
+partially explained by a split between the distribution of company size.
+
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/pe ratio clust1-1} 
+
+}
+
+\caption{Cluster 1: Market Cap vs. P/E Ratio}\label{fig:pe ratio clust1}
+\end{figure}
 
 \hypertarget{modeling}{%
 \subsection{Modeling}\label{modeling}}
@@ -700,15 +716,30 @@ smallest value. The final values used for the model were nrounds = 200,
 max\_depth = 6, eta = 0.1, gamma = 0, colsample\_bytree = 0.5,
 min\_child\_weight = 1 and subsample = 0.8.
 
-\begin{verbatim}
-## [18:55:48] WARNING: amalgamation/../src/objective/regression_obj.cu:174: reg:linear is now deprecated in favor of reg:squarederror.
-\end{verbatim}
+\begin{figure}
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/XGBoost-1} \end{center}
+{\centering \includegraphics{stock_analysis_files/figure-latex/XGBoost-1} 
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/XGBoost-2} \end{center}
+}
 
-\begin{center}\includegraphics{stock_analysis_files/figure-latex/XGBoost-3} \end{center}
+\caption{XGBoost Tuning Parameters}\label{fig:XGBoost-1}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/XGBoost-2} 
+
+}
+
+\caption{XGBoost Tuning Parameters}\label{fig:XGBoost-2}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics{stock_analysis_files/figure-latex/XGBoost-3} 
+
+}
+
+\caption{XGBoost Tuning Parameters}\label{fig:XGBoost-3}
+\end{figure}
 
 \hypertarget{lasso-regression}{%
 \paragraph{\texorpdfstring{\textbf{Lasso Regression}\\
