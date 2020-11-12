@@ -192,10 +192,10 @@ To account for missing values, we chose to use the CART (Classification and Regr
 
 ## Correlation Plot
 There were 62 columns after we finished data cleaning, and we want to select the important features to do modeling.
-We performed a correlation analysis based on Pearson's coefficient between each numeric predictor first. We considered a correlation > |0.8|, with p < 0.05 as a significant correlation. \hyperref[sec:fig3]{Figure 3} demonstrates significant correlation between many of our predictor variables. 
+We performed a correlation analysis based on Pearson's coefficient between each numeric predictor first. We considered a |correlation| > 0.8, with p < 0.05 as a significant correlation. \hyperref[sec:fig3]{Figure 3} demonstrates significant correlation between many of our predictor variables. 
 However, due to the large amount of variables, the correlation plot was uninterpretable if we try to plot all the variables, therefore, we tried to filtered the correlation plot, keeping only variables that had a correlation with absolute value greater than 0.8.
 
-```{r corrplot, echo=FALSE,fig.height=5, fig.width=5,fig.align='center', fig.cap='Correlogram of variables with R>|0.8|'}
+```{r corrplot, echo=FALSE,fig.height=5, fig.width=5,fig.align='center', fig.cap='Correlogram of variables with |R| > 0.8'}
 #corrplot for numerical
 df_full <- read.csv('full_set.csv')
 df_full_numeric <- subset(df_full, select =c(3:60))
@@ -223,7 +223,7 @@ ggcorrplot(mtx_corrtable, type = 'upper', lab = TRUE)
 ```
 
 ## Data Distribution
-we then performed the distribution plot for all the columns to check the data distribution, to observe the means, and check for outliers. Most variables were not normally distributed and had a clear skew. In Figure (FILL_IN), we show a subset of the variable distributions.
+we then performed the distribution plot for all the columns to check the data distribution, to observe the means, and check for outliers. Most variables were not normally distributed and had a clear skew. In Figure 3, we show a subset of the variable distributions.
 
 ```{r data normal distribution, echo = FALSE, message = FALSE, warning = FALSE}
 df_normalize <- normalize(df_full)
@@ -321,8 +321,8 @@ fviz_pca_ind(res.pca,
 fviz_pca_var(res.pca,
              col.var = "contrib", # Color by contributions to the PC
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-             # Avoid text overlapping
-)
+             repel = TRUE     # Avoid text overlapping
+             )
 ```
 ## K Means Clustering
 The 'elbow method' was first performed to determine an optimal number of k clusters. However, there was no significant drop in within-cluster sum of squares with k besides k=2. As two clusters did not provide much discrimination for our observations, we instead used k=4 as the final number of clusters. 
