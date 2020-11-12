@@ -83,7 +83,7 @@ shinyUI(fluidPage(
                  h4('Lucy Zhang'),
                  tags$line('Lucy completed her degree in Software Engineering at McMaster University.'),
                  h4('Colin Green'),
-                 tags$line('Colin Green holds a Bachelor of Science with a major in Physics and a minor in Business from the University of Ottawa and is currently a student a York University studying machine learning.  As an aspiring data scientist, he hopes to one day contribute to the solution of the climate crisis with the use of machine learning.'),
+                 tags$line('Colin Green holds an Honours Bachelor of Science with a major in Physics and a minor in Business from the University of Ottawa and is currently a student a York University studying machine learning.  As an aspiring data scientist, he hopes to one day contribute to the solution of the climate crisis with the use of machine learning.'),
                  h4('Albina Cako'),
                  tags$line('Education: Bachelor of Science (Honors with Distinction) Ryerson University. Currently on my 4th year of Doctor of Naturopathic Medicine Degree at the Canadian College of Naturopathic Medicine. As well, doing a Certificate on Machine learning at York University and a Masters of Biomedical Engineering at Ryerson University focusing on Machine Learning. Interests: Machine learning in the medical field, as well as use of Machine learning in technological innovation, marketing, social media and business development.'),
                  h2('Model Information'),
