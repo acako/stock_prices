@@ -28,7 +28,7 @@ csl: cell-numeric.csl
 header-includes:
     - \usepackage{hyperref}
     - \usepackage{graphicx}
-    - \usepackage{booktabs}
+    - \usepackage{lscape}
 ---
 
 # Introduction
@@ -157,12 +157,12 @@ complete_data <- complete_data[complete_data$X != 'AMX', ]
 ## Missing Values
 After we finished the first step of data cleaning, we want to do the data validation. For missing values, as the plot shown, a lot of observations make up the majority of the missing data and we decided to remove observations that have more than a third of the columns NA. After we removed those observations, we set the sector and year columns as a factor and saved the new data set into a new CSV files for further data exploration.
 
-```{r missing values, echo=FALSE, message=FALSE, fig.cap='Missing values map: before and after imputation'}
+```{r missing values, echo=FALSE, message=FALSE, fig.cap='Missing values map before imputation', fig.align='center'}
 missing_plot(complete_data)
 #sort((sapply(complete_data, function(x) sum(is.na(x)))), decreasing=TRUE)
 
 complete_data_remove<-complete_data[which(rowMeans(!is.na(complete_data))>(1/3)),]
-missing_plot(complete_data_remove)
+#missing_plot(complete_data_remove)
 #sort((sapply(complete_data_remove, function(x) sum(is.na(x)))), decreasing=TRUE)
 
 complete_data_remove$Sector <- as.factor(complete_data_remove$Sector)
@@ -290,7 +290,7 @@ par(mfrow=c(1,1))
 
 ```
 
-``````{r correlation plot 2, echo=FALSE,fig.align='center'}
+``````{r correlation plot 2, echo=FALSE,fig.align='center', fig.cap='Correlogram of Top 10 Variables'}
 ggcorrplot(cor$r, type = 'upper', p.mat = p.mat, sig.level = 0.05, lab = TRUE, lab_size = 2)
 
 ```
@@ -330,12 +330,14 @@ The 'elbow method' was first performed to determine an optimal number of k clust
 include_graphics('unsupervised_elbow.png')
 ```
 The following figure displays our datapoints in a 2-D space based on 4 clusters.
-```{r cluster,fig.cap='K means clustering, k = 4', out.height='70%', out.width = '100%', message = FALSE, warning = FALSE, echo = FALSE}
+\begin{landscape}
+```{r cluster,fig.cap='K means clustering, k = 4', message = FALSE, warning = FALSE, echo = FALSE}
 include_graphics('cluster_image.png')
 ```
+\end{landscape}
 
 ## Cluster Interpretation
-We performed some exploratory visualizations to interpret how the data was clustered by k-means. Cluster 1 contained the majority of observations, with n=19759. Cluster 2 had 35 observations, cluster 3 had 126, and cluster 4 had 586. On average, cluster 1 contained smaller market capitalization companies compared to other clusters.  
+We performed some exploratory visualizations to interpret how the data was clustered by k-means. Cluster 1 contained the majority of observations, with n=19759. Cluster 2 had 35 observations, cluster 3 had 126, and cluster 4 had 586. On average, cluster 1 contained more small- and medium-sized companies compared to other clusters, with 89% of observations falling under a market cap of $10 billion.  
 ```{r cluster by marketcap, echo = FALSE, message = FALSE, fig.cap = 'Clusters by Market Cap', fig.align='center', fig.height=5,fig.width=5}
 df_updated <- read.csv('important_with_clusters_updated.csv')
 nasdaq <- read.csv('nasdaq.csv')
@@ -362,53 +364,18 @@ df_c4 <- subset(df_updated, df_updated$cluster==4) #big pharma, consumer goods?
 ggplot(df_updated, aes(x = log(Market.Cap), color=cluster)) + geom_density() + labs(title = 'Clusters by Market Cap')
 ```
 K-means was able to segregate the large high-tech companies: Facebook, Apple, Amazon, Google, Intel, and Microsoft all into one cluster (Cluster 2). We noted that these companies trended towards  large market capitalization, high stock compensation, and high R & D expenses. Cluster 3 contained a significant majority of big banks, such as JP Morgan, Wells Fargo, and Bank of America, as well as large energy corporations such as ExxonMobil and Chevron. Clusters 1 and 4 had similar sector distributions, although companies in cluster 4 were all large cap. Interesting to note that the top 20 big pharmaceutical and healthcare companies were mainly in cluster 4, such as Johnson & Johnson, Roche, and Abbvie.   
-```{r sector echo = FALSE, message = FALSE, fig.cap = 'Clusters by Sector', fig.align='center', fig.height=5,fig.width=5}
+```{r sector, echo = FALSE, message = FALSE, fig.cap = 'Clusters by Sector', fig.align='center', fig.height=5,fig.width=5}
 ggplot(df_updated, aes(x=cluster, fill = Sector)) + geom_bar(position = 'fill')
 ```
+Price-to-earnings ratio is a common method of determining how a company is valued by investors. A high P/E ratio may suggest that investors are willing to pay a higher price for that company's share price because of future growth expectations. Here, we see that cluster 2, composed largely of high-tech companies such as Google, had high P/E ratios - aligning with investor sentiments about the growth of the industry. Cluster 1 maintains an interesting bimodal distribution of positive and negative P/E ratios. Stocks with negative P/E ratio suggest that these companies are reporting a loss. 
 
-```{r cluster tables, echo = FALSE}
-c1df <- left_join(unique(df_c1), stocks_lookup_table, by = 'X')
-c1df <- c1df[, names(c1df) %in% c('X','name','Sector','Market.Cap')]
-c1df <- c1df[,c(1,4,3,2)]
-c2df <- left_join(unique(df_c2), stocks_lookup_table, by = 'X')
-c2df <- c2df[, names(c2df) %in% c('X','name','Sector','Market.Cap')]
-c2df <- c2df[,c(1,4,3,2)]
-c3df <- left_join(unique(df_c3), stocks_lookup_table, by = 'X')
-c3df <- c3df[, names(c3df) %in% c('X','name','Sector','Market.Cap')]
-c3df <- c3df[,c(1,4,3,2)]
-c4df <- left_join(unique(df_c4), stocks_lookup_table, by = 'X')
-c4df <- c4df[, names(c4df) %in% c('X','name','Sector','Market.Cap')]
-c4df <- c4df[,c(1,4,3,2)]
+```{r pe ratio,  echo = FALSE, message = FALSE, fig.cap = 'Clusters by Sector', fig.align='center', fig.height=5,fig.width=5}
+ggplot(df_updated[df_updated$`P/E` > -10 & df_updated$`P/E` < 50,], aes(x = `P/E`, color=cluster)) + geom_density() + labs(title = 'Clusters by P/E ratio')
 ```
-```{r top companies in each cluster, echo = FALSE}
-sortedc1 <- na.omit(c1df)
-sortedc1 <- sortedc1[order(-sortedc1$Market.Cap),]
-sortedc1 <- sortedc1[1:15,]
-c1table <- sortedc1[, !names(sortedc1) %in% c('Market.Cap')]
-c1table <- unique(c1table)
-
-sortedc2 <- na.omit(c2df)
-sortedc2 <- sortedc2[order(-sortedc2$Market.Cap),]
-sortedc2 <- sortedc2[1:30,]
-c2table <- sortedc2[, !names(sortedc2) %in% c('Market.Cap')]
-c2table <- unique(c2table)
-c2table <- c2table[1:7,]
-
-sortedc3 <- na.omit(c3df)
-sortedc3 <- sortedc3[order(-sortedc3$Market.Cap),]
-sortedc3 <- sortedc3[1:30,]
-c3table <- sortedc3[, !names(sortedc3) %in% c('Market.Cap')]
-c3table <- unique(c3table)
-
-sortedc4 <- na.omit(c4df)
-sortedc4 <- sortedc4[order(-sortedc4$Market.Cap),]
-sortedc4 <- sortedc4[1:30,]
-c4table <- sortedc4[, !names(sortedc4) %in% c('Market.Cap')]
-c4table <- unique(c4table)
-c4table <- c4table[1:10,]
+Normalizing for the proportion of small-medium and large cap stocks in cluster 1, we noted that small to medium-sized companies were 2 to 3 times more likely to have a negative P/E ratio compared to large companies. The bimodal distribution in cluster 1 can therefore be partially explained by a split between the distribution of company size.
+```{r pe ratio clust1,  echo = FALSE, message = FALSE, fig.cap = 'Cluster 1: Market Cap vs. P/E Ratio', fig.align='center', fig.height=5,fig.width=5}
+ggplot(df_updated[df_updated$cluster==1 & df_updated$`P/E` > -10 & df_updated$`P/E` < 50,], aes(x = `P/E`, y=Market.Cap,color=Sector)) + geom_point() + labs(title = 'Cluster 1: Market Cap vs. P/E Ratio')
 ```
-
-
 ## Modeling
 The k-fold cross-validation method evaluates the model performance on different subsets of the training data calculates the average prediction error rate. We used k = 10 for our project,and this method was used instead of the simple train-test-split as it gives a more valid estimation of model effectiveness.
 
@@ -425,8 +392,8 @@ The model used tuning parameter 'subsample' as a constant at a value of 0.8, and
 The final values used for the model were nrounds = 200, max_depth =
  6, eta = 0.1, gamma = 0, colsample_bytree = 0.5, min_child_weight =
  1 and subsample = 0.8.
-```{r XGBoost, message = FALSE, warning = FALSE, echo = FALSE,fig.height=5, fig.width=5,fig.align='center'}
-XGB_model_albina_updated <- readRDS("XGB_model_albina_updated.rds")
+```{r XGBoost, message = FALSE, warning = FALSE, echo = FALSE,fig.height=5, fig.width=5,fig.align='center', fig.cap='XGBoost Tuning Parameters'}
+invisible(XGB_model_albina_updated <- readRDS("XGB_model_albina_updated.rds"))
 ggplot2::ggplot(varImp(XGB_model_albina_updated))
 plot(XGB_model_albina_updated)
 ```
