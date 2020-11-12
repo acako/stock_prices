@@ -362,7 +362,7 @@ df_c4 <- subset(df_updated, df_updated$cluster==4) #big pharma, consumer goods?
 ggplot(df_updated, aes(x = log(Market.Cap), color=cluster)) + geom_density() + labs(title = 'Clusters by Market Cap')
 ```
 K-means was able to segregate the large high-tech companies: Facebook, Apple, Amazon, Google, Intel, and Microsoft all into one cluster (Cluster 2). We noted that these companies trended towards  large market capitalization, high stock compensation, and high R & D expenses. Cluster 3 contained a significant majority of big banks, such as JP Morgan, Wells Fargo, and Bank of America, as well as large energy corporations such as ExxonMobil and Chevron. Clusters 1 and 4 had similar sector distributions, although companies in cluster 4 were all large cap. Interesting to note that the top 20 big pharmaceutical and healthcare companies were mainly in cluster 4, such as Johnson & Johnson, Roche, and Abbvie.   
-```{r cluster sector echo = FALSE, message = FALSE, fig.cap = 'Clusters by Sector', fig.align='center', fig.height=5,fig.width=5}
+```{r sector echo = FALSE, message = FALSE, fig.cap = 'Clusters by Sector', fig.align='center', fig.height=5,fig.width=5}
 ggplot(df_updated, aes(x=cluster, fill = Sector)) + geom_bar(position = 'fill')
 ```
 
