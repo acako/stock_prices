@@ -168,8 +168,10 @@ ggplot(df_updated, aes(x = log(Market.Cap), color=cluster)) + geom_density() + l
 ggplot(df_updated, aes(x=cluster, fill = Sector)) + geom_bar(position = 'fill')
 
 #PE ratio
-ggplot(df_updated[df_updated$PE > -10 & df_updated$PE < 50, ], aes(x = `P/E`, color=cluster)) + geom_density() + labs(title = 'Clusters by P/E ratio')
+ggplot(df_updated[df_updated$`P/E` > -10 & df_updated$`P/E` < 50,], aes(x = `P/E`, color=cluster)) + geom_density() + labs(title = 'Clusters by P/E ratio')
 ggplot(df_updated, aes(x=Market.Cap, y=Retained.earnings..deficit., color = cluster)) + geom_point()  + labs(title = 'Price to Earnings by Sector') + geom_text(label = df_updated$X.2)
+
+df_updated[df_updated$`P/E`<0,]
 
 
 #Clusters by dividend payout: dividend payout higher in cluster 3 compared to others. cluster 1 mostly probably smaller companies with lower dividend
