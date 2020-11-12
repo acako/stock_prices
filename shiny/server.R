@@ -13,8 +13,8 @@ library(dplyr)
 #load in tickers
 options(scipen = 999)
 tickers <- read.csv('tickers.csv')
-
-fill_ticker_df <- function(tick){
+model <- readRDS('XGB_model_albina_updated.RDS')
+fill_ticker_df <- function(tick, sect){
     params <- list('datatype'='json')
     apikey <- 'apikey=81419012a8f4bf777c342c25e2ddaf77'
     url <-  'https://financialmodelingprep.com/api/v3/'
@@ -34,6 +34,8 @@ fill_ticker_df <- function(tick){
         'R.D.Expenses'=as.integer(0),
         'Total.debt'=as.integer(0),
         'Long.term.debt'=as.integer(0),
+        'Sector'=as.factor(''),
+        'cluster'=as.numeric(1),
         'Current.Market.Cap'=as.integer(0)
         )
 
@@ -53,6 +55,7 @@ fill_ticker_df <- function(tick){
         ticker_data$R.D.Expenses[1] <- content(income_res)[[1]]$researchAndDevelopmentExpenses
         ticker_data$Total.debt[1] <- content(balance_res)[[1]]$totalDebt
         ticker_data$Long.term.debt[1] <- content(balance_res)[[1]]$longTermDebt
+        ticker_data$Sector[1] <- as.factor(sect)
         ticker_data$Current.Market.Cap[1] <- content(mc_res)[[1]]$marketCap
     }
     return(ticker_data)
@@ -74,7 +77,7 @@ fill_time_series_df <- function(tick){
     )
     #upper_lim <- unname(quantile(time_series_df, 0.98))[1]
     #lower_lim <- unname(quantile(time_series_df, 0.02))[1]
-    #time_series_df <- time_series_df %>% subset(market.Cap < upper_lim & market.Cap > lower_lim)
+    #time_series_df <- time_series_df %>% subset(market.Cap < upper_lim) %>% subset(market.Cap > lower_lim)
     return(time_series_df)
 }
 shinyServer(function(input, output) {
@@ -83,6 +86,7 @@ shinyServer(function(input, output) {
         input$evaluate
         isolate(data.frame(
             'Company.name'=as.character(input$Company.name),
+            'Sector'=as.factor(input$sector),
             'Consolidated.income'=as.integer(input$Consolidated.income),
             'Dividend.payments'=as.integer(input$Dividend.payments),
             'Stock.based.compensation'=as.integer(input$Stock.based.compensation),
@@ -93,16 +97,17 @@ shinyServer(function(input, output) {
             'R.D.Expenses'=as.integer(input$R.D.Expenses),
             'Total.debt'=as.integer(input$Total.debt),
             'Long.term.debt'=as.integer(input$Long.term.debt),
+            'cluster'=as.numeric(1),
             'Current.Market.Cap'=as.integer(input$Current.Market.Cap)))
     })
     
     
     
-    text <- eventReactive(input$evaluate_tick, {
+    ticker_pred <- eventReactive(input$evaluate_tick, {
         if (input$ticker %in% tickers$symbols) {
-            current_mc <- round((fill_ticker_df(input$ticker))$Current.Market.Cap)
-            rint <- runif(1,0.95,1.05)
-            pred <- round(rint-1,4)*100
+            data <- fill_ticker_df(input$ticker, input$sector_tick)
+            current_mc <- data$Market.Cap[1]
+            pred <- predict(model, newdata=data, type=)
             if (pred < 1){
                 diff <- '% lower '
             } else {
@@ -146,10 +151,41 @@ shinyServer(function(input, output) {
                     theme(plot.title = element_text(hjust = 0.5)) +
                     theme_bw())
     })
+    
+    manual_pred <- eventReactive(input$evaluate_man, {
+            current_mc <- input$Current.Market.Cap
+            rint <- runif(1,0.95,1.05)
+            pred <- round(rint-1,4)*100
+            if (pred < 1){
+                diff <- '% lower '
+            } else {
+                diff <- '% higher '
+            }
+            if (pred/current_mc >= 1.025){
+                rec <- 'a strong buy'
+            } else if(pred/current_mc > 1.01 & pred/current_mc < 1.025){
+                rec <- 'a weak buy.'
+            } else if (pred/current_mc > 0.99 & pred/current_mc <= 1.01){
+                rec <- 'to hold.'
+            } else if (pred/current_mc > 0.975 & pred/current_mc <= 0.99){
+                rec <- 'a weak sell.'
+            } else if( pred/current_mc <= 0.975){
+                rec <- 'a strong sell.'
+            }
+            isolate(local(paste('The current market cap is: $',
+                                current_mc,
+                                '. The predicted market cap is ',
+                                abs(pred),
+                                diff,
+                                'than the current market cap.',
+                                'The recommendation for this stock is ',
+                                rec,
+                                sep = '')))
 
+    })
     
     output$prediction_tick <- renderText({
-        text()
+        ticker_pred()
     })
     output$time_series <- renderPlot({
         if (input$ticker %in% tickers$symbols) {
