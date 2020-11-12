@@ -110,6 +110,7 @@ Supervised learning was performed using four algorithms: XGBoost, Random Forest,
 Due to its accuracy, size, and speed in predicting, we chose the XGBoost model to include in our application. The application's main function is to provide a recommendation for a stock based on the financial information released by the company. The application is built to be used by financial advisers and portfolio managers. The main page allows the user to input a ticker ID. If the ID is in the database, the application will pull the latest financial data for the company, and run the model on that data. The application then compares the predicted market cap with the current market cap and provides a recommendation based on the difference. If the ID is not in the database, the user can manually enter the financial data for the company in order to produce a recommendation. The application uses data provided by the API from [https://financialmodelingprep.com/](https://financialmodelingprep.com/). The application is limited by the availability of the financial data and the restrictions provided by the free account on financialmodelingprep.com. For a full deployment, a paid account would be needed.
 
 The application can be found here [https://colin-green.shinyapps.io/stock-evaluator/](https://colin-green.shinyapps.io/stock-evaluator/)
+
 # Results
 
 ```{r create a table describing the columns and rows, echo=FALSE, message=FALSE}
