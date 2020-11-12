@@ -10,11 +10,18 @@
 library(shiny)
 library(httr)
 library(dplyr)
-#load in tickers
+library(ggplot2)
+library(scales)
+#remove sci notation
 options(scipen = 999)
+#load in tickers
 tickers <- read.csv('tickers.csv')
+#load in model
 model <- readRDS('XGB_model_albina_updated.RDS')
-fill_ticker_df <- function(tick, sect){
+#load in cluster info
+cluster_info <- read.csv('clusters.csv')
+#function to retrieve financial info if ticker is selected
+fill_ticker_df <- function(tick){
     params <- list('datatype'='json')
     apikey <- 'apikey=81419012a8f4bf777c342c25e2ddaf77'
     url <-  'https://financialmodelingprep.com/api/v3/'
@@ -34,7 +41,7 @@ fill_ticker_df <- function(tick, sect){
         'R.D.Expenses'=as.integer(0),
         'Total.debt'=as.integer(0),
         'Long.term.debt'=as.integer(0),
-        'Sector'=as.factor(''),
+        'Sector'=as.character(''),
         'cluster'=as.numeric(1),
         'Current.Market.Cap'=as.integer(0)
         )
@@ -45,7 +52,7 @@ fill_ticker_df <- function(tick, sect){
         balance_res <- GET(url=balance_url, query=params)
         income_res <- GET(url=income_url, query=params)
         ticker_data$ticker[1] <- as.character(tick)
-        ticker_data$Consolidated.income[1] <- content(income_res)[[1]]$netIncome
+        ticker_data$Consolidated.Income[1] <- content(income_res)[[1]]$netIncome
         ticker_data$Dividend.payments[1] <- content(cash_res)[[1]]$dividendsPaid
         ticker_data$Stock.based.compensation[1] <- content(cash_res)[[1]]$stockBasedCompensation
         ticker_data$Income.Tax.Expense[1] <- content(income_res)[[1]]$incomeTaxExpense
@@ -55,12 +62,12 @@ fill_ticker_df <- function(tick, sect){
         ticker_data$R.D.Expenses[1] <- content(income_res)[[1]]$researchAndDevelopmentExpenses
         ticker_data$Total.debt[1] <- content(balance_res)[[1]]$totalDebt
         ticker_data$Long.term.debt[1] <- content(balance_res)[[1]]$longTermDebt
-        ticker_data$Sector[1] <- as.factor(sect)
         ticker_data$Current.Market.Cap[1] <- content(mc_res)[[1]]$marketCap
     }
     return(ticker_data)
 }
 
+#function that pulls the historical market cap info
 fill_time_series_df <- function(tick){
     params <- list('datatype'='json')
     apikey <- 'apikey=81419012a8f4bf777c342c25e2ddaf77'
@@ -75,62 +82,73 @@ fill_time_series_df <- function(tick){
         'date'=as.Date(date_list,'%Y-%m-%d'),
         'market.Cap'=(as.numeric(mc_list)/10^9)
     )
-    #upper_lim <- unname(quantile(time_series_df, 0.98))[1]
-    #lower_lim <- unname(quantile(time_series_df, 0.02))[1]
-    #time_series_df <- time_series_df %>% subset(market.Cap < upper_lim) %>% subset(market.Cap > lower_lim)
+    upper_lim <- unname(quantile(time_series_df$market.Cap, 0.98))[1]
+    lower_lim <- unname(quantile(time_series_df$market.Cap, 0.02))[1]
+    time_series_df <- time_series_df %>% subset(market.Cap < upper_lim) %>% subset(market.Cap > lower_lim)
     return(time_series_df)
 }
 shinyServer(function(input, output) {
 
-    inputData <- reactive({
+    inputData <- eventReactive(input$evaluate_man, {
         input$evaluate
         isolate(data.frame(
-            'Company.name'=as.character(input$Company.name),
-            'Sector'=as.factor(input$sector),
-            'Consolidated.income'=as.integer(input$Consolidated.income),
-            'Dividend.payments'=as.integer(input$Dividend.payments),
-            'Stock.based.compensation'=as.integer(input$Stock.based.compensation),
-            'Income.Tax.Expense'=as.integer(input$Income.Tax.Expense),
-            'Retained.earnings..deficit.'=as.integer(input$Retained.earnings..deficit),
-            'Operating.Cash.Flow'=as.integer(input$Operation.Cash.Flow),
-            'Operating.Expenses'=as.integer(input$Operating.Expenses),
-            'R.D.Expenses'=as.integer(input$R.D.Expenses),
-            'Total.debt'=as.integer(input$Total.debt),
-            'Long.term.debt'=as.integer(input$Long.term.debt),
+            'Sector'=input$sector,
+            'Consolidated.Income'=as.numeric(input$Consolidated.Income),
+            'Dividend.payments'=as.numeric(input$Dividend.payments),
+            'Stock.based.compensation'=as.numeric(input$Stock.based.compensation),
+            'Income.Tax.Expense'=as.numeric(input$Income.Tax.Expense),
+            'Retained.earnings..deficit.'=as.numeric(input$Retained.earnings..deficit.),
+            'Operating.Cash.Flow'=as.numeric(input$Operating.Cash.Flow),
+            'Operating.Expenses'=as.numeric(input$Operating.Expenses),
+            'R.D.Expenses'=as.numeric(input$R.D.Expenses),
+            'Total.debt'=as.numeric(input$Total.debt),
+            'Long.term.debt'=as.numeric(input$Long.term.debt),
             'cluster'=as.numeric(1),
-            'Current.Market.Cap'=as.integer(input$Current.Market.Cap)))
+            'Current.Market.Cap'=as.numeric(input$Current.Market.Cap)))
     })
-    
     
     
     ticker_pred <- eventReactive(input$evaluate_tick, {
         if (input$ticker %in% tickers$symbols) {
-            data <- fill_ticker_df(input$ticker, input$sector_tick)
-            current_mc <- data$Market.Cap[1]
-            pred <- predict(model, newdata=data, type=)
-            if (pred < 1){
+            pred_data <- fill_ticker_df(input$ticker)
+            if (input$ticker %in% cluster_info$X){
+                index <- which(cluster_info$X==input$ticker)[1]
+                cluster <- as.numeric(cluster_info$cluster[[index]])
+            } else {
+                cluster <- as.numeric(1)
+            }
+            sector <- input$sector_tick
+            pred_data <- pred_data %>% mutate(sector=sector)
+            pred_data <- pred_data %>% mutate(cluster=cluster)
+            pred_data$cluster <- as.factor(pred_data$cluster)
+            pred_data$sector <- as.factor(pred_data$sector)
+            current_mc <- pred_data$Current.Market.Cap[1]
+            pred <- predict(model, newdata=pred_data)
+            percent_diff <- round(1-(pred-current_mc)/current_mc,4)*100
+            if (pred < current_mc){
                 diff <- '% lower '
             } else {
                 diff <- '% higher '
             }
-            if (pred/current_mc >= 1.025){
+            if (percent_diff >= 1.05){
                     rec <- 'a strong buy'
-            } else if(pred/current_mc > 1.01 & pred/current_mc < 1.025){
+            } else if(percent_diff > 1.02 & percent_diff < 1.05){
                     rec <- 'a weak buy.'
-            } else if (pred/current_mc > 0.99 & pred/current_mc <= 1.01){
+            } else if (percent_diff > 0.98 & percent_diff <= 1.02){
                     rec <- 'to hold.'
-            } else if (pred/current_mc > 0.975 & pred/current_mc <= 0.99){
+            } else if (percent_diff > 0.95 & percent_diff <= 0.98){
                     rec <- 'a weak sell.'
-            } else if( pred/current_mc <= 0.975){
+            } else if(percent_diff <= 0.95){
                     rec <- 'a strong sell.'
             }
-            isolate(local(paste('The current market cap is: $',
-                                current_mc,
+            mc_as_dollar <- dollar(current_mc)
+            isolate(local(paste('The current market cap is: ',
+                                mc_as_dollar,
                                 '. The predicted market cap is ',
-                                abs(pred),
+                                abs(percent_diff),
                                 diff,
                                 'than the current market cap.',
-                                'The recommendation for this stock is ',
+                                ' The recommendation for this stock is ',
                                 rec,
                                 sep = '')))
         } else {
@@ -139,12 +157,12 @@ shinyServer(function(input, output) {
     })
     
     time_series_plot <- eventReactive(input$evaluate_tick, {
-        data <- fill_time_series_df(input$ticker)
-        lower <- 0.95*min(data$market.Cap)
-        upper <- 1.05*max(data$market.Cap)
-        isolate(data %>% 
+        mc_data <- fill_time_series_df(input$ticker)
+        lower <- 0.95*min(mc_data$market.Cap)
+        upper <- 1.05*max(mc_data$market.Cap)
+        isolate(mc_data %>% 
                     ggplot(aes(x=date, y=market.Cap)) +
-                    geom_line(color='red', size=2) + geom_point(size=3) +
+                    geom_line(color='red', size=2) +
                     ylim(lower,upper) +
                     ggtitle(input$ticker) +
                     labs(x='Date', y='Market Capitalization (in billions $)') +
@@ -153,43 +171,51 @@ shinyServer(function(input, output) {
     })
     
     manual_pred <- eventReactive(input$evaluate_man, {
-            current_mc <- input$Current.Market.Cap
-            rint <- runif(1,0.95,1.05)
-            pred <- round(rint-1,4)*100
-            if (pred < 1){
+            pred_data <- inputData()
+            pred_data$Sector <- as.factor(pred_data$Sector)
+            pred_data$cluster <- as.factor(pred_data$cluster)
+            pred <- predict(model, newdata=pred_data)
+            current_mc <- pred_data$Current.Market.Cap[1]
+            percent_diff <- round(1-(pred-current_mc)/current_mc,4)*100
+            if (pred < current_mc){
                 diff <- '% lower '
             } else {
                 diff <- '% higher '
             }
-            if (pred/current_mc >= 1.025){
+            if (percent_diff >= 1.05){
                 rec <- 'a strong buy'
-            } else if(pred/current_mc > 1.01 & pred/current_mc < 1.025){
+            } else if(percent_diff > 1.02 & percent_diff < 1.05){
                 rec <- 'a weak buy.'
-            } else if (pred/current_mc > 0.99 & pred/current_mc <= 1.01){
+            } else if (percent_diff > 0.98 & percent_diff <= 1.02){
                 rec <- 'to hold.'
-            } else if (pred/current_mc > 0.975 & pred/current_mc <= 0.99){
+            } else if (percent_diff > 0.95 & percent_diff <= 0.98){
                 rec <- 'a weak sell.'
-            } else if( pred/current_mc <= 0.975){
+            } else if(percent_diff <= 0.95){
                 rec <- 'a strong sell.'
             }
-            isolate(local(paste('The current market cap is: $',
-                                current_mc,
+            mc_as_dollar <- dollar(current_mc)
+            isolate(local(paste('The current market cap is: ',
+                                mc_as_dollar,
                                 '. The predicted market cap is ',
-                                abs(pred),
+                                abs(percent_diff),
                                 diff,
                                 'than the current market cap.',
-                                'The recommendation for this stock is ',
+                                ' The recommendation for this stock is ',
                                 rec,
                                 sep = '')))
-
     })
     
     output$prediction_tick <- renderText({
         ticker_pred()
     })
+    
     output$time_series <- renderPlot({
         if (input$ticker %in% tickers$symbols) {
         time_series_plot()}
+    })
+    
+    output$prediction_man <- renderText({
+        manual_pred()
     })
 
 })

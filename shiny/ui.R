@@ -9,7 +9,7 @@
 
 library(shiny)
 library(shinythemes)
-sectors <- c('Basic Materials', 'Communication Services', 'Consumer Cyclical',
+sectors <- list('Basic Materials', 'Communication Services', 'Consumer Cyclical',
              'Consumer Defensive', 'Energy', 'Financial Services', 'Healthcare',
              'Industrials', 'Real Estate', 'Technology', 'Utilities')
 # Define UI for application that draws a histogram
@@ -42,17 +42,13 @@ shinyUI(fluidPage(
         tabPanel('Manual Entry',
                  fluidRow(
                      column(3,
-                            textInput('Company.name',
-                                      'Company Name'),
-                            textInput('Consolidated.Income',
-                                      'Consolidated Income'),
-                            textInput('Dividend.payments',
-                                      'Dividend Payments'),
                             selectInput('sector',
                                         'Sector',
                                         sectors),
-                            actionButton('evaluate_man',
-                                         'Evaluate')),
+                            textInput('Consolidated.Income',
+                                      'Consolidated Income'),
+                            textInput('Dividend.payments',
+                                      'Dividend Payments')),
                      column(3,
                             textInput('Stock.based.compensation',
                                       'Stock Based Compensation'),
@@ -73,7 +69,9 @@ shinyUI(fluidPage(
                             textInput('Long.term.debt',
                                       'Long Term Debt'),
                             textInput('Current.Market.Cap',
-                                      'Current Market Cap')),
+                                      'Current Market Cap'),
+                            actionButton('evaluate_man',
+                                         'Evaluate')),
                  ),
                  
                  textOutput('prediction_man')
