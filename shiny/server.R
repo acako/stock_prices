@@ -13,6 +13,7 @@ library(dplyr)
 library(ggplot2)
 library(scales)
 library(caret)
+library(xgboost)
 #remove sci notation
 options(scipen = 999)
 #load in tickers
@@ -125,14 +126,14 @@ shinyServer(function(input, output) {
             pred_data$sector <- as.factor(pred_data$sector)
             current_mc <- pred_data$Current.Market.Cap[1]
             pred <- predict(model, newdata=pred_data)
-            percent_diff <- round(1-(pred-current_mc)/current_mc,4)*100
+            percent_diff <- round((pred-current_mc)/current_mc,4)*100
             if (pred < current_mc){
                 diff <- '% lower '
             } else {
                 diff <- '% higher '
             }
             if (percent_diff >= 1.05){
-                    rec <- 'a strong buy'
+                    rec <- 'a strong buy.'
             } else if(percent_diff > 1.02 & percent_diff < 1.05){
                     rec <- 'a weak buy.'
             } else if (percent_diff > 0.98 & percent_diff <= 1.02){
