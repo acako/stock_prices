@@ -12,6 +12,7 @@ library(httr)
 library(dplyr)
 library(ggplot2)
 library(scales)
+library(caret)
 #remove sci notation
 options(scipen = 999)
 #load in tickers
