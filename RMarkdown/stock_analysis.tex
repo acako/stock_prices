@@ -249,8 +249,8 @@ then 1/3 of the data as missing values were removed. For the rest of the
 columns, data imputation was performed using the MICE package in R. We
 used the CART method to impute the data. CART imputes values by using
 classification and regression trees. Four columns were left with missing
-values after imputation. Those columns were removed leaving a dataset
-with a total of 62 columns.
+values after imputation. Those columns were removed leaving the final
+dataset with a total of 62 columns.
 
 \hypertarget{feature-selection}{%
 \subsection{Feature Selection}\label{feature-selection}}
@@ -261,11 +261,12 @@ Decision tree is a classification algorithm used for classification
 problems, as well as detecting variable importance in a dataset. The top
 10 important variables from the decision tree were selected as the
 features. They were used to run k-means unsupervised learning, which
-determined 4 clusters of data. Then, supervised learning dataset was
-selected as the top 10 variables selected from the decision tree plus
-the cluster \# (as a categorical variable) and the Sector of the stock.
-Thus, the unsupervised learning data contained 10 features, while the
-supervised learning data contained 12.
+determined 4 clusters of data. Then, for the supervised learning
+dataset, we used the top 10 variables selected from the decision tree
+plus the cluster number obtained from k-means model (as a categorical
+variable) and the Sector of the stock. Thus, the unsupervised learning
+data contained 10 features, while the supervised learning data contained
+12.
 
 \begin{longtable}[]{@{}lll@{}}
 \caption{Common Predictor variables}\tabularnewline
@@ -306,7 +307,7 @@ the observations.
 \subsection{Unsupervised Learning}\label{unsupervised-learning}}
 
 The k-Means algorithm was performed in order to cluster the data before
-supervised learning. The number of clusters was evaluated by plotting
+supervised learning. The number of clusters were evaluated by plotting
 the within-cluster sum of squares (WSS) against the number of clusters
 (k). The optimal number of clusters was chosen based on a combination of
 the `elbow method' and domain knowledge.
@@ -314,25 +315,24 @@ the `elbow method' and domain knowledge.
 \hypertarget{supervised-learning}{%
 \subsection{Supervised Learning}\label{supervised-learning}}
 
-Supervised learning was performed using four algorithms: XGBoost, Random
-Forest, Lasso Model and GBM Model. XGBoost is a very powerful algorithm
-which drives fast learning and offers efficient usage of storage.
-XGBoost uses ensemble learning, which is a systematic solution that
-combines the predictive power of multiple learners. It outputs a single
-model that gives the combined output from many models. This allows the
-opportunity to not rely on the results of a single machine learning
-model.In this particular model, the trees are built sequentially, such
-that the next tree focuses on reducing the errors of the previous tree.
-Random forest is another supervised learning model that uses
-``ensemble'' method to fit many decision trees by using a subset of the
-rows and then taking the ``mode'' of the predicted class. GBM, which
-stands for Gradient Boosting Machine, is also a gradient boosting
-algorithm that works similar to XGBoost. However, XGBoost has more
-tuning parameters, thus both algorithms were chosen for comparison. All
-models were ran and they were evaluated using the k-fold cross
-validation method. Three accuracy metrics: Root Mean-Squared Error
-(RMSE), Pearson correlation (\(R^2\)), and Mean Average Error (MAE) were
-used to chose the final model.
+Supervised learning was performed using three algorithms: XGBoost,
+Random Forest and GBM Model. XGBoost is a very powerful algorithm which
+drives fast learning and offers efficient usage of storage. XGBoost uses
+ensemble learning, which is a systematic solution that combines the
+predictive power of multiple learners. It outputs a single model that
+gives the combined output from many models. This allows the opportunity
+to not rely on the result of a single machine learning model. In this
+particular model, the trees are built sequentially, such that the next
+tree focuses on reducing the errors of the previous tree. Random forest
+is another supervised machine learning model that uses the ``ensemble''
+method to fit many decision trees by using a subset of the rows and then
+taking the ``mode'' of the predicted class. GBM, which stands for
+Gradient Boosting Machine, is also a gradient boosting algorithm that
+works similar to XGBoost. However, XGBoost has more tuning parameters,
+thus both algorithms were chosen for comparison. All models were ran and
+then evaluated using the k-fold cross validation method. Three accuracy
+metrics: Root Mean-Squared Error (RMSE), Pearson correlation (\(R^2\)),
+and Mean Average Error (MAE) were used to chose the final model.
 
 \hypertarget{deployment}{%
 \subsection{Deployment}\label{deployment}}
@@ -343,9 +343,9 @@ to provide a recommendation for a stock based on the financial
 information released by the company. The application is built to be used
 by financial advisers and portfolio managers. The main page allows the
 user to input a ticker ID. If the ID is in the database, the application
-will pull the latest financial data for the company, and run the model
-on that data. The application then compares the predicted market cap
-with the current market cap and provides a recommendation based on the
+will pull the latest financial data for the company and run the model on
+that data. The application then compares the predicted market cap with
+the current market cap and provides a recommendation based on the
 difference. If the ID is not in the database, the user can manually
 enter the financial data for the company in order to produce a
 recommendation. The application uses data provided by the API from
@@ -354,7 +354,7 @@ the availability of the financial data and the restrictions provided by
 the free account on financialmodelingprep.com. For a full deployment, a
 paid account would be needed.
 
-The application can be found here
+The application can be found here:
 \url{https://colin-green.shinyapps.io/stock-evaluator/} \# Results
 
 \begin{longtable}[]{@{}lll@{}}
@@ -478,15 +478,22 @@ market capitalization for a company\strut
 \hypertarget{data-preparation}{%
 \subsection{Data Preparation}\label{data-preparation}}
 
+Five containing stock information from a different years (2014, 2015,
+2016, 2017 and 2018) were merged into one dataset. Analysis was
+performed on the data and after some research, 66 columns were selected
+as fundamental columns needed for analysis. The non-fundamental columns
+were removed from the dataset. A column was added for the year that the
+dataset came from.
+
 \hypertarget{missing-values}{%
 \subsection{Missing Values}\label{missing-values}}
 
-After we finished the first step of data cleaning, we want to do the
-data validation. For missing values, as the plot shown, a lot of
-observations make up the majority of the missing data and we decided to
-remove observations that have more than a third of the columns NA. After
-we removed those observations, we set the sector and year columns as a
-factor and saved the new data set into a new CSV files for further data
+After preparing the dataset, we assessed the data for missing values. As
+shown in the plot, a few columns had a large amount of missing data. We
+decided to remove any columns that were missing more then 1/3 of the
+data. This left a total of 66 columns on the dataset. After we removed
+the missing data columns, we set the Sector and year columns as a factor
+and saved the new data set into a new CSV file for further data
 exploration.
 
 \begin{figure}
@@ -500,21 +507,23 @@ exploration.
 
 To account for missing values, we chose to use the CART (Classification
 and Regression Trees) method of imputation. After imputation, 4 columns
-still have missing values, which were then subsequently removed.
+still had missing values, which were then subsequently removed.
 
 \hypertarget{correlation-plot}{%
 \subsection{Correlation Plot}\label{correlation-plot}}
 
-There were 62 columns after we finished data cleaning, and we want to
-select the important features to do modeling. We performed a correlation
-analysis based on Pearson's coefficient between each numeric predictor
-first. We considered a \textbar correlation\textbar{} \textgreater{}
-0.8, with p \textless{} 0.05 as a significant correlation.
-\hyperref[sec:fig3]{Figure 3} demonstrates significant correlation
-between many of our predictor variables. However, due to the large
-amount of variables, the correlation plot was uninterpretable if we try
-to plot all the variables, therefore, we tried to filtered the
-correlation plot, keeping only variables that had a correlation with
+There were 62 columns after we finished data cleaning and we wanted to
+select only significant features for our target variable before
+modeling. Before focusing on feature selection, we had to check for
+correlation between the independent variables. We performed a
+correlation analysis based on Pearson's coefficient between each numeric
+predictor first. We considered a \textbar correlation\textbar{}
+\textgreater{} 0.8, with p \textless{} 0.05 as a significant
+correlation. \hyperref[sec:fig3]{Figure 3} demonstrates significant
+correlation between many of our predictor variables. However, due to the
+large amount of variables, the correlation plot was not interpretable if
+all the variables were plotted together. Therefore, we filtered the
+correlation plot by keeping only variables that had a correlation with
 absolute value greater than 0.8.
 
 \begin{figure}
@@ -529,10 +538,9 @@ absolute value greater than 0.8.
 \hypertarget{data-distribution}{%
 \subsection{Data Distribution}\label{data-distribution}}
 
-we then performed the distribution plot for all the columns to check the
-data distribution, to observe the means, and check for outliers. Most
-variables were not normally distributed and had a clear skew. In Figure
-3, we show a subset of the variable distributions.
+We to observe the means, and check for outliers. Most variables were not
+normally distributed and had a clear skew. In Figure 3, we show a subset
+of the variable distributions.
 
 \begin{figure}
 
@@ -546,10 +554,10 @@ variables were not normally distributed and had a clear skew. In Figure
 \hypertarget{feature-selection-1}{%
 \subsection{Feature Selection}\label{feature-selection-1}}
 
-In order to do our feature selection, we ran a decision tree model to
-determine important variables within our dataset. Below are plots
-showing the importance of each variable as well as their correlations
-with one another.
+Since there were 62 columns on our dataset, we ran a decision tree model
+to determine the most important variables to be included in modelling.
+Below are plots showing the importance of each variable. We also ran a
+correlation to ensure that the features were not highly correlated.
 
 \begin{figure}
 
@@ -610,11 +618,13 @@ Expense and Operating Cash Flow had more negligible contribution.
 \hypertarget{k-means-clustering}{%
 \subsection{K Means Clustering}\label{k-means-clustering}}
 
-The `elbow method' was first performed to determine an optimal number of
-k clusters. However, there was no significant drop in within-cluster sum
-of squares with k besides k=2. As two clusters did not provide much
-discrimination for our observations, we instead used k=4 as the final
-number of clusters.
+The ``silhouette'' method was first performed to determined number of
+clusters. It suggested a number of cluster of 2 (k=2). The `elbow
+method' was then performed to determine an optimal number of k clusters.
+However, there was no significant drop in within-cluster sum of squares
+with k besides k=2. As two clusters did not provide much discrimination
+for our observations, we instead used k=4 as the final number of
+clusters.
 
 \begin{figure}
 
@@ -711,22 +721,18 @@ partially explained by a split between the distribution of company size.
 \hypertarget{modeling}{%
 \subsection{Modeling}\label{modeling}}
 
-The k-fold cross-validation method evaluates the model performance on
-different subsets of the training data calculates the average prediction
-error rate. We used k = 10 for our project,and this method was used
-instead of the simple train-test-split as it gives a more valid
-estimation of model effectiveness.
+K-fold cross-validation method was used to train the models instead of
+the simple train-test-split for this project, as it gives a more valid
+estimation of model effectiveness. The k-fold cross-validation method
+evaluates the model performance on different subsets of the training
+data and calculates the average prediction error rate. For this value
+k=10 was used on all models.
 
 \hypertarget{xgboost}{%
 \subsection{XGBoost}\label{xgboost}}
 
-\begin{verbatim}
-For the XGBoost model, we used nrounds, eta, max_depth as tuning parameters to increase the accuarcy of the final model and reduce errors.
-\end{verbatim}
-
-The model used tuning parameter `subsample' as a constant at a value of
-0.8, and RMSE was used to select the optimal model using the smallest
-value. The final values used for the model were nrounds = 200,
+The XGBoost model was ran and was parametrized using grid method. The
+final parameter values used by the best model were nrounds = 200,
 max\_depth = 6, eta = 0.1, gamma = 0, colsample\_bytree = 0.5,
 min\_child\_weight = 1 and subsample = 0.8.
 
@@ -758,27 +764,31 @@ min\_child\_weight = 1 and subsample = 0.8.
 \hypertarget{gradient-boosting}{%
 \subsection{Gradient Boosting}\label{gradient-boosting}}
 
-The gradient boosting model was tuned by several different parameters.
-The final values used for the model were n.trees = 600,
-interaction.depth = 9, shrinkage = 0.1 and n.minobsinnode = 20
+The gradient boosting model was tuned by several parameters. The final
+values used for the model were n.trees = 600, interaction.depth = 9,
+shrinkage = 0.1 and n.minobsinnode = 20
 
 \begin{center}\includegraphics{stock_analysis_files/figure-latex/gradient boosting-1} \end{center}
+
+\#\#Random Forest The Random Forest model was ran using its normal
+parameters. The model was not tuned due to the long running time and the
+limited timeframe of this project.
 
 \hypertarget{model-selection}{%
 \subsection{Model Selection}\label{model-selection}}
 
 All models found \(Consolidated Income\) and
 \(Stock based Compensation\) and \(Dividend Payments\) to be important
-predictors of Market.Cap. Mean Absolute Error (MAE) tells the average
-error of the variable we want to predict. Root Mean-Squared Error (RMSE)
-is similar with MAE but it is more useful when we are interested in
-fewer larger errors over many small errors. Overall, we prioritize model
-stability and thus prioritized RMSE over MAE. \(R^2\) computes how much
-better the regression fits the data than the mean line, which gives an
-overall score.For predicting market cap, we desired a model with the
-lowest RMSE and MAE to keep the high accuracy of prediction. The XGBoost
-model had the highest \(R^2\) as well as the lowest RMSE and MAE, thus,
-it was chosen for deployment.
+predictors of Market.Cap. Mean Absolute Error (MAE) shows the average
+error of the predicted variable. Root Mean-Squared Error (RMSE) is
+similar with MAE but it is more useful when we are interested in fewer
+large errors over many small errors. Overall, we prioritized model
+stability by prioritizing RMSE over MAE. \(R^2\) computes how well the
+regression model fits the data. The higher the \(R^2\) value, the better
+the model fits the data. For predicting market cap, we desired a model
+with the lowest RMSE and MAE to keep the high accuracy of prediction.
+The XGBoost model had the highest \(R^2\) as well as the lowest RMSE and
+MAE, thus, it was chosen for deployment.
 
 \begin{longtable}[]{@{}llrl@{}}
 \caption{Model Accuracy}\tabularnewline
@@ -799,8 +809,108 @@ gradient\_boosting & 1.18e+10 & 0.88 & 2.92e+09\tabularnewline
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
-\hypertarget{discussion-1}{%
-\section{Discussion}\label{discussion-1}}
+This project focused on applying unsupervised and supervised learning on
+stock data. We merged 5 datasets from different years of stock data with
+the same attributes, containing a total of 225 columns. We cleaned the
+data by adding by chosing fundamental columns and imputing missing
+values using the MICE package. We then ran a decision tree model which
+chose the most important variables which were used as the features for
+our modeling. Unsupervised learning using the K-means algorithm was used
+to cluster the data into 4 different clusters. Cluster 1 was the largest
+and had 19759 observations. It included small-medium sized companies,
+where 89\% of the observations fell under a market cap of \$10 billion.
+Cluster 2 was the smallest with 35 observations and it included the
+large high-tech companies, such as Amazon, Apple, Facebook and Google.
+Cluster 3 had 126 observations and included majority of the big banks
+such as Bank of America and large energy corporations such as Chevron.
+Cluster 4 had 568 observations similar sector distribution to cluster
+one, however, the companies all had a large market cap. In this cluster
+20 large pharmaceutical and healthcare companies were found. It was
+interesting to see how well the clustering algorithm was able to cluster
+the data in different sections based on the type of company they were,
+their market cap and other attributes. However, it is notable to discuss
+that the clusters were not equally distributed and cluster 1 was harder
+to interpret due to the large number of observations. A larger number of
+cluster could be considered in future work in order to make the clusters
+smaller and more interpretable. It is important to note that both the
+elbow method and silhouette method to chose the number of clusters
+suggested a cluster number of 2, which when was ran resulted in a very
+large cluster and a negligible second cluster. Thus, we observed that
+algorithms determining cluster numbers should be used as a guide and
+tuned when needed. We also learned that it is important to change the
+number of cluster to make the data as interpretable as possible.
+Supervised learning was applied on the 10 important features plus Sector
+and cluster \# as features. Three algorithms, XGBoost, GBM and Random
+Forest were ran using the cross-validation method. XGBoost and GBM
+models were tuned with several parameters, while Random Forest was not
+due to its high running time. The models were evaluated using \(R^2\),
+RMSE and MAE and XGBoost was the best performer, with Random Forest
+being the second best and GBM being the worst performer. It is important
+to note that Random Forest performed almost as well as XGBoost without
+tuning, thus, if the model was tuned it could have achieved higher
+performance then the XGBoost. However, this was not possible due to the
+short time frame of this project and the running time of the model.
+Therefore, we realized that it is important to consider modeling running
+time and project timeline when choosing our models. XGBoost achieved a
+\(R^2\) value of 0.9010295. This means that the std (standard deviation)
+of the error of the regression model is 1/3 of the std of the error that
+would be achieved with a constant-only model (a regression model without
+predictors). Thus the model is quite accurate in prediction, however,
+there is still error present. A higher \(R^2\) value and lower RMSE and
+MAE values could have been achieved if the model parameters were tuned
+further. However, due to the limited time frame, the model's parameters
+were tuned only by values, rather then value range. Using value range
+instead of values on the grid tuning algorithm would have allowed for
+more possibility of achieving a more highly accurate model. Our project
+had several limitations. First of all the data was old, from 2014-2018
+and could not reflect the situation of the stocks currently. In
+addition, it is important to note that COVID-19 has dramatically changed
+the economy and affected the prices of stocks. Thus, while using this
+app, users might not get a reflection of the current marketplace.
+Furthermore, the supervised learning gave many unbalanced clusters, one
+of them containing 19759 observations, which was hard to interpret.
+Thus, this could have given error in our interpretation of the cluster.
+In addition, these clusters were used in our modelling, thus the
+unbalanced or non-interpretable clusters could misguide the users.
+Ethical considerations It is important to note that this app contains
+data from 2014-2018, thus it is not to be used as a reflection of the
+current marketplace, considering the COVID-19 pandemic.
+
+\hypertarget{bibliography}{%
+\section{\texorpdfstring{Bibliography\\
+}{Bibliography }}\label{bibliography}}
+
+Advanced Technical Analysis Concepts {[}Internet{]}. Investopedia.
+{[}cited 2020 Nov 11{]}.~ Available from:
+\url{https://www.investopedia.com/advanced-technical-analysis-concepts-4689656/}
+Boyte-White C. Revenue vs.~Income: What's the Difference?
+{[}Internet{]}. Investopedia.~ {[}cited 2020 Nov 11{]}. Available
+from:~\url{https://www.investopedia.com/ask/answers/122214/what-difference-between-revenue-and-income.asp}
+Chen T, Guestrin C. Xgboost: A scalable tree boosting system.
+InProceedings of the 22nd acm sigkdd international conference on
+knowledge discovery and data mining 2016 Aug 13 (pp.~785-794).\\
+Hayes A. Price-to-Earnings Ratio -- P/E Ratio {[}Internet{]}.
+Investopedia. {[}cited 2020 Nov 11{]}. Available
+from:~\url{https://www.investopedia.com/terms/p/price-earningsratio.asp/}
+Majaski C. The Difference Between Fundamental vs.~Technical Analysis?
+{[}Internet{]}.~ Investopedia. {[}cited 2020 Nov 11{]}. Available
+from:~\url{https://www.investopedia.com/ask/answers/difference-between-fundamental-and-technical-analysis/}
+Staff I. Can Stocks have a negative price-to-earnings ratio?
+{[}Internet{]}. Investopedia. {[}cited 2020 Nov 11{]}. Available
+from:~\url{https://www.investopedia.com/ask/answers/05/negativeeps.asp}\\
+Strader TJ, Rozycki JJ, Root TH. Machine Learning Stock Market
+Prediction Studies: Review and Research Directions. 2017;28(4):22. Teng
+X, Wang T, Zhang X, Lan L, Luo Z. Enhancing Stock Price Trend Prediction
+via a Time-Sensitive Data Augmentation Method {[}Internet{]}. Vol. 2020,
+Complexity. Hindawi; 2020 {[}cited 2020 Nov 10{]}. p.~e6737951.
+Available
+from:~\url{https://www.hindawi.com/journals/complexity/2020/6737951/}
+The Complete List of Bank Stocks Trading on the NYSE \textbar{}
+TopForeignStocks.com {[}Internet{]}. {[}cited 2020 Nov 11{]}. Available
+from:~\url{https://topforeignstocks.com/stock-lists/the-complete-list-of-bank-stocks-trading-on-the-nyse-2/}
+Zhong X, Enke D. Predicting the daily return direction of the stock
+market using hybrid machine learning algorithms. Financ Innov. 2019
+Dec;5(1):1--20.
 
 
 
