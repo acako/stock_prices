@@ -45,7 +45,7 @@ Previous machine learning models that simulated stock market returns have largel
 
 ## Objective
 
-In this project, we apply machine learning and data science techniques to predict the market capitalization, which is how much company is worth on the stock market. Stock price can then be calculated by dividing market capitalization by total number of stocks issued. We also create an application using R shiny to be used as a guide for investors. This application would be used individuals interested in checking their stock analyses with a machine learning prediction. The application could be used by financial analysts, portfolio managers, or non-professional investors with an interest in fundamental analysis.
+In this project, we apply machine learning and data science techniques to predict the market capitalization, which is how much a company is worth on the stock market. Stock price can then be calculated by dividing market capitalization by total number of stocks issued. We also create an application using R shiny to be used as a guide by investors. This application would be used individuals interested in checking their stock analyses with a machine learning prediction. The application could be used by financial analysts, portfolio managers, or non-professional investors with an interest in fundamental analysis.
 
 # Methodology
 
@@ -79,10 +79,10 @@ library(xtable)
 ```
 
 ## Data Preprocessing
-The original dataset was obtained from Kaggle. Five datasets were combined together containing stock information for different years: 2014, 2015, 2016, 2017 and 2018, respectively. There were 225 columns in the original dataset. However, after curating the data, only 66 columns were chosen as fundamental columns and were included in the project. 
+The original dataset was obtained from Kaggle. Five datasets were combined together containing stock information for different years: 2014, 2015, 2016, 2017 and 2018, respectively. There were 225 columns in the original dataset. However, after curating the data, only 65 columns were chosen as fundamental columns and were included in the project. 
 
 ## Missingness
-The dataset was assessed for missing values. Any columns that had more then 1/3 of the data as missing values were removed. For the rest of the columns, data imputation was performed using the MICE package in R. We used the CART method to impute the data. CART imputes values by using classification and regression trees. Four columns were left with missing values after imputation. Those columns were removed leaving the final dataset with a total of 62 columns. 
+The dataset was assessed for missing values. Any columns that had more then 1/3 of the data as missing values were removed. For the rest of the columns, data imputation was performed using the MICE package in R. We used the CART method to impute the data. CART imputes values by using classification and regression trees. Four columns were left with missing values after imputation. Those columns were removed leaving the final dataset with a total of 61 columns. 
 
 ## Feature Selection
 It is important to note that this project contains both unsupervised and supervised learning. Decision Tree was used for feature selection. Decision tree is a classification algorithm used for classification problems, as well as detecting variable importance in a dataset. The top 10 important variables from the decision tree were selected as the features. They were used to run k-means unsupervised learning, which determined 4 clusters of data. Then, for the supervised learning dataset, we used the top 10 variables selected from the decision tree plus the cluster number obtained from k-means model (as a categorical variable) and the Sector of the stock. Thus, the unsupervised learning data contained 10 features, while the supervised learning data contained 12. 
@@ -93,7 +93,7 @@ predictors_type <- list('numeric', 'numeric', 'numeric', 'numeric', 'numeric', '
 predictors_df <- data.frame(matrix(unlist(predictors_list), nrow=10, byrow=TRUE), stringsAsFactors = FALSE)
 predictors_df <- predictors_df %>% mutate(blank = c(" "," "," "," "," "," "," "," "," "," "),Description = predictors_type)
 colnames(predictors_df) <- c("Variable", "             ", "Type")
-kable(predictors_df, format='pipe', caption = 'Common Predictor variables')
+kable(predictors_df, format='pipe', caption = 'Selected features')
 ```
 
 ## Principal Component Analysis
@@ -108,12 +108,9 @@ Supervised learning was performed using three algorithms: XGBoost, Random Forest
 ## Deployment
 Due to its accuracy, size, and speed in predicting, we chose the XGBoost model to include in our application. The application's main function is to provide a recommendation for a stock based on the financial information released by the company. The application is built to be used by financial advisers and portfolio managers. The main page allows the user to input a ticker ID. If the ID is in the database, the application will pull the latest financial data for the company and run the model on that data. The application then compares the predicted market cap with the current market cap and provides a recommendation based on the difference. If the ID is not in the database, the user can manually enter the financial data for the company in order to produce a recommendation. The application uses data provided by the API from [https://financialmodelingprep.com/](https://financialmodelingprep.com/). The application is limited by the availability of the financial data and the restrictions provided by the free account on financialmodelingprep.com. For a full deployment, a paid account would be needed.
 
-<<<<<<< HEAD
 The application can be found here: [https://colin-green.shinyapps.io/stock-evaluator/](https://colin-green.shinyapps.io/stock-evaluator/)
-=======
-The application can be found here [https://colin-green.shinyapps.io/stock-evaluator/](https://colin-green.shinyapps.io/stock-evaluator/)
+\newpage
 
->>>>>>> 672bad53dd5d1cd4923544546999149ecb7cd4ba
 # Results
 
 ```{r create a table describing the columns and rows, echo=FALSE, message=FALSE}
@@ -126,7 +123,7 @@ kable(datadictionary, format='pipe', caption = 'Data Dictionary')
 ```
 
 ## Data Preparation
-Five containing stock information from a different years (2014, 2015, 2016, 2017 and 2018) were merged into one dataset. Analysis was performed on the data and after some research, 66 columns were selected as fundamental columns needed for analysis. The non-fundamental columns were removed from the dataset. A column was added for the year that the dataset came from. 
+Five datasets containing stock information from a different years (2014, 2015, 2016, 2017 and 2018) were merged into one dataset. Analysis was performed on the data and after some research, 65 columns were selected as fundamental columns needed for analysis. The non-fundamental columns were removed from the dataset. A column was added for the year that the dataset came from. 
 ```{r data preparation,  echo=FALSE, message=FALSE}
 #load in the first file
 data_2014 <- read.csv('2014_Financial_Data.csv')
@@ -161,7 +158,7 @@ complete_data <- complete_data[complete_data$X != 'AMX', ]
 ```
 
 ## Missing Values
-After preparing the dataset, we assessed the data for missing values. As shown in the plot, a few columns had a large amount of missing data. We decided to remove any columns that were missing more then 1/3 of the data. This left a total of 66 columns on the dataset. After we removed the missing data columns, we set the Sector and year columns as a factor and saved the new data set into a new CSV file for further data exploration.
+After preparing the dataset, we assessed the data for missing values. As shown in the plot, a few columns had a large amount of missing data. We decided to remove any columns that were missing more then 1/3 of the data. This left a total of 65 columns on the dataset. After we removed the missing data columns, we set the Sector and year columns as a factor and saved the new data set into a new CSV file for further data exploration.
 
 ```{r missing values, echo=FALSE, message=FALSE, fig.cap='Missing values map before imputation', fig.align='center'}
 missing_plot(complete_data)
@@ -195,7 +192,7 @@ To account for missing values, we chose to use the CART (Classification and Regr
 ```
 
 ## Correlation Plot
-There were 62 columns after we finished data cleaning and we wanted to select only significant features for our target variable before modeling. Before focusing on feature selection, we had to check for correlation between the independent variables. We performed a correlation analysis based on Pearson's coefficient between each numeric predictor first. We considered a |correlation| > 0.8, with p < 0.05 as a significant correlation. \hyperref[sec:fig3]{Figure 3} demonstrates significant correlation between many of our predictor variables. 
+There were 61 columns after we finished data cleaning and we wanted to select only significant features for our target variable before modeling. Before focusing on feature selection, we had to check for correlation between the independent variables. We performed a correlation analysis based on Pearson's coefficient between each numeric predictor first. We considered a |correlation| > 0.8, with p < 0.05 as a significant correlation. Figure 2 demonstrates significant correlation between many of our predictor variables. 
 However, due to the large amount of variables, the correlation plot was not interpretable if all the variables were plotted together. Therefore, we filtered the correlation plot by keeping only variables that had a correlation with absolute value greater than 0.8.
 
 ```{r corrplot, echo=FALSE,fig.height=5, fig.width=5,fig.align='center', fig.cap='Correlogram of variables with |R| > 0.8'}
@@ -272,7 +269,7 @@ nCol <- 3
 <!-- ``` -->
 
 ## Feature Selection
-Since there were 62 columns on our dataset, we ran a decision tree model to determine the most important variables to be included in modelling. Below are plots showing the importance of each variable. We also ran a correlation to ensure that the features were not highly correlated.
+Since there were 61 columns on our dataset, we ran a decision tree model to determine the most important variables to be included in predicting market cap. Below are plots showing the importance of each variable. We also ran a correlation to ensure that the features were not highly correlated. The top 10 important variables were: consolidated income, dividend payments, stock based compensation, income tax expense, retained earnings deficit, operating cash flow, operating expenses, R & D expenses, total debt, and long term debt.
 ```{r variable importance,fig.height=5, fig.width=5,fig.align='center', fig.cap='Top 10 variable importance, determined by Decision Tree', echo=FALSE}
 tree_imp2 <- read.csv('tree_imp2.csv')
 par(mar=c(5,9,4,1)+.1)
@@ -298,7 +295,7 @@ ggcorrplot(cor$r, type = 'upper', p.mat = p.mat, sig.level = 0.05, lab = TRUE, l
 ```
 
 ## Principal Component Analysis
-We performed PCA to reduce the dimensionality of our feature dataset. The Scree plot shows the overall variance explained by each principal component. The top 5 dimensions explained approximately 90% of the total variance within the data. Individual datapoints involving large technology companies (Google, Apple, Amazon) had high contributions to the overall variance. R&D Expenses and Stock-based compensation were two variables with high contribution to variance, while Income Tax Expense and Operating Cash Flow had more negligible contribution.  
+We performed PCA to reduce the dimensionality of our feature dataset. The Scree plot (Figure 6) shows the overall variance explained by each principal component. The top 5 dimensions explained approximately 90% of the total variance within the data. Individual datapoints involving large technology companies (Google, Apple, Amazon) had high contributions to the overall variance (Figure 7). R&D Expenses and Stock-based compensation were two variables with high contribution to variance, while Income Tax Expense and Operating Cash Flow had more negligible contribution (Figure 8).  
 
 ```{r scree, message = FALSE, warning = FALSE, echo = FALSE, fig.cap= 'Scree plot', fig.height=3, fig.width=3,fig.align='center'}
 df_PCA <- read.csv('important.csv')
@@ -381,7 +378,7 @@ ggplot(df_updated[df_updated$cluster==1 & df_updated$`P/E` > -10 & df_updated$`P
 K-fold cross-validation method was used to train the models instead of the simple train-test-split for this project, as it gives a more valid estimation of model effectiveness. The k-fold cross-validation method evaluates the model performance on different subsets of the training data and calculates the average prediction error rate. For this value k=10 was used on all models.  
 
 ## XGBoost
-The XGBoost model was ran and was parametrized using grid method. The final parameter values used by the best model were nrounds = 200, max_depth = 6, eta = 0.1, gamma = 0, colsample_bytree = 0.5, min_child_weight = 1 and subsample = 0.8.
+The XGBoost model was used and was parametrized using grid method. The final parameter values used by the best model were nrounds = 200, max_depth = 6, eta = 0.1, gamma = 0, colsample_bytree = 0.5, min_child_weight = 1 and subsample = 0.8.
 ```{r XGBoost, message = FALSE, warning = FALSE, echo = FALSE,fig.height=5, fig.width=5,fig.align='center', fig.cap='XGBoost Tuning Parameters', results='hide', fig.keep='all'}
 invisible(XGB_model_albina_updated <- readRDS("XGB_model_albina_updated.rds"))
 ggplot2::ggplot(varImp(XGB_model_albina_updated))
@@ -395,11 +392,11 @@ Gradient_Boosting_model <- readRDS("GBM_Model.rds")
 ggplot2::ggplot(varImp(Gradient_Boosting_model))
 
 ```
-##Random Forest
-The Random Forest model was ran using its normal parameters. The model automaticaly tunes with one parameter mtry. The final model used mtry = 12. 
+## Random Forest
+The Random Forest model was ran using its normal parameters. The model automatically tunes with one parameter mtry. The final model used mtry = 12. 
 
 ## Model Selection
-All models found $Consolidated Income$ and $Stock based Compensation$ and $Dividend Payments$ to be important predictors of Market.Cap. Mean Absolute Error (MAE) shows the average error of the predicted variable. Root Mean-Squared Error (RMSE) is similar with MAE but it is more useful when we are interested in fewer large errors over many small errors. Overall, we prioritized model stability by prioritizing RMSE over MAE. $R^2$ computes how well the regression model fits the data. The higher the $R^2$ value, the better the model fits the data. For predicting market cap, we desired a model with the lowest RMSE and MAE to keep the high accuracy of prediction. The XGBoost model had the highest $R^2$ as well as the lowest RMSE and MAE, thus, it was chosen for deployment.
+All models found $Consolidated Income$, $Stock based Compensation$ and $Dividend Payments$ to be important predictors of Market.Cap. Mean Absolute Error (MAE) shows the average error of the predicted variable. Root Mean-Squared Error (RMSE) is similar with MAE but it is more useful when we are interested in fewer large errors over many small errors. Overall, we prioritized model stability by prioritizing RMSE over MAE. $R^2$ computes how well the regression model fits the data. The higher the $R^2$ value, the better the model fits the data. For predicting market cap, we desired a model with the lowest RMSE and MAE to keep the high accuracy of prediction. The XGBoost model had the highest $R^2$ as well as the lowest RMSE and MAE, thus, it was chosen for deployment.
 
 ```{r create dataframe of model performance, echo=FALSE}
 models <- c("random_forest","extreme_gradient_boosting","gradient_boosting" )
@@ -413,18 +410,22 @@ kable(model_performance, format = 'pipe', caption = 'Model Accuracy')
 ```
 
 # Discussion
-This project focused on applying unsupervised and supervised learning on stock data. We merged 5 datasets from different years of stock data with the same attributes, containing a total of 225 columns. We cleaned the data by adding by chosing fundamental columns and imputing missing values using the MICE package. We then ran a decision tree model which chose the most important variables which were used as the features for our modeling.
+This project focused on applying unsupervised and supervised learning on stock data. We merged 5 datasets from different years of stock data with the same attributes, containing a total of 225 columns. We cleaned the data by choosing fundamental columns and imputing missing values using the MICE package. We then ran a decision tree model which chose the most important variables which were used as the features for our modeling.
+
 Unsupervised learning using the K-means algorithm was used to cluster the data into 4 different clusters. Cluster 1 was the largest and had 19759 observations. It included small-medium sized companies, where 89% of the observations fell under a market cap of $10 billion. Cluster 2 was the smallest with 35 observations and it included the large high-tech companies, such as Amazon, Apple, Facebook and Google. Cluster 3 had 126 observations and included majority of the big banks such as Bank of America and large energy corporations such as Chevron. Cluster 4 had 568 observations similar sector distribution to cluster one, however, the companies all had a large market cap. In this cluster 20 large pharmaceutical and healthcare companies were found. It was interesting to see how well the clustering algorithm was able to cluster the data in different sections based on the type of company they were, their market cap and other attributes. However, it is notable to discuss that the clusters were not equally distributed and cluster 1 was harder to interpret due to the large number of observations. A larger number of cluster could be considered in future work in order to make the clusters smaller and more interpretable. It is important to note that both the elbow method and silhouette method to chose the number of clusters suggested a cluster number of 2, which when was ran resulted in a very large cluster and a negligible second cluster. Thus, we observed that algorithms determining cluster numbers should be used as a guide and tuned when needed. We also learned that it is important to change the number of cluster to make the data as interpretable as possible. 
+
 Supervised learning was applied on the 10 important features plus Sector and cluster # as features. Three algorithms, XGBoost, GBM and Random Forest were ran using the cross-validation method. XGBoost and GBM models were tuned with several parameters, while Random Forest was not due to its high running time. The models were evaluated using $R^2$, RMSE and MAE and XGBoost was the best performer, with Random Forest being the second best and GBM being the worst performer. It is important to note that Random Forest performed almost as well as XGBoost without tuning, thus, if the model was tuned it could have achieved higher performance then the XGBoost. However, this was not possible due to the short time frame of this project and the running time of the model. Therefore, we realized that it is important to consider modeling running time and project timeline when choosing our models. XGBoost achieved a $R^2$ value of 0.9010295. This means that the std (standard deviation) of the error of the regression model is 1/3 of the std of the error that would be achieved with a constant-only model (a regression model without predictors). Thus the model is quite accurate in prediction, however, there is still error present. A higher $R^2$ value and lower RMSE and MAE values could have been achieved if the model parameters were tuned further. However, due to the limited time frame, the model's parameters were tuned only by values, rather then value range. Using value range instead of values on the grid tuning algorithm would have allowed for more possibility of achieving a more highly accurate model. 
-Our project  had several limitations. First of all the data was old, from 2014-2018 and could not reflect the situation of the stocks currently. In addition, it is important to note that COVID-19 has dramatically changed the economy and affected the prices of stocks. Thus, while using this app, users might not get a reflection of the current marketplace. Furthermore, the supervised learning gave many unbalanced clusters, one of them containing 19759 observations, which was hard to interpret. Thus, this could have given error in our interpretation of the cluster. In addition, these clusters were used in our modelling, thus the unbalanced or non-interpretable clusters could misguide the users. 
-Ethical considerations
-It is important to note that this app contains data from 2014-2018, thus it is not to be used as a reflection of the current marketplace, considering the COVID-19 pandemic.
 
+Our project had several limitations. First of all the data was old, from 2014-2018 and may not reflect the situation of the stocks currently. In addition, it is important to note that COVID-19 has dramatically changed the economy and affected the prices of stocks - for example, inflating even further the price of tech stocks. Thus, while using this app, users might not get a reflection of the current marketplace. Furthermore, the supervised learning gave many unbalanced clusters, one of them containing 19759 observations, which was hard to interpret. Thus, this could have given error in our interpretation of the cluster. In addition, these clusters were used in our modelling, thus the unbalanced or non-interpretable clusters could misguide the users. Additionally, we assumed that the market capitalization of the data fairly represented the intrinsic value of the company. Price discovery may have occurred between the time that these data were collected and the current economy.
 
-# Bibliography\
+## Ethical considerations
+It is important to note that this app uses historic data, thus it is not to be used as a perfect prediction of the current marketplace. Predictions offered by this application are not to be used completely place of advice from finance professionals or due diligence. Research has shown that on average, most investors cannot beat the market; the stock market is a zero-sum game. While these predictions might aid in picking individual stocks, investing in a broadly-diversified exchange-traded fund (ETF) is one method to ensure consistent, long-term gains.
+
+\newpage
+# Bibliography
 
 Advanced Technical Analysis Concepts [Internet]. Investopedia. [cited 2020 Nov 11].\ 
-Available from: https://www.investopedia.com/advanced-technical-analysis-concepts-4689656\
+Available from: https://www.investopedia.com/advanced-technical-analysis-concepts-4689656 \
 Boyte-White C. Revenue vs. Income: What’s the Difference? [Internet]. Investopedia.\ 
 [cited 2020 Nov 11]. Available from:\ https://www.investopedia.com/ask/answers/122214/what-difference-between-revenue-and-income.asp
 Chen T, Guestrin C. Xgboost: A scalable tree boosting system. InProceedings of the 22nd acm sigkdd international conference on knowledge discovery and data mining 2016 Aug 13 (pp. 785-794).\
